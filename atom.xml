@@ -4,7 +4,7 @@
   <title><![CDATA[John's Blog]]></title>
   <link href="http://GinSmile.github.io/atom.xml" rel="self"/>
   <link href="http://GinSmile.github.io/"/>
-  <updated>2013-08-28T22:14:23+08:00</updated>
+  <updated>2013-08-29T00:45:54+08:00</updated>
   <id>http://GinSmile.github.io/</id>
   <author>
     <name><![CDATA[John Xu]]></name>
@@ -12,6 +12,106 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[博客配置]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/"/>
+    <updated>2013-08-28T23:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi</id>
+    <content type="html"><![CDATA[<h2>1.添加About Me页面</h2>
+
+<p>首先创建about页面：<code>rake new_page["about"]</code>，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。  <br/>
+然后打开source/_includes/custom/navigation.html，修改成如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/about"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><img class="right" src="http://GinSmile.github.io/images/about_shot.png" width="247" height="130" title="image" alt="images">
+然后使用<code>rake generate</code>命令，就会产生相应的静态页面。使用<code>rake preview</code>预览即可。  <br/>
+如果想在username.github.io中看到，不要忘了<code>rake deploy</code>以及git命令提交到github。</p>
+
+<!--more-->
+
+
+<h2>2.添加社会化分享按钮</h2>
+
+<p>只需要添加著名的社会化分享按钮addthis.com即可。去<a href="https://www.addthis.com/get/sharing#.Uh4X56EW3nM">addthis.com</a>注册,获取代码。  <br/>
+将代码粘贴到source/_includes/post/sharing.html中。例如我的sharing.html文件为：</p>
+
+<pre><code>&lt;div class="sharing"&gt;
+    &lt;!-- AddThis Button BEGIN --&gt;
+    &lt;div class="addthis_toolbox addthis_default_style addthis_32x32_style"&gt;
+        &lt;a class="addthis_button_sinaweibo"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_twitter"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_facebook"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_pinterest_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_google_plusone_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_compact"&gt;&lt;/a&gt;&lt;a class="addthis_counter addthis_bubble_style"&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript"&gt;var addthis_config = {"data_track_addressbar":true};&lt;/script&gt;
+    &lt;script type="text/javascript" src="http://GinSmile.github.io//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"&gt;&lt;/script&gt;
+    &lt;!-- AddThis Button END --&gt;
+</code></pre>
+
+<h2>3.添加社会化评论</h2>
+
+<p>Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Disqus注册帐号，在注册的时候输入网站域名（username.github.io即可）。注册时的shortname很有用，下面代码中要修改的就是shortname！！注册成功后修改octopress目录下的_config.yml文件：</p>
+
+<pre><code>#Disqus Comments
+disqus_short_name: shortname
+disqus_show_comment_count: true
+</code></pre>
+
+<p><em>另外，这里注意，在修改_config.yml的时候，一定要注意冒号后面有个空格，否则在<code>rake generate</code>的时候会有解析错误</em>  <br/>
+最重要的一点，_config.yml文件修改好之后必须generate之后才能在本地preview到。而其他文件，比如post了一个新的文章，如果处在preview状态，刷新一下localhost:4000会立马看到。</p>
+
+<h2>4.添加新浪微博支持</h2>
+
+<p>原始的greyshade主题不支持新浪微博，这里稍加修改，即可在页面左下角显示新浪微博的按钮。本修改方法来自于<a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">allenhsu</a>，在这里向作者表示感谢。   <br/>
+<img class="left" src="http://GinSmile.github.io/images/social_shot.png" width="282" height="114" title="image" alt="images"></p>
+
+<p>首先，在source/sass/parts/_header.scss文件中去掉第316行,<code>margin-right: 15px;</code>更改为：</p>
+
+<pre><code>margin-right: 5px;
+margin-bottom: 15px;
+</code></pre>
+
+<p>然后，还是在上一个文件里，在320行往后添加weibo相关代码，最终代码段如下：</p>
+
+<pre><code>&amp;:hover{
+                opacity: 1;
+            }
+            &amp;.weibo{
+                background: image-url('social/weibo.png') center no-repeat #e32529;
+                border: 1px solid #e32529;
+                &amp;:hover{
+                  border: 1px solid darken(#e32529, 10%);
+                }
+                  }               
+            &amp;.facebook{
+                background: image-url('social/facebook.png') center no-repeat #3B5998;
+                border: 1px solid #3B5998;
+                &amp;:hover{
+                    border: 1px solid darken(#3B5998, 10%);
+                }
+            }
+</code></pre>
+
+<p>第三步，在source/_includes/header.html中，修改代码，在类为social的div下加上如下代码：</p>
+
+<pre><code>&lt;div class="social"&gt;
+
+        &lt;a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo"&gt;Weibo&lt;/a&gt;
+</code></pre>
+
+<p>最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github下载。  <br/>
+如果还不清楚，可在我的github中查看修改过程。修改commit链接。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[用GitHub Pages和Octopress搭建博客]]></title>

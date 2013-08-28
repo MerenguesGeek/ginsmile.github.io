@@ -9,7 +9,7 @@
 	<meta name="author" content="John Xu">
 
 	
-	<meta name="description" content="Aug 28th, 2013 Comments 用GitHub Pages和Octopress搭建博客 本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档， &hellip;">
+	<meta name="description" content="Aug 28th, 2013 Comments 博客配置 1.添加About Me页面 首先创建about页面：rake new_page["about"]，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。 然后打开source/ &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,6 +68,9 @@
 <nav id="sub-nav">
 	<div class="social">
 		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
 		
 		
 		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
@@ -96,6 +99,54 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-28T23:16:00+08:00" data-updated="true" itemprop="datePublished">Aug 28<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/08/28/bo-ke-pei-zhi/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/08/28/bo-ke-pei-zhi/" itemprop="url">博客配置</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h2>1.添加About Me页面</h2>
+
+<p>首先创建about页面：<code>rake new_page["about"]</code>，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。  <br/>
+然后打开source/_includes/custom/navigation.html，修改成如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/about"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><img class="right" src="/images/about_shot.png" width="247" height="130" title="image" alt="images">
+然后使用<code>rake generate</code>命令，就会产生相应的静态页面。使用<code>rake preview</code>预览即可。  <br/>
+如果想在username.github.io中看到，不要忘了<code>rake deploy</code>以及git命令提交到github。</p>
+
+
+		
+		<a href="/blog/2013/08/28/bo-ke-pei-zhi/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
