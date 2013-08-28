@@ -7,7 +7,7 @@ title: John's Blog
 subtitle: I’m a programmer & otaku from Ji'nan, China. 
 author: John Xu
 simple_search: http://google.com/search
-description:blog,code,program
+description: nice and beautiful
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -19,7 +19,7 @@ date_format: "ordinal"
 subscribe_rss: /atom.xml
 subscribe_email:
 # RSS feeds can list your email address if you like
-email:xu.jin.smile@gmail.com
+email: xu.jin.smile@gmail.com
 
 # ----------------------- #
 #    Jekyll & Plugins     #
@@ -63,13 +63,13 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user:ginsmile
+github_user: ginsmile
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
 
 # Twitter
-twitter_user:
+twitter_user: _9394870064011
 twitter_tweet_button: true
 
 # Google +1
@@ -90,8 +90,8 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name:
-disqus_show_comment_count: false
+disqus_short_name: ginsmile
+disqus_show_comment_count: true
 
 # Google Analytics
 google_analytics_tracking_id:
