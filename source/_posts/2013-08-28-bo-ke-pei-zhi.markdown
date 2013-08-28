@@ -81,6 +81,6 @@ Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Di
     		{% if site.weibo_user %}
     		<a class="weibo" href="http://www.weibo.com/{{ site.weibo_user }}" title="Weibo">Weibo</a>
     		{% endif %}
-最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github下载。    
-如果还不清楚，可在我的github中查看修改过程。修改commit链接。    
+最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github[下载](https://github.com/GinSmile/ginsmile.github.io/tree/03f65a6acf8b00988c294b01c701abfbfedb41a1/source/images/social/weibo.png)。    
+如果还不清楚，可在我的github中查看修改过程。点击这个链接：[commit 添加博文：博客配置，添加新浪添加微博支持](https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1),由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。
 
