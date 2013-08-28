@@ -4,7 +4,7 @@
   <title><![CDATA[John's Blog]]></title>
   <link href="http://GinSmile.github.io/atom.xml" rel="self"/>
   <link href="http://GinSmile.github.io/"/>
-  <updated>2013-08-28T22:11:58+08:00</updated>
+  <updated>2013-08-28T22:14:23+08:00</updated>
   <id>http://GinSmile.github.io/</id>
   <author>
     <name><![CDATA[John Xu]]></name>
@@ -244,9 +244,9 @@ $ sudo apt-get install retext
     <link href="http://GinSmile.github.io/blog/2013/08/28/xin-bo-ke-kai-tong-liao/"/>
     <updated>2013-08-28T15:54:00+08:00</updated>
     <id>http://GinSmile.github.io/blog/2013/08/28/xin-bo-ke-kai-tong-liao</id>
-    <content type="html"><![CDATA[<h2>精神家园</h2>
+    <content type="html"><![CDATA[<h2>我的新家</h2>
 
-<p>越来越喜欢github了，不仅有代码托管还有博客框架提供。本博客是利用GitHub Pages和Octopress搭建成功的。<br/>
+<p>  越来越喜欢github了，不仅有代码托管还有博客框架提供。本博客是利用GitHub Pages和Octopress搭建成功的。<br/>
 Markdown真的很棒，用它来写作真的很舒服。另外，像黑客一样写博客的感觉真的很爽。^.^b 今后争取把高质量的文章放到这里。</p>
 ]]></content>
   </entry>
