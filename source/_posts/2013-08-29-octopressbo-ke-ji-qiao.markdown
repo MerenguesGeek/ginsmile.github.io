@@ -1,0 +1,77 @@
+---
+layout: post
+title: "Octopress博客技巧"
+date: 2013-08-29 13:42
+comments: true
+categories: Octopress
+published: false
+---
+
+
+
+0.首页仅显示部分
+----------------------------------------
+只需要在post的markdown文档里面适当位置加上`<!--more-->`即可。这样就不会在首页显示此代码以后的部分。另外，还会在首页的相同位置添加一个read on的链接，点击即可阅读全文。  
+
+1.插入图片
+--------------------------------------------
+参考[Image Tag](http://octopress.org/docs/plugins/image-tag/)
+    {% img center /images/anime/welcome.jpg 711 154 'welcome' 'welcome' %}
+{% img center /images/anime/welcome.jpg 711 154 'welcome' 'welcome' %}   
+
+<!--more-->
+2.草稿
+-----------------------------------
+只需要在新的post的头步加入`published: false`即可。    
+比如本文头部为：
+    ---
+    layout: post
+    title: "Octopress博客技巧"
+    date: 2013-08-29 13:42
+    comments: true
+    categories: Octopress
+    published: false
+    ---
+需要注意的是，在使用preview查看的时候，草稿还是会显示的，但是在deploy的时候，草稿并不会在_deploy中生成，也就是说不会在username.github.io上显示。
+
+
+3.添加类别
+----------------------------------------------
+单个类别：
+    categories: octopress
+多个类别：
+    #方式一
+    categories: [octopress, github, algorithm]
+    #方式二
+    categories:
+    - octopress
+    - github
+    - algorithm
+
+
+
+
+4.rake deploy失败的解决办法
+----------------------------------------------------
+rake deploy失败通常是因为不小心在GitHub修改了master分支，错误信息大概如下：    
+    ## Pushing generated _deploy website
+    To git@github.com:GinSmile/ginsmile.github.io.git
+     ! [rejected]        master -> master (non-fast-forward)
+    error: 无法推送一些引用到 'git@github.com:GinSmile/ginsmile.github.io.git'
+    提示：更新被拒绝，因为您当前分支的最新提交落后于其对应的远程分支。
+    提示：再次推送前，先与远程变更合并（如 'git pull ...'）。详见
+    提示：'git push --help' 中的 'Note about fast-forwards' 小节。    
+这时候，需要修改RakeFile文件（Octopress目录下）来强制推送，这里参考了[stackoverflow的解决办法](http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress)  
+第264行：     
+    system "git push origin #{deploy_branch}"
+修改为：   
+    system "git push origin +#{deploy_branch}"
+注意：此方法使强制推送，会删除GitHub上的所有的本地分支没有的提交。记住推送完毕后再把RakeFile文件改回来。
+
+
+参考资料
+----------------------------------
+[stackoverflow](http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress)  
+[octopress docs/blogging](http://octopress.org/docs/blogging/)
+[Chatswood](http://blog.chatswood.org.uk/)
+
