@@ -1,11 +1,24 @@
 ---
 layout: post
-title: "博客配置"
+title: "Octopress博客配置"
 date: 2013-08-28 23:16
 comments: true
-categories: 
+categories: Octopress
 ---
 
+以下介绍了我的Octopress博客的配置情况。   
+
+0.添加主题
+--------------------------------------------
+Octopress有很多精美的主题，在这里可以看到很多：http://opthemes.com/ 。本博客使用了greyshade主题，该主题的作者是[Shashank Mehta](http://shashankmehta.in/)，主题的介绍页面在http://shashankmehta.in/archive/2012/greyshade.html。   
+这里介绍了greyshade主题的安装：       
+假设你已经安装好了默认主题，并且当前在octopress目录下，只需要输入以下命令即可：
+    $ git clone git@github.com:shashankmehta/greyshade.git .themes/greyshade
+    $ echo "\$greyshade: color;" >> sass/custom/_colors.scss 
+    $ rake "install[greyshade]"
+    $ rake generate
+<!--more-->
+   
 1.添加About Me页面
 ------------------------------------
 首先创建about页面：`rake new_page["about"]`，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。    
@@ -84,3 +97,11 @@ Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Di
 最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github[下载](https://github.com/GinSmile/ginsmile.github.io/tree/03f65a6acf8b00988c294b01c701abfbfedb41a1/source/images/social/weibo.png)。    
 如果还不清楚，可在我的github中查看修改过程。点击这个链接：[commit 添加博文：博客配置，添加新浪添加微博支持](https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1),由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。
 
+   
+   
+   
+   
+参考资料：   
+[greyshade](https://github.com/shashankmehta/greyshade)   
+[yanjiuyanjiu.com](http://www.yanjiuyanjiu.com/blog/20130402/)    
+[zonyitoo.github.io](http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/)    

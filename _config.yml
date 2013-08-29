@@ -3,8 +3,8 @@
 # ----------------------- #
 
 url: http://GinSmile.github.io
-title: John's Blog
-subtitle: I’m a programmer & otaku from Ji'nan, China. 
+title: John Xu's Blog
+subtitle: I’m a programmer & ANIME fan from Ji'nan, China. 
 author: John Xu
 simple_search: http://google.com/search
 description: nice and beautiful
@@ -97,7 +97,7 @@ disqus_short_name: ginsmile
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-43605042-1
 
 # Facebook Like
 facebook_like: false
