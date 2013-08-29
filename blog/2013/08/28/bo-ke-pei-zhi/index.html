@@ -1,0 +1,268 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>博客配置 - John's Blog</title>
+	<meta name="author" content="John Xu">
+
+	
+	<meta name="description" content="博客配置 1.添加About Me页面 首先创建about页面：rake new_page["about"]，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。 然后打开source/_includes/custom/navigation.html &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="John's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("xu.jin.smile@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+</div>
+<hgroup>
+  <h1><a href="/">John's Blog</a></h1>
+  
+    <h2>I’m a programmer & otaku from Ji'nan, China.</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+
+<section class="aboutme">
+  <p>
+    nice and beautiful
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/ginsmile" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">博客配置</h1>
+	<div class="entry-content" itemprop="articleBody"><h2>1.添加About Me页面</h2>
+
+<p>首先创建about页面：<code>rake new_page["about"]</code>，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。  <br/>
+然后打开source/_includes/custom/navigation.html，修改成如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/about"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><img class="right" src="/images/about_shot.png" width="247" height="130" title="image" alt="images">
+然后使用<code>rake generate</code>命令，就会产生相应的静态页面。使用<code>rake preview</code>预览即可。  <br/>
+如果想在username.github.io中看到，不要忘了<code>rake deploy</code>以及git命令提交到github。</p>
+
+<!--more-->
+
+
+<h2>2.添加社会化分享按钮</h2>
+
+<p>只需要添加著名的社会化分享按钮addthis.com即可。去<a href="https://www.addthis.com/get/sharing#.Uh4X56EW3nM">addthis.com</a>注册,获取代码。  <br/>
+将代码粘贴到source/_includes/post/sharing.html中。例如我的sharing.html文件为：</p>
+
+<pre><code>&lt;div class="sharing"&gt;
+    &lt;!-- AddThis Button BEGIN --&gt;
+    &lt;div class="addthis_toolbox addthis_default_style addthis_32x32_style"&gt;
+        &lt;a class="addthis_button_sinaweibo"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_twitter"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_facebook"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_pinterest_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_google_plusone_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_compact"&gt;&lt;/a&gt;&lt;a class="addthis_counter addthis_bubble_style"&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript"&gt;var addthis_config = {"data_track_addressbar":true};&lt;/script&gt;
+    &lt;script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"&gt;&lt;/script&gt;
+    &lt;!-- AddThis Button END --&gt;
+</code></pre>
+
+<h2>3.添加社会化评论</h2>
+
+<p>Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Disqus注册帐号，在注册的时候输入网站域名（username.github.io即可）。注册时的shortname很有用，下面代码中要修改的就是shortname！！注册成功后修改octopress目录下的_config.yml文件：</p>
+
+<pre><code>#Disqus Comments
+disqus_short_name: shortname
+disqus_show_comment_count: true
+</code></pre>
+
+<p><em>另外，这里注意，在修改_config.yml的时候，一定要注意冒号后面有个空格，否则在<code>rake generate</code>的时候会有解析错误</em>  <br/>
+最重要的一点，_config.yml文件修改好之后必须generate之后才能在本地preview到。而其他文件，比如post了一个新的文章，如果处在preview状态，刷新一下localhost:4000会立马看到。</p>
+
+<h2>4.添加新浪微博支持</h2>
+
+<p>原始的greyshade主题不支持新浪微博，这里稍加修改，即可在页面左下角显示新浪微博的按钮。本修改方法来自于<a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">allenhsu</a>，在这里向作者表示感谢。   <br/>
+<img class="left" src="/images/social_shot.png" width="282" height="114" title="image" alt="images"></p>
+
+<p>首先，在source/sass/parts/_header.scss文件中去掉第316行,<code>margin-right: 15px;</code>更改为：</p>
+
+<pre><code>margin-right: 5px;
+margin-bottom: 15px;
+</code></pre>
+
+<p>然后，还是在上一个文件里，在320行往后添加weibo相关代码，最终代码段如下：</p>
+
+<pre><code>&amp;:hover{
+                opacity: 1;
+            }
+            &amp;.weibo{
+                background: image-url('social/weibo.png') center no-repeat #e32529;
+                border: 1px solid #e32529;
+                &amp;:hover{
+                  border: 1px solid darken(#e32529, 10%);
+                }
+                  }               
+            &amp;.facebook{
+                background: image-url('social/facebook.png') center no-repeat #3B5998;
+                border: 1px solid #3B5998;
+                &amp;:hover{
+                    border: 1px solid darken(#3B5998, 10%);
+                }
+            }
+</code></pre>
+
+<p>第三步，在source/_includes/header.html中，修改代码，在类为social的div下加上如下代码：</p>
+
+<pre><code>&lt;div class="social"&gt;
+
+        &lt;a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo"&gt;Weibo&lt;/a&gt;
+</code></pre>
+
+<p>最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github<a href="https://github.com/GinSmile/ginsmile.github.io/tree/03f65a6acf8b00988c294b01c701abfbfedb41a1/source/images/social/weibo.png">下载</a>。  <br/>
+如果还不清楚，可在我的github中查看修改过程。点击这个链接：<a href="https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1">commit 添加博文：博客配置，添加新浪添加微博支持</a>,由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。</p>
+</div>
+
+</article>
+
+	<div class="sharing">
+<!-- AddThis Button BEGIN -->
+<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+<a class="addthis_button_sinaweibo"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_pinterest_share"></a>
+<a class="addthis_button_google_plusone_share"></a>
+<a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+</div>
+<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"></script>
+<!-- AddThis Button END -->
+
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2013 - John Xu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'ginsmile';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>
