@@ -4,7 +4,7 @@ title: "Octopress博客技巧"
 date: 2013-08-29 13:42
 comments: true
 categories: Octopress
-published: false
+published: true
 ---
 
 
@@ -68,6 +68,10 @@ rake deploy失败通常是因为不小心在GitHub修改了master分支，错误
     system "git push origin +#{deploy_branch}"
 注意：此方法使强制推送，会删除GitHub上的所有的本地分支没有的提交。记住推送完毕后再把RakeFile文件改回来。
 
+5.更换网页favcion
+---------------------------------------
+这个只需要拿一个新的16×16的favicon.png的图片来替换source/favicon.png即可。然后`rake generate
+`，`rake preview`就会在localhost:4000端口看到结果。不过有时会由于缓存的原因不能马上看到结果。
 
 参考资料
 ----------------------------------

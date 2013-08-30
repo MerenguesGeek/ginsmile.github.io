@@ -102,6 +102,7 @@ Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Di
    
    
 参考资料：   
+--------------------------------------
 [greyshade](https://github.com/shashankmehta/greyshade)   
 [yanjiuyanjiu.com](http://www.yanjiuyanjiu.com/blog/20130402/)    
 [zonyitoo.github.io](http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/)    

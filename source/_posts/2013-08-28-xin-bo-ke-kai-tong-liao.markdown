@@ -3,7 +3,7 @@ layout: post
 title: "新博客开通了"
 date: 2013-08-28 15:54
 comments: true
-categories: 
+categories: Lifestyle
 ---
 
 

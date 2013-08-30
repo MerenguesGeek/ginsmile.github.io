@@ -3,7 +3,7 @@ layout: post
 title: "用GitHub Pages和Octopress搭建博客"
 date: 2013-08-28 19:42
 comments: true
-categories: 
+categories: Octopress
 ---
 本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档，其文档已经包含了成功搭建一个博客的绝大部分内容。   
 文档地址：[GitHub Pages](https://help.github.com/categories/20/articles)，[Octopress Document](http://octopress.org/docs/)   
