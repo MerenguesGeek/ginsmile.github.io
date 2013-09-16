@@ -6,9 +6,9 @@ comments: true
 categories: python
 ---
 
-##python中的列表推导式
 真是超级喜欢这个语法，大赞!    
 最近在看《某科学的超电磁炮》，感觉婚后光子玩python玩的不错～～哈哈    
+<!--more-->
 
 ####列表推导式能轻易完成复杂的工作
 先来一段有名的三行快排：
@@ -21,6 +21,7 @@ categories: python
     L=qsort(L)
     print L
 真是太劲爆了，短短三行，就把快排的思想显露无疑。下面来分析一下：       
+{% img right /images/pic/mypython.png 190 240 '婚后光子' '婚后光子' %}
 > `[x for x in L if x<L[0]]`指的是把L中小于L[0]的提取出来组成一个列表       
 > `[x for x in L if x==L[0]]`指的是把L中等于L[0]的提取出来组成一个列表       
 > `qsort([x for x in L if x>L[0]])`指的是把L中大于L[0]的提取出来组成一个列表    

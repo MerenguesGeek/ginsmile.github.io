@@ -3,7 +3,7 @@ layout: post
 title: "Raspberry Pi 把玩记录"
 date: 2013-09-16 20:16
 comments: true
-categories: Raspberry Pi
+categories: RaspberryPi
 ---
 
 树莓派
@@ -12,7 +12,7 @@ categories: Raspberry Pi
 
 ###1. 配置
 它是一款基于Linux的卡片大小的微型电脑，我买的是红板（国产B版）： 
-{% img right /images/pic/Pi_Logo.png 190 240 'Pi_Logo' 'Pi_Logo' %}
+
     树莓派主板
     散热片
     开关电源线
@@ -24,7 +24,7 @@ categories: Raspberry Pi
     HDMI线 
 
 <!--more-->
-
+{% img right /images/pic/Pi_Logo.png 190 240 'Pi_Logo' 'Pi_Logo' %}
 
 ###2. 安装过程中遇到的问题
 
