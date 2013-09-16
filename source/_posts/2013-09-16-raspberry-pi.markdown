@@ -3,7 +3,7 @@ layout: post
 title: "Raspberry Pi 把玩记录"
 date: 2013-09-16 20:16
 comments: true
-categories: 
+categories: Raspberry Pi
 ---
 
 树莓派
