@@ -81,7 +81,8 @@ Tips：
    
 
 ###参考资料
-[爱板网](http://www.eeboard.com/bbs/thread-5473-1-1.html)
-[树莓派论坛]（http://www.shumeipai.net）
+[爱板网](http://www.eeboard.com/bbs/thread-5473-1-1.html)   
+
+[树莓派论坛](http://www.shumeipai.net)
 
     

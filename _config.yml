@@ -4,7 +4,7 @@
 
 url: http://GinSmile.github.io
 title: John Xu's Blog
-subtitle: I’m a programmer & ANIME fan from Ji'nan, China. 
+subtitle: Just enjoy coding. 
 author: John Xu
 simple_search: http://google.com/search
 description: nice and beautiful
@@ -64,7 +64,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 
 # Github repositories
 github_user: ginsmile
-github_repo_count: 0
+github_repo_count: 3
 github_show_profile_link: true
 github_skip_forks: true
 

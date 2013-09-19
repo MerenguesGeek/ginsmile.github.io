@@ -73,6 +73,13 @@ rake deploy失败通常是因为不小心在GitHub修改了master分支，错误
 这个只需要拿一个新的16×16的favicon.png的图片来替换source/favicon.png即可。然后`rake generate
 `，`rake preview`就会在localhost:4000端口看到结果。不过有时会由于缓存的原因不能马上看到结果。
 
+6.rake preview 命令执行后的 TCPServer Error: Address already in use 错误
+这种情况，是因为端口已经被使用了，就需要找到占用端口的进程，然后杀掉！
+    $ lsof -wni tcp:4000
+    $ kill -9 PID
+PID指的是杀掉的进程的ID，可以从第一个命令中获得。
+
+
 参考资料
 ----------------------------------
 [stackoverflow](http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress)  

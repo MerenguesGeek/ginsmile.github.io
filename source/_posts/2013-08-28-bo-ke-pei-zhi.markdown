@@ -68,11 +68,11 @@ Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Di
 原始的greyshade主题不支持新浪微博，这里稍加修改，即可在页面左下角显示新浪微博的按钮。本修改方法来自于[allenhsu](http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html)，在这里向作者表示感谢。     
 {% img left /images/social_shot.png 282 114 'image' 'images' %}     
 
-首先，在source/sass/parts/_header.scss文件中去掉第316行,`margin-right: 15px;`更改为：
+首先，在sass/parts/_header.scss文件中去掉第316行,`margin-right: 15px;`更改为：
     margin-right: 5px;
     margin-bottom: 15px;
 然后，还是在上一个文件里，在320行往后添加weibo相关代码，最终代码段如下：
-    &:hover{
+            &:hover{
     				opacity: 1;
     			}
     			&.weibo{
