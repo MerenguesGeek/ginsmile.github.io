@@ -13,5 +13,5 @@ John Xu
 关注Web开发，移动互联网。   
 
 
-联系方式：xu.jin.smile[At]gmail.com
+Email：xu.jin.smile[At]gmail.com
 
