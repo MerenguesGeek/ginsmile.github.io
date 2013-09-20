@@ -98,11 +98,23 @@ Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Di
 如果还不清楚，可在我的github中查看修改过程。点击这个链接：[commit 添加博文：博客配置，添加新浪添加微博支持](https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1),由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。
 
    
-   
-   
+5.imagepop plugin
+-------------------------------------
+
+这是一个添加图片的插件，可以按照比例缩放图片，点击图片可以查看原图，项目地址在[imgpop](https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default)  
+这里重复一下安装过程：   
+> 在`octopress/Gemfile`中添加以下代码，就可以得到相应依赖：
+        gem 'erubis'
+        gem 'mini_magick'
+> 运行`bundle install`,安装相应依赖
+> 将开源项目中的`_style.scss`中的内容添加到`octopress/sass/custom/_styles.scss`中
+> 将开源项目中plugins中的两个文件复制`octopress/plugins`文件夹下
+> 将开源项目中的imgpop.js文件复制`octopress`文件夹下     
+ok~~
    
 参考资料：   
 --------------------------------------
-[greyshade](https://github.com/shashankmehta/greyshade)   
-[yanjiuyanjiu.com](http://www.yanjiuyanjiu.com/blog/20130402/)    
-[zonyitoo.github.io](http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/)    
+> [greyshade](https://github.com/shashankmehta/greyshade)   
+> [yanjiuyanjiu.com](http://www.yanjiuyanjiu.com/blog/20130402/)    
+> [zonyitoo.github.io](http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/)   
+> [imgpop](https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default)  

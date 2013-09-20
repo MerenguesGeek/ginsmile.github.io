@@ -12,12 +12,13 @@ published: true
 0.首页仅显示部分
 ----------------------------------------
 只需要在post的markdown文档里面适当位置加上`<!--more-->`即可。这样就不会在首页显示此代码以后的部分。另外，还会在首页的相同位置添加一个read on的链接，点击即可阅读全文。  
+{% img right /images/pic/octopress_logo.png 227 227 'octopress_logo' 'octopress_logo' %}   
 
 1.插入图片
 --------------------------------------------
 参考[Image Tag](http://octopress.org/docs/plugins/image-tag/)
-    {% img center /images/anime/welcome.jpg 711 154 'welcome' 'welcome' %}
-{% img center /images/anime/welcome.jpg 711 154 'welcome' 'welcome' %}   
+    {% img right /images/pic/octopress_logo.png 227 227 'octopress_logo' 'octopress_logo' %}
+
 
 <!--more-->
 2.草稿
@@ -79,10 +80,17 @@ rake deploy失败通常是因为不小心在GitHub修改了master分支，错误
     $ kill -9 PID
 PID指的是杀掉的进程的ID，可以从第一个命令中获得。
 
+7.错误 WARN  Could not determine content-length of response body 的解决
+这是一Webrick引发的问题，详细错误如下：
+    WARN  Could not determine content-length of response body. Set content-length of the response or set Response#chunked = true
+可以用以下方法来解决，在`Octopress/Gemfile`中，添加以下命令：
+    gem 'thin'
 
 参考资料
 ----------------------------------
-[stackoverflow](http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress)  
-[octopress docs/blogging](http://octopress.org/docs/blogging/)
-[Chatswood](http://blog.chatswood.org.uk/)
+> [stackoverflow](http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress)     
+> [octopress docs/blogging](http://octopress.org/docs/blogging/)    
+> [Chatswood](http://blog.chatswood.org.uk/) 
+> [stackoverflow](http://stackoverflow.com/questions/9612618/warn-could-not-determine-content-length-of-response-body-set-content-length-of)
+  
 
