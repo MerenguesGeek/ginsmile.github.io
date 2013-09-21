@@ -130,16 +130,16 @@ categories: Octopress
 ----------------------------------------
 使用此命令`rake setup_github_pages`设置Octpress和Github的联系。
 这条命令将：
-    询问你的GitHub Pages仓库的URL地址
-    重命名远端分支名从这‘origin’到站‘octopress’
-    将GitHub Pages项目作为默认的远端分支
-    将活动分支将从master转换为source
-    根据你的Git仓库地址设置博客的URL
-    在_deploy分支设置一个master分支，部署用，最终页面的目录最终即最终此文件夹
+> - 询问你的GitHub Pages仓库的URL地址
+> - 重命名远端分支名从这‘origin’到站‘octopress’
+> - 将GitHub Pages项目作为默认的远端分支
+> - 将活动分支将从master转换为source
+> - 根据你的Git仓库地址设置博客的URL
+> - 在_deploy分支设置一个master分支，部署用，最终页面的目录最终即最终此文件夹
 使用以下命令在本地预览
     $ rake generate  //此命令会产生最终的静态页面
     $ rake preview   //此命令会打开4000端口,可输入localhost:4000预览博客
-使用以下命令将页面部署到_deploy目录。
+使用以下命令将c产生你的blog，产生的文件到_deploy目录，然后自动commit，push到github的master分支。
     $ rake generate
     $ rake deploy    
 将改动将更新到github
@@ -147,13 +147,13 @@ categories: Octopress
     $ git commit -m 'your message'
     $ git push origin source
    
-截止到此，一个基于GitHub Pages和Octopress的博客就搭建好了。 现在打开username.github.io就会看到刚刚搭建好的博客，注意：只有push到github上之后才会在username.github.io看到最终效果，`$ rake deploy`仅仅是更新本地的_deploy目录，仅可以在本地预览的时候看到。 
+截止到此，一个基于GitHub Pages和Octopress的博客就搭建好了。 现在打开username.github.io就会看到刚刚搭建好的博客，注意：只有deploy到github上之后才会在username.github.io看到最终效果.
     
 8.发布第一篇博文
 -------------------------------------------------------
 生成博文框架
     $ rake new_post[‘文章标题’]
-此时可以在source/_posts文件夹下看到刚创建的网页。使用markdown语法写一片博客即可（此处可使用retext编辑Markdown文件）。
+此时可以在source/_posts文件夹下看到刚创建的网页。使用markdown语法写一篇博客即可（此处可使用retext编辑Markdown文件）。
     $ rake generate  //此命令会产生最终的静态页面
     $ rake preview   //此命令会打开4000端口,可输入在浏览器localhost:4000预览
     $ rake deploy    

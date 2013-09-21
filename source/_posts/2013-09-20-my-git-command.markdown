@@ -3,19 +3,19 @@ layout: post
 title: "我的Git常用命令"
 date: 2013-09-20 16:50
 comments: true
-categories: 
+categories: Git
 ---
 
 
 使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
-
+{% img right /images/pic/git_logo.png 130 130 'welcome' 'welcome' %}
 设置
------------------------------
-{% img right /images/pic/git_logo.png 130 130 'welcome' 'welcome' %}   
+-----------------------------   
 设置邮箱和用户名
 
     git config --global user.email "xu.jin.smile@gmail.com"
     git config --global user.name "GinSmile"
+
 生成SSH Key
 
     ssh-keygen -t rsa -C "example@163.com"
@@ -61,7 +61,7 @@ categories:
     git rm Readme.md
 仅仅在暂存区删除，不再跟踪该文件，并在目录中保留
 
-    git rm –cached Readme.md
+    git rm --cached Readme.md
     
 
 
