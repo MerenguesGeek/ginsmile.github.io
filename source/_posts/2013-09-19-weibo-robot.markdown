@@ -3,7 +3,7 @@ layout: post
 title: "Weibo Robot"
 date: 2013-09-19 12:01
 comments: true
-categories: python,RaspberryPi
+categories: [python, RaspberryPi]
 ---
 
 
