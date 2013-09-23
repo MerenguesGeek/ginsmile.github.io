@@ -107,6 +107,26 @@ categories: Git
 最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。点击查看大图
 {% imgpop /images/pic/git.png 10% Git Command %}
 
+
+
+一个简单的Git工作流程
+-------------------------------
+    #创建develop分支：
+    git branch develop
+
+    #切换到develop分支
+    git checkout develop
+
+    #做一些更改后提交
+    git commit -m "some changes"
+
+    # 切换到Master分支
+    git checkout master
+
+    # 对Develop分支进行合并
+    git merge –no–ff develop
+参数`–no–ff`代表**快进式合并**（fast-farward merge），会直接将Master分支指向Develop分支。
+
 参考资料：
 ---------------------------------
 > - [Git Guide](http://rogerdudler.github.io/git-guide/index.zh.html)
