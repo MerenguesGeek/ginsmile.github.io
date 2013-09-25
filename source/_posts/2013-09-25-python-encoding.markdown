@@ -12,6 +12,7 @@ python中默认使用ASCII编码，但是如果出现中文等非ASCII字符就�
     
 即可。最常见的是在第一行或者第二行写上字符：`# -*- coding:utf-8 -*-`  或者 ` #coding=utf-8 `
 
+<!--more-->
 其他编码转换为unicode
 -----------------
 使用函数unicode(s,encoding) 或者s.decode(encoding)，就可以将gb2312，utf-8，GBK等编码转换为unicode，例如将utf-8转换成unicode：

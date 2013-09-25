@@ -14,7 +14,7 @@ styles: [data-table]
 > - 字符集(Character set)：是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。    
 > - 字符编码（Character Encoding）：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系。
 
-
+<!--more-->
 ASCII
 --------------------
 **ASCII字符集**，共表示了128个字符，包括32个不能打印的字符。    
@@ -59,10 +59,10 @@ Universal Character Set，通用字符集。是由ISO 10646标准所定义的标
 
 下面介绍下UCS-4       
 0xxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx 共有 2^31 = 2147483648 个码位。
-- UCS-4编码分为2^7 = 128 个group，每个group形如 01234567 xxxxxxxx xxxxxxxx xxxxxxxx
-- 每个group分为2^8 = 256 个plane，每个plane形如 01234567 12345678 xxxxxxxx xxxxxxxx
-- 每个plane分为2^8 = 256 个rows，每个rows形如 01234567 12345678 12345678 xxxxxxx
-- 每个rows分为2^8 = 256 个cells，每个cells形如 01234567 12345678 12345678 12345678
+> - UCS-4编码分为2^7 = 128 个group，每个group形如 01234567 xxxxxxxx xxxxxxxx xxxxxxxx
+> - 每个group分为2^8 = 256 个plane，每个plane形如 01234567 12345678 xxxxxxxx xxxxxxxx
+> - 每个plane分为2^8 = 256 个rows，每个rows形如 01234567 12345678 12345678 xxxxxxx
+> - 每个rows分为2^8 = 256 个cells，每个cells形如 01234567 12345678 12345678 12345678
 
 00000000 00000000 xxxxxxxx xxxxxxxx ，即高两个字节均为0的UCS-4被称为BMP 
 
