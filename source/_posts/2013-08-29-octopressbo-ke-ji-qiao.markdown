@@ -75,12 +75,14 @@ rake deploy失败通常是因为不小心在GitHub修改了master分支，错误
 `，`rake preview`就会在localhost:4000端口看到结果。不过有时会由于缓存的原因不能马上看到结果。
 
 6.rake preview 命令执行后的 TCPServer Error: Address already in use 错误
+---------------------------------------
 这种情况，是因为端口已经被使用了，就需要找到占用端口的进程，然后杀掉！
     $ lsof -wni tcp:4000
     $ kill -9 PID
 PID指的是杀掉的进程的ID，可以从第一个命令中获得。
 
 7.错误 WARN  Could not determine content-length of response body 的解决
+----------------------------------------
 这是一Webrick引发的问题，详细错误如下：
     WARN  Could not determine content-length of response body. Set content-length of the response or set Response#chunked = true
 可以用以下方法来解决，在`Octopress/Gemfile`中，添加以下命令：
