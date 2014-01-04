@@ -9,7 +9,7 @@ categories:
 之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
 关键是之前安装的很多插件，恢复过来就用不了了。    
 <!--more-->
-1.首先要按照安装全新Octopress那样，弄出来一个能安装Octopress的环境,安好rvm,Ruby1.9.3之类的，详见[用GitHub Pages和Octopress搭建博客](http://localhost:4000/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/#.UsghFqx5MxA)。    
+1.首先要按照安装全新Octopress那样，弄出来一个能安装Octopress的环境,安好rvm,Ruby1.9.3之类的，详见[用GitHub Pages和Octopress搭建博客](http://ginsmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/#.UsgqCqx5MxA)。    
 2.然后，要clone下来source分支：
 	$ git clone -b source git@github.com:username/username.github.com.git octopress
 3.进入octopress目录，clone下_deploy来：
