@@ -20,5 +20,4 @@ categories: [python, RaspberryPi]
    
 Demo：http://weibo.com/u/3798238610
 
-截图：   
-{% imgpop /images/pic/littlerain.png 5% My Big Image %}
+

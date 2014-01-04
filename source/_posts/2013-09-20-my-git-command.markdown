@@ -104,8 +104,8 @@ categories: Git
     *.c
     
     
-最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。点击查看大图
-{% imgpop /images/pic/git.png 10% Git Command %}
+最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。
+<img class="center" src="/images/pic/git.png"  title="welcome" alt="welcome"> 
 
 
 
