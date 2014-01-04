@@ -9,24 +9,19 @@ footer: true
 
 John Xu
 ============
-本名徐进，一名在读大学生，程序员。
-关注Web开发，移动互联网。   
+KEEP FIGHTING!    
+     
+***
 
-
-邮箱：
+Email：
 > - Gmail：xu.jin.smile[AT]gmail.com
+    
 
-你也可以通过以下方式找到我：    
-
-我的主阵地： 
+You can also find me in the follow sites：    
 
 > - [个人博客](http://ginsmile.github.io )  
 > - [新浪微博](http://weibo.com/smilexujin)   
 > - [GitHub](https://github.com/GinSmile)    
-
-
-
-其他：
 > - [豆瓣](http://www.douban.com/people/ginsmile/)   
 > - [果壳](http://www.guokr.com/i/1903166604/)    
 > - [知乎](http://www.zhihu.com/people/smilexujin)    
