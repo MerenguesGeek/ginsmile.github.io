@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Linux | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-09T14:57:40+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[learing linux,part 1,2]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_1-2/"/>
+    <updated>2014-08-07T22:53:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_1-2</id>
+    <content type="html"><![CDATA[<p>此文为学习《鸟哥的私房菜》时候的备忘录.</p>
+
+<ul>
+<li>第一部分 Linux的规则与安装</li>
+<li>第二部分 Linux文件、目录与磁盘格式</li>
+</ul>
+
+
+<!--more-->
+
+
+<h2>第一部分 Linux的规则与安装</h2>
+
+<hr />
+
+<h3>CPU频率相关</h3>
+
+<ul>
+<li>CPU的外频：CPU与外部组件进行数据传输、运算时的速度，如333MHz</li>
+<li>CPU的频率：CPU每秒钟可以进行的工作次数，如3.0GHz</li>
+<li>CPU的倍频：CPU内部用来加速工作性能的一个倍数，外频 * 倍频 ＝ 频率，如9倍，333M * 9 = 3.0G</li>
+</ul>
+
+
+<p>CPU每次能够处理的数据量称为字组大小（work size），字组大小为32bit的称为32bitCPU</p>
+
+<hr />
+
+<h3>显示内存的计算</h3>
+
+<p>屏幕像素个数 * 每像素占内存大小 ＝ 显示屏幕内容所需要的内存    <br/>
+<em>（1024 * 768） * 3B ＝ 2.25MB</em>，注：全彩的像素每个颜色占一个字节，红黄蓝。</p>
+
+<hr />
+
+<h3>硬盘相关</h3>
+
+<p>512Bytes的扇区，扇区围成一个圆就成为磁道，所有盘面的同一个磁道组成一个柱面。   <br/>
+分区的最小单位是柱面，磁盘存储的最小单位是扇区。</p>
+
+<hr />
+
+<h3>Linux是什么</h3>
+
+<p>Linux是一套操作系统，包括内核和系统调用两层。  <br/>
+硬件&mdash;内核&mdash;系统调用&mdash;应用程序</p>
+
+<hr />
+
+<h3>分区</h3>
+
+<ul>
+<li>硬盘可以分为主分区（三个或四个）和扩展分区（最多一个），扩展分区可以继续切出逻辑分区来。</li>
+<li>主分区和扩展分区最多只有四个</li>
+<li>只有逻辑分区和主分区能够格式化</li>
+</ul>
+
+
+<p><strong>第一个可开机设备的第一个扇区共512bytes，其中MBR（masster boot recorder，主引导区）占446bytes，分区表（partition table）占64bytes，分区标志2bytes。每个分区记录占16bytes，所以最多能分四个分区。</strong></p>
+
+<hr />
+
+<h3>开机流程</h3>
+
+<ul>
+<li>BIOS，开机主动执行BIOS，认识第一个可开机的设备</li>
+<li>MBR，第一个可开机设备的第一个扇区内的主引导分区块，包含引导加载程序</li>
+<li>引导加载程序，读取内核文件</li>
+<li>内核文件，开始操作系统的功能</li>
+</ul>
+
+
+<h2>第二部分 Linux文件、目录与磁盘格式</h2>
+
+<hr />
+
+<h3>文件权限</h3>
+
+<p>Linux中的文件有很多的属性，用来保护数据的安全性。</p>
+
+<pre><code>xujindeMacBook-Pro:text xujin$ ls -l
+total 992
+-rw-r--r--@ 1 xujin  staff  507711  7 26 08:36 pic.jpg
+</code></pre>
+
+<p>【权限】-【连接】-【所有者】-【用户组】-【文件大小】-【修改日期】</p>
+
+<ul>
+<li>chgrp，改用户组，chgrp othergroup a.jpg</li>
+<li>chown，改所有者，chown otheruser a.jpg</li>
+<li>chmod，改权限
+
+<ul>
+<li>chmod 764 a.jpg</li>
+<li>chmod rwxrw-r&mdash; a.jpg</li>
+<li>chmod u=rwx, g=rw-, o=r&mdash; a.jpg</li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>一个文件是否能够被执行，仅仅与上面命令中显示的权限有关，与扩展名无关</strong></p>
+
+<hr />
+
+<h3>特殊目录</h3>
+
+<blockquote><ul>
+<li>[.]   当前目录</li>
+<li>[..]  上一级目录</li>
+<li>[&ndash;]   前一个工作目录</li>
+<li>[~]   目前用户所在的主文件夹</li>
+<li>[~account] 用户account所在的主文件夹</li>
+</ul>
+</blockquote>
+
+<hr />
+
+<h3>文件目录管理的基本命令</h3>
+
+<ul>
+<li>ls,cd,pwd,mkdir,rmdir</li>
+<li>cp,rm,mv</li>
+<li>cat,nl,more,less,head,tail,od</li>
+<li>touch,file</li>
+<li>which,whereis,locate,find</li>
+</ul>
+
+
+<hr />
+
+<h3>文件系统</h3>
+
+<p>Linux最主要的文件系统为Ext2，该文件系统包括：superblock，inode，block。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[John Xu's Blog]]></title>
   <link href="http://GinSmile.github.io/atom.xml" rel="self"/>
   <link href="http://GinSmile.github.io/"/>
-  <updated>2014-08-03T22:43:32+08:00</updated>
+  <updated>2014-08-09T14:57:40+08:00</updated>
   <id>http://GinSmile.github.io/</id>
   <author>
     <name><![CDATA[John Xu]]></name>
@@ -14,105 +14,144 @@
 
   
   <entry>
-    <title type="html"><![CDATA[TCP/IP协议学习]]></title>
-    <link href="http://GinSmile.github.io/blog/2014/08/03/tcp-ip-illustrated-1/"/>
-    <updated>2014-08-03T22:35:00+08:00</updated>
-    <id>http://GinSmile.github.io/blog/2014/08/03/tcp-ip-illustrated-1</id>
-    <content type="html"><![CDATA[<p>本文是关于《TCP/IP详解》的读书笔记。</p>
+    <title type="html"><![CDATA[learing linux,part 1,2]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_1-2/"/>
+    <updated>2014-08-07T22:53:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_1-2</id>
+    <content type="html"><![CDATA[<p>此文为学习《鸟哥的私房菜》时候的备忘录.</p>
 
-<h2>第一章 概述</h2>
+<ul>
+<li>第一部分 Linux的规则与安装</li>
+<li>第二部分 Linux文件、目录与磁盘格式</li>
+</ul>
 
-<h3>1.分层</h3>
 
-<p>TCP/IP是一个协议族（又叫Internet协议族），是一组不同层次上的多个协议的组合。</p>
+<!--more-->
+
+
+<h2>第一部分 Linux的规则与安装</h2>
+
+<hr />
+
+<h3>CPU频率相关</h3>
+
+<ul>
+<li>CPU的外频：CPU与外部组件进行数据传输、运算时的速度，如333MHz</li>
+<li>CPU的频率：CPU每秒钟可以进行的工作次数，如3.0GHz</li>
+<li>CPU的倍频：CPU内部用来加速工作性能的一个倍数，外频 * 倍频 ＝ 频率，如9倍，333M * 9 = 3.0G</li>
+</ul>
+
+
+<p>CPU每次能够处理的数据量称为字组大小（work size），字组大小为32bit的称为32bitCPU</p>
+
+<hr />
+
+<h3>显示内存的计算</h3>
+
+<p>屏幕像素个数 * 每像素占内存大小 ＝ 显示屏幕内容所需要的内存    <br/>
+<em>（1024 * 768） * 3B ＝ 2.25MB</em>，注：全彩的像素每个颜色占一个字节，红黄蓝。</p>
+
+<hr />
+
+<h3>硬盘相关</h3>
+
+<p>512Bytes的扇区，扇区围成一个圆就成为磁道，所有盘面的同一个磁道组成一个柱面。   <br/>
+分区的最小单位是柱面，磁盘存储的最小单位是扇区。</p>
+
+<hr />
+
+<h3>Linux是什么</h3>
+
+<p>Linux是一套操作系统，包括内核和系统调用两层。  <br/>
+硬件&mdash;内核&mdash;系统调用&mdash;应用程序</p>
+
+<hr />
+
+<h3>分区</h3>
+
+<ul>
+<li>硬盘可以分为主分区（三个或四个）和扩展分区（最多一个），扩展分区可以继续切出逻辑分区来。</li>
+<li>主分区和扩展分区最多只有四个</li>
+<li>只有逻辑分区和主分区能够格式化</li>
+</ul>
+
+
+<p><strong>第一个可开机设备的第一个扇区共512bytes，其中MBR（masster boot recorder，主引导区）占446bytes，分区表（partition table）占64bytes，分区标志2bytes。每个分区记录占16bytes，所以最多能分四个分区。</strong></p>
+
+<hr />
+
+<h3>开机流程</h3>
+
+<ul>
+<li>BIOS，开机主动执行BIOS，认识第一个可开机的设备</li>
+<li>MBR，第一个可开机设备的第一个扇区内的主引导分区块，包含引导加载程序</li>
+<li>引导加载程序，读取内核文件</li>
+<li>内核文件，开始操作系统的功能</li>
+</ul>
+
+
+<h2>第二部分 Linux文件、目录与磁盘格式</h2>
+
+<hr />
+
+<h3>文件权限</h3>
+
+<p>Linux中的文件有很多的属性，用来保护数据的安全性。</p>
+
+<pre><code>xujindeMacBook-Pro:text xujin$ ls -l
+total 992
+-rw-r--r--@ 1 xujin  staff  507711  7 26 08:36 pic.jpg
+</code></pre>
+
+<p>【权限】-【连接】-【所有者】-【用户组】-【文件大小】-【修改日期】</p>
+
+<ul>
+<li>chgrp，改用户组，chgrp othergroup a.jpg</li>
+<li>chown，改所有者，chown otheruser a.jpg</li>
+<li>chmod，改权限
+
+<ul>
+<li>chmod 764 a.jpg</li>
+<li>chmod rwxrw-r&mdash; a.jpg</li>
+<li>chmod u=rwx, g=rw-, o=r&mdash; a.jpg</li>
+</ul>
+</li>
+</ul>
+
+
+<p><strong>一个文件是否能够被执行，仅仅与上面命令中显示的权限有关，与扩展名无关</strong></p>
+
+<hr />
+
+<h3>特殊目录</h3>
 
 <blockquote><ul>
-<li>应用层（Telnet，FTP等），负责处理特定的应用程序细节。</li>
-<li>运输层（TCP，UDP），为两台主机上的应用程序提供端到端的通信。</li>
-<li>网络层（IP，ICMP，IGMP），处理分组在网络中的活动，提供点到点的服务。</li>
-<li>链路层（设备驱动程序以及接口卡，ARP，RARP），处理与电缆等传输媒介的物理接口细节。</li>
+<li>[.]   当前目录</li>
+<li>[..]  上一级目录</li>
+<li>[&ndash;]   前一个工作目录</li>
+<li>[~]   目前用户所在的主文件夹</li>
+<li>[~account] 用户account所在的主文件夹</li>
 </ul>
 </blockquote>
 
-<p>其中，应用层通常是一个用户进程，处理应用程序细节，而下三层一般在操作系统内核中执行（如UNIX），处理通信细节。</p>
+<hr />
 
-<p><strong>一个互联网就是一组通过相同协议族互联在一起的网络。</strong>可以通过路由器连接两个不同的网络（如以太网和令牌环网）。TCP/IP倾向于使用路由器而不是网桥来连接网络。
-&ndash; internet：用一个共同的协议族把多个网络连接在一起。
-&ndash; Internet：世界范围内通过TCP/IP互相通信的所有主机集合。internet是一个Internet。</p>
-
-<h3>2. 互联网地址</h3>
-
-<p>互联网上的每一个接口必须有一个唯一的Internet地址（IP地址）。32bit = 4Byte</p>
-
-<pre><code>    - A类：0     7位网络号      24位主机号
-    - B类：10    14位网络号     16位主机号
-    - C类：110   21位网络号     8位主机号
-    - D类：1110  28位多播组号
-    - E类：11110 27位（留待后用）
-</code></pre>
-
-<p>点分十进制表示法，如A类中的一个为：127.0.0.1</p>
-
-<h3>3. 域名系统</h3>
-
-<p>域名系统（DNS）是一个分布的数据库，由他来提供IP地址和主机名之间的映射信息。</p>
-
-<h3>4. 封装</h3>
-
-<p>例如，当FTP数据从应用层开始通过TCP传输数据时，逐层封装，逐次加上
-1. Appl首部
-2. TCP首部
-3. IP首部
-4. 以太网首部</p>
-
-<p>来声明生成数据的上一层协议的类型以及其他信息，方面数据的处理。</p>
-
-<h3>5. 分用</h3>
-
-<p>利用封装时的信息，每层协议都要检查报文首部中的协议标识，以确定接受数据的上层协议</p>
-
-<h3>6. 客户-服务器模型</h3>
-
-<p>两种服务模式：</p>
-
-<p>1.重复型
-&ndash; 1) 等待一个客户请求
-&ndash; 2) 处理客户请求
-&ndash; 3) 发送相应给请求的客户
-&ndash; 4) 返回第1步</p>
-
-<p>2.并发型
-&ndash; 1) 等待一个客户请求
-&ndash; 2) 启动一个新的服务器来处理这个客户请求，处理结束后终止这个新服务器
-&ndash; 3)返回第1步</p>
-
-<h3>7. 端口号</h3>
+<h3>文件目录管理的基本命令</h3>
 
 <ul>
-<li>运输层的TCP和UDP使用16bit的端口号来识别应用程序。</li>
-<li>必须是奇数，单工->全双工 时候的遗留，单工时候每个应用程序需要两个连接。</li>
-<li>服务器使用知名端口号（1~1023），客户端使用临时端口号。</li>
+<li>ls,cd,pwd,mkdir,rmdir</li>
+<li>cp,rm,mv</li>
+<li>cat,nl,more,less,head,tail,od</li>
+<li>touch,file</li>
+<li>which,whereis,locate,find</li>
 </ul>
 
 
-<h3>8. RFC</h3>
+<hr />
 
-<p>RFC（Request for Comment），Internet的正是标准都以RFC文档出版。大量的RFC文档不是正式标准，RFC 数字越大内容越新。  <br/>
-重要的RFC：
-&ndash; 赋值RFC（Assigned Numbers RFC），<a href="http://www.ietf.org/rfc/rfc1340.txt">RFC1340</a>，列出了所有Internet协议中使用的数字和常数
-&ndash; Internet正式协议标准，<a href="http://www.ietf.org/rfc/rfc1600.txt">RFC 1600</a>，描述了各种Internet协议的标准化现状
-&ndash; 主机需求RFC，<a href="http://www.ietf.org/rfc/rfc1122.txt">RFC 1122</a>，<a href="http://www.ietf.org/rfc/rfc1123.txt">RFC 1123</a>，列出了协
-议中关于“必须”、“应该”、“可以”、“不应该”或者“不能”等特性及其实现细节。
-&ndash; 路由器需求RFC，<a href="http://www.ietf.org/rfc/rfc1009.txt">RFC 1009</a>，与主机需求R F C类似，但是只单独描述了路由器的需求。</p>
+<h3>文件系统</h3>
 
-<h2>第二章 链路层</h2>
-
-<p>在TCP/IP协议组中，链路层的目的：
-1. 为IP模块发送和接受IP数据报
-2. 为ARP模块发送ARP请求和接受ARP应答
-3. 为RARP发送RARP请求和接受RARP应答</p>
-
-<p>最常见的链路层封装是<strong>以太网封装格式</strong>（RFC 894）</p>
+<p>Linux最主要的文件系统为Ext2，该文件系统包括：superblock，inode，block。</p>
 ]]></content>
   </entry>
   
