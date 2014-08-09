@@ -1,0 +1,407 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>用GitHub Pages和Octopress搭建博客 - John Xu's Blog</title>
+	<meta name="author" content="John Xu">
+
+	
+	<meta name="description" content="用GitHub Pages和Octopress搭建博客 本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档，其文档已经包含了成功搭建一个博客的绝大部分内容。 文档地址：GitHub &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+
+	  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+      
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("xu.jin.smile@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+</div>
+<hgroup>
+  <h1><a href="/">John Xu's Blog</a></h1>
+  
+    <h2>Just enjoy coding.</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+
+<section class="aboutme">
+  <p>
+    nice and beautiful
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/ginsmile" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">用GitHub Pages和Octopress搭建博客</h1>
+	<div class="entry-content" itemprop="articleBody"><p>本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档，其文档已经包含了成功搭建一个博客的绝大部分内容。 <br/>
+文档地址：<a href="https://help.github.com/categories/20/articles">GitHub Pages</a>，<a href="http://octopress.org/docs/">Octopress Document</a> <br/>
+注意：根据官方文档中的步骤安装Ruby 1.9.3可能会遇到一个错误,解决方法请看本文后面部分。</p>
+
+<!--more-->
+
+
+<h1>搭建流程</h1>
+
+<h2>1.注册GitHub帐号</h2>
+
+<p>按照标准流程来注册帐号，创建名为username.github.io的repo，不要添加任何文件。</p>
+
+<h2>2.安装git</h2>
+
+<pre><code>$ sudo apt-add-repository ppa:git-core/ppa
+$ sudo apt-get update
+$ sudo apt-get install git
+</code></pre>
+
+<p>设置git，务必和github上相同</p>
+
+<pre><code>$ git config --global user.name "your username"
+$ git config --global user.email "you email"   
+</code></pre>
+
+<h2>3.产生SSH Key</h2>
+
+<p>首先查看目录中是否有SSH Key</p>
+
+<pre><code>$ cd ～/.ssh
+$ ls
+# Lists the files in your .ssh directory
+</code></pre>
+
+<p>如果目录中没有SSH，则要生成一个新的，做法如下</p>
+
+<pre><code>$ ssh-keygen -t rsa -C "your_email@example.com"
+......
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/you/.ssh/id_rsa):
+# 这里直接打回车，按提示输入密码。（必须输入密码！）
+........
+# 如果成功，则会显示：
+Your identification has been saved in /home/you/.ssh/id_rsa.
+........
+</code></pre>
+
+<p>如果有SSH Key或者刚刚生成了新的SSH，则把SSH添加到剪贴板：</p>
+
+<pre><code>$ sudo apt-get install xclip
+# Downloads and installs xclip.
+
+$ xclip -sel clip &lt; ~/.ssh/id_rsa.pub
+# Copies the contents of the id_rsa.pub file to your clipboard
+</code></pre>
+
+<h2>4.在github中设置SSH</h2>
+
+<p>去GitHub主页，进入Account Settings->SSH Keys->Add SSh Key，把剪贴板中剪贴板中的SSH key粘贴到里面，over。</p>
+
+<h2>5.使用RVM安装Ruby 1.9.3</h2>
+
+<p>这里是用RVM安装Ruby 1.9.3。 <br/>
+首先在终端里输入ruby -version，查看是否安装过ruby。一般如果没有之前没有用过ruby，就不会显示已安装过1.9.3版本。这时候，和官方文档不同，首先要卸载系统默认的ruby和rvm。  <br/>
+<em>这里详细请看网上的一篇博文：<a href="http://zuyunfei.com/2013/04/01/install-ruby-on-ubuntu/">Cloud&rsquo;s Blog</a></em>，这里复制下命令来备份，再次感谢原作者。 <br/>
+卸载系统默认ruby以及rvm</p>
+
+<pre><code>$ sudo apt-get remove --purge ruby-rvm ruby
+$ sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+$ rm -rf ~/.rvm* ~/.gem/ ~/.bundle
+</code></pre>
+
+<p>禁止安装doc</p>
+
+<pre><code>$ echo 'gem: --no-rdoc --no-ri' &gt;&gt; ~/.gemrc
+</code></pre>
+
+<p>安装必要的工具和库</p>
+
+<pre><code>$ sudo apt-get install -y \
+  git \
+  build-essential \
+  curl \
+  wget
+</code></pre>
+
+<p>将rvm的配置加入.bashrc中</p>
+
+<pre><code>$ sudo apt-get install -y \
+  build-essential \
+  openssl \
+  libreadline6 \
+  libreadline6-dev \
+  curl \
+  git-core \
+  zlib1g \
+  zlib1g-dev \
+  libssl-dev \
+  libyaml-dev \
+  libxml2-dev \
+  libxslt-dev \
+  autoconf \
+  libc6-dev \
+  ncurses-dev \
+  automake \
+  libtool \
+  bison \
+  subversion \
+  pkg-config \
+  libgdbm-dev
+</code></pre>
+
+<p>安装sqlite3</p>
+
+<pre><code>$ sudo apt-get install -y \ sqlite3 \ libsqlite3-dev
+</code></pre>
+
+<p>安装rvm和ruby，<em>期间可能会提示安装ruby1.9.3,根据提示安装即可</em>。</p>
+
+<pre><code>$ curl -L https://get.rvm.io | bash -s stable --ruby
+$ source ~/.rvm/scripts/rvm
+$ rvm reload
+$ rvm use default
+$ ruby --version 
+</code></pre>
+
+<p>安装cyaml和bundler</p>
+
+<pre><code>$ gem install cyaml --no-ri --no-rdoc
+$ gem install bundler --no-ri --no-rdoc
+</code></pre>
+
+<p>此时输入命令：<code>ruby --version</code>,会显示ruby 1.9.3，表示已经安装好了。</p>
+
+<h2>6.安装Octopress</h2>
+
+<p>克隆 Octopress项目</p>
+
+<pre><code>$ git clone git://github.com/imathis/octopress.git octopress
+$ cd octopress
+</code></pre>
+
+<p>安装依赖</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash
+$ bundle install
+</code></pre>
+
+<p>安装默认主题</p>
+
+<pre><code>$ rake install
+</code></pre>
+
+<h2>7.部署网站</h2>
+
+<p>使用此命令<code>rake setup_github_pages</code>设置Octpress和Github的联系。
+这条命令将：</p>
+
+<blockquote><ul>
+<li>询问你的GitHub Pages仓库的URL地址</li>
+<li>重命名远端分支名从这‘origin’到站‘octopress’</li>
+<li>将GitHub Pages项目作为默认的远端分支</li>
+<li>将活动分支将从master转换为source</li>
+<li>根据你的Git仓库地址设置博客的URL</li>
+<li>在<em>deploy分支设置一个master分支，部署用，最终页面的目录最终即最终此文件夹
+使用以下命令在本地预览
+  $ rake generate  //此命令会产生最终的静态页面
+  $ rake preview   //此命令会打开4000端口,可输入localhost:4000预览博客
+使用以下命令将c产生你的blog，产生的文件到</em>deploy目录，然后自动commit，push到github的master分支。
+  $ rake generate
+  $ rake deploy  <br/>
+将改动将更新到github
+  $ git add .
+  $ git commit -m &lsquo;your message&rsquo;
+  $ git push origin source</li>
+</ul>
+</blockquote>
+
+<p>截止到此，一个基于GitHub Pages和Octopress的博客就搭建好了。 现在打开username.github.io就会看到刚刚搭建好的博客，注意：只有deploy到github上之后才会在username.github.io看到最终效果.</p>
+
+<h2>8.发布第一篇博文</h2>
+
+<p>生成博文框架</p>
+
+<pre><code>$ rake new_post[‘文章标题’]
+</code></pre>
+
+<p>此时可以在source/_posts文件夹下看到刚创建的网页。使用markdown语法写一篇博客即可（此处可使用retext编辑Markdown文件）。</p>
+
+<pre><code>$ rake generate  //此命令会产生最终的静态页面
+$ rake preview   //此命令会打开4000端口,可输入在浏览器localhost:4000预览
+$ rake deploy    
+</code></pre>
+
+<h2>9. 安装retext编辑Markdown文章</h2>
+
+<p>网上有不少可以编辑Markdown文件的文档，这里推荐一款retext，适合liunx。</p>
+
+<pre><code>$ sudo apt-add-repository ppa:mitya57
+$ sudo apt-get update
+$ sudo apt-get install retext
+</code></pre>
+
+<h2>参考资料</h2>
+
+<p><a href="https://help.github.com/articles/generating-ssh-keys">GitHub Help</a> <br/>
+<a href="https://help.github.com/categories/20/articles">GitHub Pages</a> <br/>
+<a href="http://octopress.org/docs/">Octopress Document</a>  <br/>
+<a href="http://zuyunfei.com/">zuyunfei.com</a></p>
+</div>
+
+</article>
+
+	<!-- <div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div> -->
+<div class="sharing">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a class="addthis_button_sinaweibo"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_pinterest_share"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"></script>
+    <!-- AddThis Button END -->
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - John Xu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa007a8efad716708ac296c721099b0e4' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'ginsmile';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

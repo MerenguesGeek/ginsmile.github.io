@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[重装系统后恢复Octopress博客]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/"/>
+    <updated>2014-01-04T22:03:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke</id>
+    <content type="html"><![CDATA[<p>之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
+关键是之前安装的很多插件，恢复过来就用不了了。</p>
+
+<!--more-->
+
+
+<p>1.首先要按照安装全新Octopress那样，弄出来一个能安装Octopress的环境,安好rvm,Ruby1.9.3之类的，详见<a href="http://ginsmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/#.UsgqCqx5MxA">用GitHub Pages和Octopress搭建博客</a>。  <br/>
+2.然后，要clone下来source分支：</p>
+
+<pre><code>$ git clone -b source git@github.com:username/username.github.com.git octopress
+</code></pre>
+
+<p>3.进入octopress目录，clone下_deploy来：</p>
+
+<pre><code>$ cd octopress
+$ git clone git@github.com:username/username.github.com.git _deploy 
+</code></pre>
+
+<p>4.安装bundler，使用bundler安装所需插件</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+$ bundle install
+</code></pre>
+
+<p>5.设置github pages页面关联</p>
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+<p>过程虽然这么简单，但是在这之后，我<code>rake generate</code>的时候，出现了不少错误，比如之前新添加的tag不能用的错误，此时只能删了重新设置一遍。</p>
+
+<h2>参考资料</h2>
+
+<blockquote><p><a href="http://boboshone.com/blog/2013/06/05/write-octopress-blog-on-multiple-machines/">boboshone</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress博客技巧]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/29/octopressbo-ke-ji-qiao/"/>
+    <updated>2013-08-29T13:42:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/29/octopressbo-ke-ji-qiao</id>
+    <content type="html"><![CDATA[<h2>0.首页仅显示部分</h2>
+
+<p>只需要在post的markdown文档里面适当位置加上<code>&lt;!--more--&gt;</code>即可。这样就不会在首页显示此代码以后的部分。另外，还会在首页的相同位置添加一个read on的链接，点击即可阅读全文。<br/>
+<img class="right" src="/images/pic/octopress_logo.png" width="227" height="227" title="&lsquo;octopress_logo&rsquo; &lsquo;octopress_logo&rsquo;" ></p>
+
+<h2>1.插入图片</h2>
+
+<p>参考<a href="http://octopress.org/docs/plugins/image-tag/">Image Tag</a></p>
+
+<pre><code><img class="right" src="/images/pic/octopress_logo.png" width="227" height="227" title="octopress_logo" alt="octopress_logo">
+</code></pre>
+
+<!--more-->
+
+
+<h2>2.草稿</h2>
+
+<p>只需要在新的post的头步加入<code>published: false</code>即可。  <br/>
+比如本文头部为：</p>
+
+<pre><code>---
+layout: post
+title: "Octopress博客技巧"
+date: 2013-08-29 13:42
+comments: true
+categories: Octopress
+published: false
+---
+</code></pre>
+
+<p>需要注意的是，在使用preview查看的时候，草稿还是会显示的，但是在deploy的时候，草稿并不会在_deploy中生成，也就是说不会在username.github.io上显示。</p>
+
+<h2>3.添加类别</h2>
+
+<p>单个类别：</p>
+
+<pre><code>categories: octopress
+</code></pre>
+
+<p>多个类别：</p>
+
+<pre><code>#方式一
+categories: [octopress, github, algorithm]
+#方式二
+categories:
+- octopress
+- github
+- algorithm
+</code></pre>
+
+<h2>4.rake deploy失败的解决办法</h2>
+
+<p>rake deploy失败通常是因为不小心在GitHub修改了master分支，错误信息大概如下：</p>
+
+<pre><code>## Pushing generated _deploy website
+To git@github.com:GinSmile/ginsmile.github.io.git
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: 无法推送一些引用到 'git@github.com:GinSmile/ginsmile.github.io.git'
+提示：更新被拒绝，因为您当前分支的最新提交落后于其对应的远程分支。
+提示：再次推送前，先与远程变更合并（如 'git pull ...'）。详见
+提示：'git push --help' 中的 'Note about fast-forwards' 小节。    
+</code></pre>
+
+<p>这时候，需要修改RakeFile文件（Octopress目录下）来强制推送，这里参考了<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">stackoverflow的解决办法</a><br/>
+第264行：</p>
+
+<pre><code>system "git push origin #{deploy_branch}"
+</code></pre>
+
+<p>修改为：</p>
+
+<pre><code>system "git push origin +#{deploy_branch}"
+</code></pre>
+
+<p>注意：此方法使强制推送，会删除GitHub上的所有的本地分支没有的提交。记住推送完毕后再把RakeFile文件改回来。</p>
+
+<h2>5.更换网页favcion</h2>
+
+<p>这个只需要拿一个新的16×16的favicon.png的图片来替换source/favicon.png即可。然后<code>rake generate
+</code>，<code>rake preview</code>就会在localhost:4000端口看到结果。不过有时会由于缓存的原因不能马上看到结果。</p>
+
+<h2>6.rake preview 命令执行后的 TCPServer Error: Address already in use 错误</h2>
+
+<p>这种情况，是因为端口已经被使用了，就需要找到占用端口的进程，然后杀掉！</p>
+
+<pre><code>$ lsof -wni tcp:4000
+$ kill -9 PID
+</code></pre>
+
+<p>PID指的是杀掉的进程的ID，可以从第一个命令中获得。</p>
+
+<h2>7.错误 WARN  Could not determine content-length of response body 的解决</h2>
+
+<p>这是一Webrick引发的问题，详细错误如下：</p>
+
+<pre><code>WARN  Could not determine content-length of response body. Set content-length of the response or set Response#chunked = true
+</code></pre>
+
+<p>可以用以下方法来解决，在<code>Octopress/Gemfile</code>中，添加以下命令：</p>
+
+<pre><code>gem 'thin'
+</code></pre>
+
+<h2>参考资料</h2>
+
+<blockquote><p><a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">stackoverflow</a>   <br/>
+<a href="http://octopress.org/docs/blogging/">octopress docs/blogging</a>  <br/>
+<a href="http://blog.chatswood.org.uk/">Chatswood</a>
+<a href="http://stackoverflow.com/questions/9612618/warn-could-not-determine-content-length-of-response-body-set-content-length-of">stackoverflow</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress博客配置]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/"/>
+    <updated>2013-08-28T23:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi</id>
+    <content type="html"><![CDATA[<p>以下介绍了我的Octopress博客的配置情况。</p>
+
+<h2>0.添加主题</h2>
+
+<p>Octopress有很多精美的主题，在这里可以看到很多：<a href="http://opthemes.com/">http://opthemes.com/</a> 。本博客使用了greyshade主题，该主题的作者是<a href="http://shashankmehta.in/">Shashank Mehta</a>，主题的介绍页面在<a href="http://shashankmehta.in/archive/2012/greyshade.html%E3%80%82">http://shashankmehta.in/archive/2012/greyshade.html%E3%80%82</a> <br/>
+这里介绍了greyshade主题的安装：     <br/>
+假设你已经安装好了默认主题，并且当前在octopress目录下，只需要输入以下命令即可：</p>
+
+<pre><code>$ git clone git@github.com:shashankmehta/greyshade.git .themes/greyshade
+$ echo "\$greyshade: color;" &gt;&gt; sass/custom/_colors.scss 
+$ rake "install[greyshade]"
+$ rake generate
+</code></pre>
+
+<!--more-->
+
+
+<h2>1.添加About Me页面</h2>
+
+<p>首先创建about页面：<code>rake new_page["about"]</code>，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。  <br/>
+然后打开source/_includes/custom/navigation.html，修改成如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="/about"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><img class="right" src="/images/about_shot.png" width="247" height="130" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" >
+然后使用<code>rake generate</code>命令，就会产生相应的静态页面。使用<code>rake preview</code>预览即可。  <br/>
+如果想在username.github.io中看到，不要忘了<code>rake deploy</code>以及git命令提交到github。</p>
+
+<!--more-->
+
+
+<h2>2.添加社会化分享按钮</h2>
+
+<p>只需要添加著名的社会化分享按钮addthis.com即可。去<a href="https://www.addthis.com/get/sharing#.Uh4X56EW3nM">addthis.com</a>注册,获取代码。  <br/>
+将代码粘贴到source/_includes/post/sharing.html中。例如我的sharing.html文件为：</p>
+
+<pre><code>&lt;div class="sharing"&gt;
+    &lt;!-- AddThis Button BEGIN --&gt;
+    &lt;div class="addthis_toolbox addthis_default_style addthis_32x32_style"&gt;
+        &lt;a class="addthis_button_sinaweibo"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_twitter"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_facebook"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_pinterest_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_google_plusone_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_compact"&gt;&lt;/a&gt;&lt;a class="addthis_counter addthis_bubble_style"&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript"&gt;var addthis_config = {"data_track_addressbar":true};&lt;/script&gt;
+    &lt;script type="text/javascript" src="http://GinSmile.github.io//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"&gt;&lt;/script&gt;
+    &lt;!-- AddThis Button END --&gt;
+</code></pre>
+
+<h2>3.添加社会化评论</h2>
+
+<p>Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Disqus注册帐号，在注册的时候输入网站域名（username.github.io即可）。注册时的shortname很有用，下面代码中要修改的就是shortname！！注册成功后修改octopress目录下的_config.yml文件：</p>
+
+<pre><code>#Disqus Comments
+disqus_short_name: shortname
+disqus_show_comment_count: true
+</code></pre>
+
+<p><em>另外，这里注意，在修改_config.yml的时候，一定要注意冒号后面有个空格，否则在<code>rake generate</code>的时候会有解析错误</em>  <br/>
+最重要的一点，_config.yml文件修改好之后必须generate之后才能在本地preview到。而其他文件，比如post了一个新的文章，如果处在preview状态，刷新一下localhost:4000会立马看到。</p>
+
+<h2>4.添加新浪微博支持</h2>
+
+<p>原始的greyshade主题不支持新浪微博，这里稍加修改，即可在页面左下角显示新浪微博的按钮。本修改方法来自于<a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">allenhsu</a>，在这里向作者表示感谢。   <br/>
+<img class="left" src="/images/social_shot.png" width="282" height="114" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" ></p>
+
+<p>首先，在sass/parts/_header.scss文件中去掉第316行,<code>margin-right: 15px;</code>更改为：</p>
+
+<pre><code>margin-right: 5px;
+margin-bottom: 15px;
+</code></pre>
+
+<p>然后，还是在上一个文件里，在320行往后添加weibo相关代码，最终代码段如下：</p>
+
+<pre><code>        &amp;:hover{
+                opacity: 1;
+            }
+            &amp;.weibo{
+                background: image-url('social/weibo.png') center no-repeat #e32529;
+                border: 1px solid #e32529;
+                &amp;:hover{
+                  border: 1px solid darken(#e32529, 10%);
+                }
+                  }               
+            &amp;.facebook{
+                background: image-url('social/facebook.png') center no-repeat #3B5998;
+                border: 1px solid #3B5998;
+                &amp;:hover{
+                    border: 1px solid darken(#3B5998, 10%);
+                }
+            }
+</code></pre>
+
+<p>第三步，在source/_includes/header.html中，修改代码，在类为social的div下加上如下代码：</p>
+
+<pre><code>&lt;div class="social"&gt;
+        
+        &lt;a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo"&gt;Weibo&lt;/a&gt;
+        
+</code></pre>
+
+<p>最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github<a href="https://github.com/GinSmile/ginsmile.github.io/tree/03f65a6acf8b00988c294b01c701abfbfedb41a1/source/images/social/weibo.png">下载</a>。  <br/>
+如果还不清楚，可在我的github中查看修改过程。点击这个链接：<a href="https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1">commit 添加博文：博客配置，添加新浪添加微博支持</a>,由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。</p>
+
+<h2>5.imagepop plugin</h2>
+
+<p>这是一个添加图片的插件，可以按照比例缩放图片，点击图片可以查看原图，项目地址在<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a><br/>
+这里重复一下安装过程：</p>
+
+<blockquote><p>在<code>octopress/Gemfile</code>中添加以下代码，就可以得到相应依赖：</p>
+
+<pre><code>    gem 'erubis'
+    gem 'mini_magick'
+</code></pre>
+
+<p>运行<code>bundle install</code>,安装相应依赖
+将开源项目中的<code>_style.scss</code>中的内容添加到<code>octopress/sass/custom/_styles.scss</code>中
+将开源项目中plugins中的两个文件复制<code>octopress/plugins</code>文件夹下
+将开源项目中的imgpop.js文件复制<code>octopress</code>文件夹下   <br/>
+ok~~</p></blockquote>
+
+<h2>参考资料：   </h2>
+
+<blockquote><p><a href="https://github.com/shashankmehta/greyshade">greyshade</a> <br/>
+<a href="http://www.yanjiuyanjiu.com/blog/20130402/">yanjiuyanjiu.com</a>  <br/>
+<a href="http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/">zonyitoo.github.io</a> <br/>
+<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用GitHub Pages和Octopress搭建博客]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/"/>
+    <updated>2013-08-28T19:42:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke</id>
+    <content type="html"><![CDATA[<p>本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档，其文档已经包含了成功搭建一个博客的绝大部分内容。 <br/>
+文档地址：<a href="https://help.github.com/categories/20/articles">GitHub Pages</a>，<a href="http://octopress.org/docs/">Octopress Document</a> <br/>
+注意：根据官方文档中的步骤安装Ruby 1.9.3可能会遇到一个错误,解决方法请看本文后面部分。</p>
+
+<!--more-->
+
+
+<h1>搭建流程</h1>
+
+<h2>1.注册GitHub帐号</h2>
+
+<p>按照标准流程来注册帐号，创建名为username.github.io的repo，不要添加任何文件。</p>
+
+<h2>2.安装git</h2>
+
+<pre><code>$ sudo apt-add-repository ppa:git-core/ppa
+$ sudo apt-get update
+$ sudo apt-get install git
+</code></pre>
+
+<p>设置git，务必和github上相同</p>
+
+<pre><code>$ git config --global user.name "your username"
+$ git config --global user.email "you email"   
+</code></pre>
+
+<h2>3.产生SSH Key</h2>
+
+<p>首先查看目录中是否有SSH Key</p>
+
+<pre><code>$ cd ～/.ssh
+$ ls
+# Lists the files in your .ssh directory
+</code></pre>
+
+<p>如果目录中没有SSH，则要生成一个新的，做法如下</p>
+
+<pre><code>$ ssh-keygen -t rsa -C "your_email@example.com"
+......
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/you/.ssh/id_rsa):
+# 这里直接打回车，按提示输入密码。（必须输入密码！）
+........
+# 如果成功，则会显示：
+Your identification has been saved in /home/you/.ssh/id_rsa.
+........
+</code></pre>
+
+<p>如果有SSH Key或者刚刚生成了新的SSH，则把SSH添加到剪贴板：</p>
+
+<pre><code>$ sudo apt-get install xclip
+# Downloads and installs xclip.
+
+$ xclip -sel clip &lt; ~/.ssh/id_rsa.pub
+# Copies the contents of the id_rsa.pub file to your clipboard
+</code></pre>
+
+<h2>4.在github中设置SSH</h2>
+
+<p>去GitHub主页，进入Account Settings->SSH Keys->Add SSh Key，把剪贴板中剪贴板中的SSH key粘贴到里面，over。</p>
+
+<h2>5.使用RVM安装Ruby 1.9.3</h2>
+
+<p>这里是用RVM安装Ruby 1.9.3。 <br/>
+首先在终端里输入ruby -version，查看是否安装过ruby。一般如果没有之前没有用过ruby，就不会显示已安装过1.9.3版本。这时候，和官方文档不同，首先要卸载系统默认的ruby和rvm。  <br/>
+<em>这里详细请看网上的一篇博文：<a href="http://zuyunfei.com/2013/04/01/install-ruby-on-ubuntu/">Cloud&rsquo;s Blog</a></em>，这里复制下命令来备份，再次感谢原作者。 <br/>
+卸载系统默认ruby以及rvm</p>
+
+<pre><code>$ sudo apt-get remove --purge ruby-rvm ruby
+$ sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+$ rm -rf ~/.rvm* ~/.gem/ ~/.bundle
+</code></pre>
+
+<p>禁止安装doc</p>
+
+<pre><code>$ echo 'gem: --no-rdoc --no-ri' &gt;&gt; ~/.gemrc
+</code></pre>
+
+<p>安装必要的工具和库</p>
+
+<pre><code>$ sudo apt-get install -y \
+  git \
+  build-essential \
+  curl \
+  wget
+</code></pre>
+
+<p>将rvm的配置加入.bashrc中</p>
+
+<pre><code>$ sudo apt-get install -y \
+  build-essential \
+  openssl \
+  libreadline6 \
+  libreadline6-dev \
+  curl \
+  git-core \
+  zlib1g \
+  zlib1g-dev \
+  libssl-dev \
+  libyaml-dev \
+  libxml2-dev \
+  libxslt-dev \
+  autoconf \
+  libc6-dev \
+  ncurses-dev \
+  automake \
+  libtool \
+  bison \
+  subversion \
+  pkg-config \
+  libgdbm-dev
+</code></pre>
+
+<p>安装sqlite3</p>
+
+<pre><code>$ sudo apt-get install -y \ sqlite3 \ libsqlite3-dev
+</code></pre>
+
+<p>安装rvm和ruby，<em>期间可能会提示安装ruby1.9.3,根据提示安装即可</em>。</p>
+
+<pre><code>$ curl -L https://get.rvm.io | bash -s stable --ruby
+$ source ~/.rvm/scripts/rvm
+$ rvm reload
+$ rvm use default
+$ ruby --version 
+</code></pre>
+
+<p>安装cyaml和bundler</p>
+
+<pre><code>$ gem install cyaml --no-ri --no-rdoc
+$ gem install bundler --no-ri --no-rdoc
+</code></pre>
+
+<p>此时输入命令：<code>ruby --version</code>,会显示ruby 1.9.3，表示已经安装好了。</p>
+
+<h2>6.安装Octopress</h2>
+
+<p>克隆 Octopress项目</p>
+
+<pre><code>$ git clone git://github.com/imathis/octopress.git octopress
+$ cd octopress
+</code></pre>
+
+<p>安装依赖</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash
+$ bundle install
+</code></pre>
+
+<p>安装默认主题</p>
+
+<pre><code>$ rake install
+</code></pre>
+
+<h2>7.部署网站</h2>
+
+<p>使用此命令<code>rake setup_github_pages</code>设置Octpress和Github的联系。
+这条命令将：</p>
+
+<blockquote><ul>
+<li>询问你的GitHub Pages仓库的URL地址</li>
+<li>重命名远端分支名从这‘origin’到站‘octopress’</li>
+<li>将GitHub Pages项目作为默认的远端分支</li>
+<li>将活动分支将从master转换为source</li>
+<li>根据你的Git仓库地址设置博客的URL</li>
+<li>在<em>deploy分支设置一个master分支，部署用，最终页面的目录最终即最终此文件夹
+使用以下命令在本地预览
+  $ rake generate  //此命令会产生最终的静态页面
+  $ rake preview   //此命令会打开4000端口,可输入localhost:4000预览博客
+使用以下命令将c产生你的blog，产生的文件到</em>deploy目录，然后自动commit，push到github的master分支。
+  $ rake generate
+  $ rake deploy  <br/>
+将改动将更新到github
+  $ git add .
+  $ git commit -m &lsquo;your message&rsquo;
+  $ git push origin source</li>
+</ul>
+</blockquote>
+
+<p>截止到此，一个基于GitHub Pages和Octopress的博客就搭建好了。 现在打开username.github.io就会看到刚刚搭建好的博客，注意：只有deploy到github上之后才会在username.github.io看到最终效果.</p>
+
+<h2>8.发布第一篇博文</h2>
+
+<p>生成博文框架</p>
+
+<pre><code>$ rake new_post[‘文章标题’]
+</code></pre>
+
+<p>此时可以在source/_posts文件夹下看到刚创建的网页。使用markdown语法写一篇博客即可（此处可使用retext编辑Markdown文件）。</p>
+
+<pre><code>$ rake generate  //此命令会产生最终的静态页面
+$ rake preview   //此命令会打开4000端口,可输入在浏览器localhost:4000预览
+$ rake deploy    
+</code></pre>
+
+<h2>9. 安装retext编辑Markdown文章</h2>
+
+<p>网上有不少可以编辑Markdown文件的文档，这里推荐一款retext，适合liunx。</p>
+
+<pre><code>$ sudo apt-add-repository ppa:mitya57
+$ sudo apt-get update
+$ sudo apt-get install retext
+</code></pre>
+
+<h2>参考资料</h2>
+
+<p><a href="https://help.github.com/articles/generating-ssh-keys">GitHub Help</a> <br/>
+<a href="https://help.github.com/categories/20/articles">GitHub Pages</a> <br/>
+<a href="http://octopress.org/docs/">Octopress Document</a>  <br/>
+<a href="http://zuyunfei.com/">zuyunfei.com</a></p>
+]]></content>
+  </entry>
+  
+</feed>

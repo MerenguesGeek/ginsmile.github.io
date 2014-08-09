@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[我的Git常用命令]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/20/my-git-command/"/>
+    <updated>2013-09-20T16:50:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/20/my-git-command</id>
+    <content type="html"><![CDATA[<p>使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
+<img class="right" src="/images/pic/git_logo.png" width="130" height="130" title="&lsquo;welcome&rsquo; &lsquo;welcome&rsquo;" ></p>
+
+<h2>设置</h2>
+
+<p>设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+....然后提示输入密码什么的
+</code></pre>
+
+<!--more-->
+
+
+<h2>创建</h2>
+
+<p>初始化本地库</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>克隆远程版本库</p>
+
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
+
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>查看远程分支</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<h2>提交</h2>
+
+<p>提交</p>
+
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<h2>删除</h2>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<h2>分支</h2>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<h2>合并</h2>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<h2>忽略</h2>
+
+<p>即.gitignore文件，可忽略文件夹和文件
+忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。
+<img class="center" src="http://GinSmile.github.io/images/pic/git.png"  title="welcome" alt="welcome"></p>
+
+<h2>一个简单的Git工作流程</h2>
+
+<pre><code>#创建develop分支：
+git branch develop
+
+#切换到develop分支
+git checkout develop
+
+#做一些更改后提交
+git commit -m "some changes"
+
+# 切换到Master分支
+git checkout master
+
+# 对Develop分支进行合并
+git merge –no–ff develop
+</code></pre>
+
+<p>参数<code>–no–ff</code>代表<strong>快进式合并</strong>（fast-farward merge），会直接将Master分支指向Develop分支。</p>
+
+<h2>参考资料：</h2>
+
+<blockquote><ul>
+<li><a href="http://rogerdudler.github.io/git-guide/index.zh.html">Git Guide</a></li>
+<li><a href="https://code.csdn.net/help/CSDN_Code/code_support/Progit_Index">Pro Git</a></li>
+<li><a href="http://www.oschina.net/question/54100_74533">开源中国社区</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+</feed>

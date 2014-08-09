@@ -1,0 +1,347 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>我的Git常用命令 - John Xu's Blog</title>
+	<meta name="author" content="John Xu">
+
+	
+	<meta name="description" content="我的Git常用命令 使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。 设置 设置邮箱和用户名 git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name " &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2013/09/20/my-git-command/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+
+	  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+      
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("xu.jin.smile@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+</div>
+<hgroup>
+  <h1><a href="/">John Xu's Blog</a></h1>
+  
+    <h2>Just enjoy coding.</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+
+<section class="aboutme">
+  <p>
+    nice and beautiful
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/ginsmile" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">我的Git常用命令</h1>
+	<div class="entry-content" itemprop="articleBody"><p>使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
+<img class="right" src="/images/pic/git_logo.png" width="130" height="130" title="welcome" alt="welcome"></p>
+
+<h2>设置</h2>
+
+<p>设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+....然后提示输入密码什么的
+</code></pre>
+
+<!--more-->
+
+
+<h2>创建</h2>
+
+<p>初始化本地库</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>克隆远程版本库</p>
+
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
+
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>查看远程分支</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<h2>提交</h2>
+
+<p>提交</p>
+
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<h2>删除</h2>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<h2>分支</h2>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<h2>合并</h2>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<h2>忽略</h2>
+
+<p>即.gitignore文件，可忽略文件夹和文件
+忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。
+<img class="center" src="/images/pic/git.png"  title="welcome" alt="welcome"></p>
+
+<h2>一个简单的Git工作流程</h2>
+
+<pre><code>#创建develop分支：
+git branch develop
+
+#切换到develop分支
+git checkout develop
+
+#做一些更改后提交
+git commit -m "some changes"
+
+# 切换到Master分支
+git checkout master
+
+# 对Develop分支进行合并
+git merge –no–ff develop
+</code></pre>
+
+<p>参数<code>–no–ff</code>代表<strong>快进式合并</strong>（fast-farward merge），会直接将Master分支指向Develop分支。</p>
+
+<h2>参考资料：</h2>
+
+<blockquote><ul>
+<li><a href="http://rogerdudler.github.io/git-guide/index.zh.html">Git Guide</a></li>
+<li><a href="https://code.csdn.net/help/CSDN_Code/code_support/Progit_Index">Pro Git</a></li>
+<li><a href="http://www.oschina.net/question/54100_74533">开源中国社区</a></li>
+</ul>
+</blockquote>
+</div>
+
+</article>
+
+	<!-- <div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div> -->
+<div class="sharing">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a class="addthis_button_sinaweibo"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_pinterest_share"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"></script>
+    <!-- AddThis Button END -->
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - John Xu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa007a8efad716708ac296c721099b0e4' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'ginsmile';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2013/09/20/my-git-command/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2013/09/20/my-git-command/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

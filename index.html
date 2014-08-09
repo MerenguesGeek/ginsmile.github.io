@@ -1,1 +1,708 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>John Xu's Blog</title>
+	<meta name="author" content="John Xu">
+
+	
+	<meta name="description" content="Aug 3rd, 2014 ip, tcp Comments TCP/IP协议学习 本文是关于《TCP/IP详解》的读书笔记。 第一章 概述 1.分层 TCP/IP是一个协议族（又叫Internet协议族），是一组不同层次上的多个协议的组合。 应用层（Telnet，FTP等）， &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://GinSmile.github.io/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+
+	  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+      
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("xu.jin.smile@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+</div>
+<hgroup>
+  <h1><a href="/">John Xu's Blog</a></h1>
+  
+    <h2>Just enjoy coding.</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+
+<section class="aboutme">
+  <p>
+    nice and beautiful
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/ginsmile" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner">
+<div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-03T22:35:00+08:00" data-updated="true" itemprop="datePublished">Aug 3<span>rd</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ip/'>ip</a>, <a class='category' href='/blog/categories/tcp/'>tcp</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2014/08/03/tcp-ip-illustrated-1/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/08/03/tcp-ip-illustrated-1/" itemprop="url">TCP/IP协议学习</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>本文是关于《TCP/IP详解》的读书笔记。</p>
+
+<h2>第一章 概述</h2>
+
+<h3>1.分层</h3>
+
+<p>TCP/IP是一个协议族（又叫Internet协议族），是一组不同层次上的多个协议的组合。</p>
+
+<blockquote><ul>
+<li>应用层（Telnet，FTP等），负责处理特定的应用程序细节。</li>
+<li>运输层（TCP，UDP），为两台主机上的应用程序提供端到端的通信。</li>
+<li>网络层（IP，ICMP，IGMP），处理分组在网络中的活动，提供点到点的服务。</li>
+<li>链路层（设备驱动程序以及接口卡，ARP，RARP），处理与电缆等传输媒介的物理接口细节。</li>
+</ul>
+</blockquote>
+
+<p>其中，应用层通常是一个用户进程，处理应用程序细节，而下三层一般在操作系统内核中执行（如UNIX），处理通信细节。</p>
+
+<p><strong>一个互联网就是一组通过相同协议族互联在一起的网络。</strong>可以通过路由器连接两个不同的网络（如以太网和令牌环网）。TCP/IP倾向于使用路由器而不是网桥来连接网络。
+&ndash; internet：用一个共同的协议族把多个网络连接在一起。
+&ndash; Internet：世界范围内通过TCP/IP互相通信的所有主机集合。internet是一个Internet。</p>
+
+<h3>2. 互联网地址</h3>
+
+<p>互联网上的每一个接口必须有一个唯一的Internet地址（IP地址）。32bit = 4Byte</p>
+
+<pre><code>    - A类：0     7位网络号      24位主机号
+    - B类：10    14位网络号     16位主机号
+    - C类：110   21位网络号     8位主机号
+    - D类：1110  28位多播组号
+    - E类：11110 27位（留待后用）
+</code></pre>
+
+<p>点分十进制表示法，如A类中的一个为：127.0.0.1</p>
+
+<h3>3. 域名系统</h3>
+
+<p>域名系统（DNS）是一个分布的数据库，由他来提供IP地址和主机名之间的映射信息。</p>
+
+<h3>4. 封装</h3>
+
+<p>例如，当FTP数据从应用层开始通过TCP传输数据时，逐层封装，逐次加上
+1. Appl首部
+2. TCP首部
+3. IP首部
+4. 以太网首部</p>
+
+<p>来声明生成数据的上一层协议的类型以及其他信息，方面数据的处理。</p>
+
+<h3>5. 分用</h3>
+
+<p>利用封装时的信息，每层协议都要检查报文首部中的协议标识，以确定接受数据的上层协议</p>
+
+<h3>6. 客户-服务器模型</h3>
+
+<p>两种服务模式：</p>
+
+<p>1.重复型
+&ndash; 1) 等待一个客户请求
+&ndash; 2) 处理客户请求
+&ndash; 3) 发送相应给请求的客户
+&ndash; 4) 返回第1步</p>
+
+<p>2.并发型
+&ndash; 1) 等待一个客户请求
+&ndash; 2) 启动一个新的服务器来处理这个客户请求，处理结束后终止这个新服务器
+&ndash; 3)返回第1步</p>
+
+<h3>7. 端口号</h3>
+
+<ul>
+<li>运输层的TCP和UDP使用16bit的端口号来识别应用程序。</li>
+<li>必须是奇数，单工->全双工 时候的遗留，单工时候每个应用程序需要两个连接。</li>
+<li>服务器使用知名端口号（1~1023），客户端使用临时端口号。</li>
+</ul>
+
+
+<h3>8. RFC</h3>
+
+<p>RFC（Request for Comment），Internet的正是标准都以RFC文档出版。大量的RFC文档不是正式标准，RFC 数字越大内容越新。  <br/>
+重要的RFC：
+&ndash; 赋值RFC（Assigned Numbers RFC），<a href="http://www.ietf.org/rfc/rfc1340.txt">RFC1340</a>，列出了所有Internet协议中使用的数字和常数
+&ndash; Internet正式协议标准，<a href="http://www.ietf.org/rfc/rfc1600.txt">RFC 1600</a>，描述了各种Internet协议的标准化现状
+&ndash; 主机需求RFC，<a href="http://www.ietf.org/rfc/rfc1122.txt">RFC 1122</a>，<a href="http://www.ietf.org/rfc/rfc1123.txt">RFC 1123</a>，列出了协
+议中关于“必须”、“应该”、“可以”、“不应该”或者“不能”等特性及其实现细节。
+&ndash; 路由器需求RFC，<a href="http://www.ietf.org/rfc/rfc1009.txt">RFC 1009</a>，与主机需求R F C类似，但是只单独描述了路由器的需求。</p>
+
+<h2>第二章 链路层</h2>
+
+<p>在TCP/IP协议组中，链路层的目的：
+1. 为IP模块发送和接受IP数据报
+2. 为ARP模块发送ARP请求和接受ARP应答
+3. 为RARP发送RARP请求和接受RARP应答</p>
+
+<p>最常见的链路层封装是<strong>以太网封装格式</strong>（RFC 894）</p>
+
+		
+		
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-31T13:38:00+08:00" data-updated="true" itemprop="datePublished">Jan 31<span>st</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/note/'>note</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2014/01/31/guai-dan-xin-li-xue-bi-ji/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/01/31/guai-dan-xin-li-xue-bi-ji/" itemprop="url">怪诞心理学de读书笔记</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>我大概把我的读书的书摘和笔记整理了一下，挺有意思的这本书。这本书主要是讲了
+&ndash; 时间心理学
+&ndash; 撒谎与欺骗心理学
+&ndash; 灵异心理学
+&ndash; 决策心理学
+&ndash; 幽默心理学
+&ndash; 自私心理学</p>
+
+<p>每个都涉猎一点，讲的很宽很广，也很实用。</p>
+
+
+		
+		<a href="/blog/2014/01/31/guai-dan-xin-li-xue-bi-ji/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-30T15:18:00+08:00" data-updated="true" itemprop="datePublished">Jan 30<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/note/'>note</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2014/01/30/tuo-la-yi-dian-ye-wu-fang/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/01/30/tuo-la-yi-dian-ye-wu-fang/" itemprop="url">拖拉一点也无妨de读书笔记</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>读完这本书，首先认识到我是个十足的拖延症患者，之前也误打误撞地干了其中的一两件战拖秘籍，着实让我心中一笑（看来我也有战拖天分啊！）。作者约翰是个大学教授，也是个拖延症患者，透露了很多其他教授什么的也是，这让我感到一丝平衡，原来我大拖人遍布各行各业啊。</p>
+
+<blockquote><p>后天能干的事，就别赶着明天做了。 ——马克吐温</p></blockquote>
+
+<p>这句话确实地证明了大作家马克吐温也是个拖延症患者，可见，拖延症不是坏事，只要我们能够好好地利用它。</p>
+
+
+		
+		<a href="/blog/2014/01/30/tuo-la-yi-dian-ye-wu-fang/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-04T22:03:00+08:00" data-updated="true" itemprop="datePublished">Jan 4<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/" itemprop="url">重装系统后恢复Octopress博客</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
+关键是之前安装的很多插件，恢复过来就用不了了。</p>
+
+
+		
+		<a href="/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-28T10:50:00+08:00" data-updated="true" itemprop="datePublished">Dec 28<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/essay/'>essay</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/12/28/za-tan/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/12/28/za-tan/" itemprop="url">杂谈</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>最近有些不在状态，想写点什么，发些牢骚，好再准备上路。  <br/>
+我真的还年轻么，还有时间去蹉跎么？就像Jeff Bezos说的那样，We are our choices，我们就是选择的集合，是一个个选择成就了我们。这里引用下老Jeff的话，最近这几句话让我很受鼓舞。</p>
+
+
+		
+		<a href="/blog/2013/12/28/za-tan/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T10:37:00+08:00" data-updated="true" itemprop="datePublished">Sep 25<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/encoding/'>encoding</a>, <a class='category' href='/blog/categories/python/'>python</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/09/25/python-encoding/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/09/25/python-encoding/" itemprop="url">Python编码转换</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>python中默认使用ASCII编码，但是如果出现中文等非ASCII字符就要使用其他编码方式了。定义程序的编码方式有好几种，只要满足正则表达式：</p>
+
+<pre><code>\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$                            
+</code></pre>
+
+<p>即可。最常见的是在第一行或者第二行写上字符：<code># -*- coding:utf-8 -*-</code>  或者 <code>#coding=utf-8</code></p>
+
+
+		
+		<a href="/blog/2013/09/25/python-encoding/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T10:36:00+08:00" data-updated="true" itemprop="datePublished">Sep 25<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/encoding/'>encoding</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/09/25/file-encoding/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/09/25/file-encoding/" itemprop="url">文件编码</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>最近学习python，遇到了不少和字符编码有关的问题，所以特地查了不少资料，学习了不少知识，所以就借此机会整理了一下。</p>
+
+<blockquote><ul>
+<li>字符(Character)：是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</li>
+<li>字符集(Character set)：是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。</li>
+<li>字符编码（Character Encoding）：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系。</li>
+</ul>
+</blockquote>
+
+
+		
+		<a href="/blog/2013/09/25/file-encoding/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-23T11:16:00+08:00" data-updated="true" itemprop="datePublished">Sep 23<span>rd</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/tools/'>tools</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/09/23/tools/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/09/23/tools/" itemprop="url">我的利器</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>古语有云：<strong>工欲善其事，必先利其器</strong>。 <br/>
+学习计算机也是这样， 总结最近几年学习计算机专业的经验，我把我认为非常有用的软件，网站，工具等做了下总结：</p>
+
+<blockquote><ul>
+<li>Sublime Text，一款文本编辑器，跨平台，用起来非常舒服，可称之为神器。</li>
+<li>Git，一个分布式的版本控制系统</li>
+<li>GitHub， 用于使用Git版本控制系统项目的共享虚拟主机服务</li>
+<li>MindManager，思维导图</li>
+<li>VMware，虚拟机</li>
+<li>Powerdesigner，数据库设计软件</li>
+<li>Baidu Cloud，国内速度快，超稳定，容量大的网盘，太好用了！</li>
+<li>MOOC，大规模开放在线课堂</li>
+<li>Evernote，印象笔记，看课程做笔记就靠他了，其中的“马克飞象”扩展特别好用，可以用markdown语法些笔记</li>
+<li>Octopress，写博客的神器</li>
+<li>Raspberry Pi，树莓派，廉价低功耗Linux电脑，任你折腾</li>
+<li>LaTeX，排版利器，写论文必会</li>
+</ul>
+</blockquote>
+
+
+		
+		<a href="/blog/2013/09/23/tools/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-20T16:50:00+08:00" data-updated="true" itemprop="datePublished">Sep 20<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/git/'>Git</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/09/20/my-git-command/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/09/20/my-git-command/" itemprop="url">我的Git常用命令</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
+<img class="right" src="/images/pic/git_logo.png" width="130" height="130" title="welcome" alt="welcome"></p>
+
+<h2>设置</h2>
+
+<p>设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+....然后提示输入密码什么的
+</code></pre>
+
+
+		
+		<a href="/blog/2013/09/20/my-git-command/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-19T12:01:00+08:00" data-updated="true" itemprop="datePublished">Sep 19<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/raspberrypi/'>RaspberryPi</a>, <a class='category' href='/blog/categories/python/'>python</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2013/09/19/weibo-robot/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2013/09/19/weibo-robot/" itemprop="url">Weibo Robot</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<p>最近偷偷搞了一个微博机器人，第一版算是完成了吧，虽然还有bug，但不影响使用。  <br/>
+这个机器人是基于新浪微博的python api，搭建在我的Raspberry Pi上的，因为我想让她更像一个人，所以加了很多图片和语录，导致程序有点大，仅仅图片就20M&hellip;.OMG~~  <br/>
+以下是她的功能：
+<img class="right" src="/images/pic/sina_logo.png" width="224" height="71" title="sina" alt="sina"></p>
+
+<blockquote><ol>
+<li>每小时发布一条密友微博，以监控树莓派的状态</li>
+<li>每天发布7条普通微博，[图片 or 问候语 or 监控信息] 随机搭配</li>
+<li>回复提到我的原创微博，随机回复其[天气预报 or 问候语]</li>
+<li>回复提到我的评论（不包括点击回复按钮那种评论），随机回复其一些评论</li>
+</ol>
+</blockquote>
+
+
+		
+		<a href="/blog/2013/09/19/weibo-robot/" class="more-link">Read on &rarr;</a>
+	</div>
+
+</article>
+
+</div>
+<nav id="pagenavi">
+    
+    
+        <a href="/blog/page/2/" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav></div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - John Xu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa007a8efad716708ac296c721099b0e4' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'ginsmile';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

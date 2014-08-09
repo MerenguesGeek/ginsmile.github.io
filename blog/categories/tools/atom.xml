@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tools | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/tools/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[我的利器]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/23/tools/"/>
+    <updated>2013-09-23T11:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/23/tools</id>
+    <content type="html"><![CDATA[<p>古语有云：<strong>工欲善其事，必先利其器</strong>。 <br/>
+学习计算机也是这样， 总结最近几年学习计算机专业的经验，我把我认为非常有用的软件，网站，工具等做了下总结：</p>
+
+<blockquote><ul>
+<li>Sublime Text，一款文本编辑器，跨平台，用起来非常舒服，可称之为神器。</li>
+<li>Git，一个分布式的版本控制系统</li>
+<li>GitHub， 用于使用Git版本控制系统项目的共享虚拟主机服务</li>
+<li>MindManager，思维导图</li>
+<li>VMware，虚拟机</li>
+<li>Powerdesigner，数据库设计软件</li>
+<li>Baidu Cloud，国内速度快，超稳定，容量大的网盘，太好用了！</li>
+<li>MOOC，大规模开放在线课堂</li>
+<li>Evernote，印象笔记，看课程做笔记就靠他了，其中的“马克飞象”扩展特别好用，可以用markdown语法些笔记</li>
+<li>Octopress，写博客的神器</li>
+<li>Raspberry Pi，树莓派，廉价低功耗Linux电脑，任你折腾</li>
+<li>LaTeX，排版利器，写论文必会</li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<p>顺便说一句，最近用如下组合用的特别爽：</p>
+
+<blockquote><p>Octopress + GitHub + Evernote（马克飞象）</p></blockquote>
+
+<p>Evernote（马克飞象）的跨平台，云同步，可以让我在Windows和Linux上编辑同一篇文章，Octopress+ GitHub Pages的黑客式写博客的方式就不用多说了。<strong>简洁的Markdown语法，方便的印象笔记，让人欲罢不能</strong>。</p>
+]]></content>
+  </entry>
+  
+</feed>

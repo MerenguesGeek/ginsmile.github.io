@@ -1,0 +1,2054 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TCP/IP协议学习]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/08/03/tcp-ip-illustrated-1/"/>
+    <updated>2014-08-03T22:35:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/08/03/tcp-ip-illustrated-1</id>
+    <content type="html"><![CDATA[<p>本文是关于《TCP/IP详解》的读书笔记。</p>
+
+<h2>第一章 概述</h2>
+
+<h3>1.分层</h3>
+
+<p>TCP/IP是一个协议族（又叫Internet协议族），是一组不同层次上的多个协议的组合。</p>
+
+<blockquote><ul>
+<li>应用层（Telnet，FTP等），负责处理特定的应用程序细节。</li>
+<li>运输层（TCP，UDP），为两台主机上的应用程序提供端到端的通信。</li>
+<li>网络层（IP，ICMP，IGMP），处理分组在网络中的活动，提供点到点的服务。</li>
+<li>链路层（设备驱动程序以及接口卡，ARP，RARP），处理与电缆等传输媒介的物理接口细节。</li>
+</ul>
+</blockquote>
+
+<p>其中，应用层通常是一个用户进程，处理应用程序细节，而下三层一般在操作系统内核中执行（如UNIX），处理通信细节。</p>
+
+<p><strong>一个互联网就是一组通过相同协议族互联在一起的网络。</strong>可以通过路由器连接两个不同的网络（如以太网和令牌环网）。TCP/IP倾向于使用路由器而不是网桥来连接网络。
+&ndash; internet：用一个共同的协议族把多个网络连接在一起。
+&ndash; Internet：世界范围内通过TCP/IP互相通信的所有主机集合。internet是一个Internet。</p>
+
+<h3>2. 互联网地址</h3>
+
+<p>互联网上的每一个接口必须有一个唯一的Internet地址（IP地址）。32bit = 4Byte</p>
+
+<pre><code>    - A类：0     7位网络号      24位主机号
+    - B类：10    14位网络号     16位主机号
+    - C类：110   21位网络号     8位主机号
+    - D类：1110  28位多播组号
+    - E类：11110 27位（留待后用）
+</code></pre>
+
+<p>点分十进制表示法，如A类中的一个为：127.0.0.1</p>
+
+<h3>3. 域名系统</h3>
+
+<p>域名系统（DNS）是一个分布的数据库，由他来提供IP地址和主机名之间的映射信息。</p>
+
+<h3>4. 封装</h3>
+
+<p>例如，当FTP数据从应用层开始通过TCP传输数据时，逐层封装，逐次加上
+1. Appl首部
+2. TCP首部
+3. IP首部
+4. 以太网首部</p>
+
+<p>来声明生成数据的上一层协议的类型以及其他信息，方面数据的处理。</p>
+
+<h3>5. 分用</h3>
+
+<p>利用封装时的信息，每层协议都要检查报文首部中的协议标识，以确定接受数据的上层协议</p>
+
+<h3>6. 客户-服务器模型</h3>
+
+<p>两种服务模式：</p>
+
+<p>1.重复型
+&ndash; 1) 等待一个客户请求
+&ndash; 2) 处理客户请求
+&ndash; 3) 发送相应给请求的客户
+&ndash; 4) 返回第1步</p>
+
+<p>2.并发型
+&ndash; 1) 等待一个客户请求
+&ndash; 2) 启动一个新的服务器来处理这个客户请求，处理结束后终止这个新服务器
+&ndash; 3)返回第1步</p>
+
+<h3>7. 端口号</h3>
+
+<ul>
+<li>运输层的TCP和UDP使用16bit的端口号来识别应用程序。</li>
+<li>必须是奇数，单工->全双工 时候的遗留，单工时候每个应用程序需要两个连接。</li>
+<li>服务器使用知名端口号（1~1023），客户端使用临时端口号。</li>
+</ul>
+
+
+<h3>8. RFC</h3>
+
+<p>RFC（Request for Comment），Internet的正是标准都以RFC文档出版。大量的RFC文档不是正式标准，RFC 数字越大内容越新。  <br/>
+重要的RFC：
+&ndash; 赋值RFC（Assigned Numbers RFC），<a href="http://www.ietf.org/rfc/rfc1340.txt">RFC1340</a>，列出了所有Internet协议中使用的数字和常数
+&ndash; Internet正式协议标准，<a href="http://www.ietf.org/rfc/rfc1600.txt">RFC 1600</a>，描述了各种Internet协议的标准化现状
+&ndash; 主机需求RFC，<a href="http://www.ietf.org/rfc/rfc1122.txt">RFC 1122</a>，<a href="http://www.ietf.org/rfc/rfc1123.txt">RFC 1123</a>，列出了协
+议中关于“必须”、“应该”、“可以”、“不应该”或者“不能”等特性及其实现细节。
+&ndash; 路由器需求RFC，<a href="http://www.ietf.org/rfc/rfc1009.txt">RFC 1009</a>，与主机需求R F C类似，但是只单独描述了路由器的需求。</p>
+
+<h2>第二章 链路层</h2>
+
+<p>在TCP/IP协议组中，链路层的目的：
+1. 为IP模块发送和接受IP数据报
+2. 为ARP模块发送ARP请求和接受ARP应答
+3. 为RARP发送RARP请求和接受RARP应答</p>
+
+<p>最常见的链路层封装是<strong>以太网封装格式</strong>（RFC 894）</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[怪诞心理学de读书笔记]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/01/31/guai-dan-xin-li-xue-bi-ji/"/>
+    <updated>2014-01-31T13:38:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/01/31/guai-dan-xin-li-xue-bi-ji</id>
+    <content type="html"><![CDATA[<p>我大概把我的读书的书摘和笔记整理了一下，挺有意思的这本书。这本书主要是讲了
+&ndash; 时间心理学
+&ndash; 撒谎与欺骗心理学
+&ndash; 灵异心理学
+&ndash; 决策心理学
+&ndash; 幽默心理学
+&ndash; 自私心理学</p>
+
+<p>每个都涉猎一点，讲的很宽很广，也很实用。</p>
+
+<!--more-->
+
+
+<h2>时间心理学</h2>
+
+<p>人们总会选择幸运的日子做重要的事，避免在不幸的日子出门，而且会相信下面这些：
+&ndash; 星座运势
+&ndash; 占星学
+&ndash; 笔迹学
+大量实验已经证明了，以上这些都不准，但是为什么人们这么相信这些东西呢？伯特伦·弗瑞儿教授做过一个知名实验，就是让他的学生在不知情的情况下对同一份性格预测报告（很模糊笼统的报告）打分，结果学生都认为这个测试很准确。因而，伯特伦教授得到了一个答案：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>占星学和笔迹学事实上并不需要真的很准，只要看起来很准就足够了。只要给人们一个非常概括的描述，他们的大脑就会诱使他们相信这些描述具有非常独到的见解。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里面包含了
+&ndash; <strong>巴纳姆效应</strong>：每个人都会很容易相信一个笼统的、一般性的人格描述特别适合他。即使这种描述十分空洞，他仍然认为反映了自己的人格面貌。（类似‘你曾经面对重大的决定，之后悔恨不已’这种话。）  <br/>
+&ndash; <strong>谄媚效应</strong>：大部分人更愿意相信他们看起来更正面和积极的事情。 （类似‘他们还有很多未发挥出的潜能’这样的话，正向星座的人更有可能相信星座学。）</p>
+
+<p><code>容易上当受骗的人宁可欺骗自己，也不愿意坦然面对自己容易上当受骗这个事实</code>。</p>
+
+<p>其实，这些看似不准确的说法有时却会影响一个人。   <br/>
+&ndash; <strong>有些人的确会成为‘他们应该成为的人’</strong>。这是因为他们深信占星学和宗教，受到了潜移默化的影响。类似宗教名字里Kwadwo（安静平和）和Kwaku（调皮捣蛋），和Kwaku更容易进法庭。
+&ndash; <strong>出生日期会对一个人的职业生涯造成影响</strong>。比如英国职业足球赛，运动员的出生日跟他们的成绩息息相关。这是因为<code>在9月和11月之间出生的潜在选手要比在6月和8月出生的选手大十个月左右，所以身体也更加成熟一些。</code>这当然可以解读成：处女座 (8/23 &ndash; 9/22) ，天秤座 (9/23 &ndash; 10/22)在足球上的天赋更高。
+&ndash; <strong>出生月份会对人们的行为方式产生细微的影响</strong>。冬季出生的人相对于夏季出生的人认为自己更加不幸。
+&ndash; <strong>人们的行为方式也会对出生日期产生影响</strong>。人们会为了和耶稣更近一些而把生日放到圣诞节，或者为了逃税把生日放到12月，或是为了让自己的生日更有意义而把自己的生日和国庆日扯上关系。又或者，请占星术师把生日跳到合适时候。其中暗示着：父母个能会为了自己的孩子出人头地而更改孩子的生日，这种行为为占星术做了假证（导致19世纪很多知名人士都在行星可能高悬于天际时出生）。
+&ndash; <strong>出生日期、重要节日、政策改变等都可能会影响死亡日期</strong>。<code>有些人的确有能力运用意志延缓或加速自己的死亡时间。</code>比如一定要活到自己的生日，等遗产税下降再死，在遗产税上升之前死，过完中秋再死。当然，然们也可以谎报死亡日期来逃税。</p>
+
+<h2>撒谎与欺骗心理学</h2>
+
+<p><strong>自我监控能力</strong>  <br/>
+本书开头的那个“Q”的测试，事实证明我是一个自我监控能力弱的人&hellip;..</p>
+
+<blockquote><ul>
+<li>自我监控能力强的人倾向于让他们对面的人看到自己画的是一个Q。</li>
+<li>自我监控能力弱的人则会专注于让自己看到画的是一个Q。</li>
+</ul>
+</blockquote>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&gt; 自我监控能力高的人比较注重别人怎么看他们，他们喜欢成为众人瞩目的焦点，能够很快让自己的行为适应所处的环境，并且很善于操控别人看待他们的方式。因此，他们更有可能成为撒谎高手。    
+</span><span class='line'>&gt; 自我监控能力弱的人人即便是在不同的环境中看起来也还是"同一个人"。他们的行为在更多的情况下是由他们内心深处的感受和价值观所左右的，他们并不太在意自己的行为会给周围的人造成什么影响。因此，这种人在生活中不太会撒谎，也不太可能欺骗他人。</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>撒谎</strong>  <br/>
+原文中说：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>从我们学会说话的那一刻起，我们就已经学会撒谎了。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>那么怎样判断一个人是否说了慌言？
+本书似乎更注重于遣词造句方面，认为肢体语言、微表情（除了微笑）并不会对判断一个人说谎有很大帮助。  <br/>
+<strong>key word</strong>
+&ndash; 细节少。谎言细节更少，更多的是泛泛之谈。
+&ndash; 信息量少。谎言信息量更少，如对某件事描述得很模糊，词汇用的很少。
+&ndash; 保持距离。说谎者通常会跟谎言保持距离，使用“我”这个字的次数明显少。
+&ndash; 细枝末节。说谎者会触及更多的琐碎的无关紧要的事情。</p>
+
+<p><strong>泛美式微笑</strong>  <br/>
+&ndash; 虚假的笑容，颧大肌把嘴角往上拉起。
+&ndash; 真心的笑容，同时牵动了颧大肌和眼睛周围的眼轮匝肌。脸颊的上扬在鼻子的两侧以及眼睛的下方和旁边产生了更为明显的线条。此外，眉头和眉头下方的皮肤已向眼睛所在的方向移动，从而让两者之间的间距变得更为狭窄，并在眼睛的正上方挤出了一个&#8221;小袋&#8221;。</p>
+
+<p><strong>可塑记忆</strong>  <br/>
+记忆是可塑的，只要合理引导，就能让人相信未曾发生的事情，并能让他们描述出细节。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>一旦某位权威人士指出我们有过某种经历，多数人都会觉得很难否认，随后就会用设想填补记忆中的空缺。经过一段时间之后，事实和虚构情节之间的界限就变得难以区分了，于是我们开始相信谎言。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>简单的暗示可以让人们回忆起儿时并没有经历过的童年趣事一样，它同样可以让很多人感受到不可能存在的事物。</p>
+
+<h2>灵异心理学</h2>
+
+<p>在西方，13是不吉利的数字，而在中国、日本，4是不吉利的数字。这种迷信会影响房价等经济市场。另外，这种迷信还会影响一个人的死亡（比如4月份中国人死亡率会增加）&hellip;..这其实是查尔斯·巴斯克维尔效应在搞鬼。  <br/>
+<strong>查尔斯·巴斯克维尔效应</strong>：因极端的心理压力突发心脏病死亡，也就是恐惧致死。  <br/>
+另外，很多迷信的思想对国家的经济有影响（比如医院病人呆到某个的特定日期出院而浪费国家财产），又或是对一个人的一生都会有影响（日本火马年女婴出生率下降）。
+迷信思想的由来，正如原文所说：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在不确定性持续增加的时期，人们会迫切地寻求一种确定感，这种需求会促使他们支持强大的领导体制，并相信各种号称可以确定他们命运的不理性因素，比如迷信和巫术。</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>关于神秘巧合的分析</strong>  <br/>
+正如书中所说，好像没几年就会听到几个天大的巧合，比如那个最有名的林肯和肯尼迪的故事，但这不过是真正的巧合罢了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>全世界有数百万人过着复杂的生活，因此，如果偶尔有人中了头彩或者经历了怎么看都不可能发生的事情，那也没什么可大惊小怪的。虽然人们忍不住会想这可能是上帝发出的某种信号，或者人与人之间存在着某种神秘的感应，但事实上所有此类的事件都仅仅是一次偶然。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>人与人之间有着六度空间，认识更多的人可以给自己带来更多的好运。</p>
+
+<p><strong>关于房间闹鬼</strong>  <br/>
+通常是次声波在作祟。</p>
+
+<h2>决策心理学</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>大量的研究显示，我们日常行为的很多方面都会不自觉地受到外在因素的影响。这些因素并不会在电影或电视屏幕上快速闪过。相反，它们就出现在我们眼皮底下，而且会对我们的思想和行为模式产生重大的影响。类似名字这么简单的因素就是其中之一。</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>关于名字</strong>  <br/>
+名字非常重要！！一个人的名字可以影响一个人的一生。在各方面影响。。。。。呃
+奇怪的名字可能让这个人从小就受欺负，让他自卑，充满正能量的名字可能让他一生都过得很好。  <br/>
+<strong>关于身高</strong>  <br/>
+身高高的人让人感觉更靠谱。人们对相同身高的人，如果这个人支持他更多一点，就会认为他更高。  <br/>
+<strong>关于外貌</strong>  <br/>
+一个人的外貌会影响一个人，如果这个人长的老实无辜，那他锒铛入狱的可能性就比一张罪犯脸要小很多。与丑陋的人相比，长相好看的人更有可能获得工作，得到的薪水也要高于与其能力相当的同事。  <br/>
+<strong>关于男女好感</strong>  <br/>
+就是要让对方心跳加速，不管是不是因为你，还是因为外在因素。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>如果你想让一个人爱上你，在约会的时候最好避开新世纪音乐、乡间散步和风铃，因为它们只会让人变得更加心平气和。相反，如果你选择了和心仪的人一起去听摇滚音乐会、玩过山车或者看恐怖片，那么你成功的几率就大大增加了。心跳频率和吸引力之间的关系可以告诉你这些学者为什么会持上述观点。</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>关于搭讪</strong>  <br/>
+彼此分享过搞笑经历的人会觉得更为亲近一些，也会发现对方更有吸引力。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>闪电约会中最为成功的搭讪语就好比是在你的嘴里放一根吸管，这样可以让你的声音变得比较滑稽，也因而让彼此得以共享一段搞笑的经历，而这无疑有助于增强彼此之间的亲近程度和吸引力。</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>幽默心理学</h2>
+
+<ul>
+<li>笑话给人的优越感越强烈，人们就会笑得越开心。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>平均而言，15％的女性会觉得嘲讽女性的笑话好笑，但持同样观点的男性却高达50％。这些笑话的评分充分说明，“优越性”理论的确可以解释让男性和女性发笑的东西有何不同。</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>那些能让我们产生紧张感的人生问题会让我们发笑。（比如老年人会对记忆衰退的笑话感到好笑。）</li>
+<li>双关语，需要左右半脑同时去理解，重新诠释之后才会变的好笑！~~所以右脑损伤的人不会理解这种笑话。比如：</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>There are tow fishes in the tank, one fish says to the other,"Do U know how to drive this tank?"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>。。。呃
+&ndash; 字母“K”，最容易让人发笑，为神马？</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>人们仅仅会因为微笑而感到快乐！带有/K/的词会燃人的脸部呈现出微笑的表情。</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果你微笑，那么全世界半数的人都会和你一起微笑。（笑声会传染）</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>在不自觉的情况下，人们会模仿他人的面部表情，从而迅速感受到别人内心的那种感觉，因而更容易对他们的处境感同身受，沟通起来也更容易一些。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这就是为什么电视节目把事先录制好的笑声播出来，请职业“哄笑者”。
+&ndash; 世界上最好笑的笑话</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>两个猎人正在森林中狩猎，其中一个突然晕倒了。他看上去已经停止了呼吸，眼睛朝上翻着。另一个猎人掏出手机，拨通紧急求助电话。他气喘吁吁地对接线员说：“我朋友死了。我该怎么办？”接线员用冷静和宽慰的语调回答说：“放松一点，我能够帮助你。首先确定一下他确实是死了。”一阵沉默过后，接线员在电话里听到了一声枪响。重新抓起电话的猎人说：“好了，然后怎么办？” </span></code></pre></td></tr></table></div></figure>
+
+
+<p>这则笑话囊括了笑话的三要素，而且会让所有人不管男女老幼都感到好笑。</p>
+
+<blockquote><ul>
+<li>让我们感到高人一等</li>
+<li>减轻了让人紧张的事件对情绪的影响</li>
+<li>某种不合理的东西让我们惊讶得合不拢嘴然后笑了出来</li>
+</ul>
+</blockquote>
+
+<h2>自私心理学</h2>
+
+<ul>
+<li>不道德的行为是普遍存在的。虽然绝大部分的人都号称自己是诚实正直的公民，但在有机可乘的情况下，我们中的很多人都是不诚实的。（比如人们会偷掉公共场所的茶匙。）</li>
+<li>人们觉得多拿大公司的钱是可以接受的，但如果多找钱的是当地的一家小商店，那就不能把多找的钱据为己有了。在后续的采访中，很多诚实的顾客都表示，从跟自己差不多的人身上赚取意外之财就是不对的。
+     在连锁商店做实验时，所有的顾客都会一声不响地拿钱走人，但换成街角小店后，一半的顾客都会立即把多找的零钱还给店主。</li>
+<li>飞快地眨眼睛(频率显然超过每分钟50次)，而这是内心极度不安的外在表现。</li>
+<li>我们会帮助与我们相似的人。
+      仅仅因为两个人的生日相同，就足以说服人们腾出宝贵的时间去帮助一个完全陌生的人。</li>
+<li>人口密度越大，助人为乐的程度就越低。
+      在人口众多的城市里，人们会更有更多的“感觉超负荷”经历。来自他人、手机、交通和广告的各种信息一直在对人们狂轰乱炸。结果他们就只能和所有需要处理大量信息的系统一样工作，那就是给所有的信息排列优先顺序，花最少的时间应付各种分散其注意力的琐事。正因如此，人们才会从需要帮助的人身边径直走过去，从而把帮助这些人的责任推到了别人身上。所有这一切导致了一种自相矛盾的现象：某一个空间里的人越多，人们的孤独和孤立感就会越强烈。</li>
+<li>如果住在生活节奏比较快的城市里，人们就更可能拥有急躁的人格。
+      这种人格的人说话都比较快，经常会抢着帮别人把话说完。在进餐的时候他们总是第一个吃完，而且看表的次数远远多于其他人。有些研究人员认为这种生活方式会给人体造成巨大的压力。</li>
+<li>当人们已经接受了一个别人的较合理的请求的时候，往往会接受第二个不怎么合理的请求。
+     如果接受了第一个请求，突然之间，他们就会认为自己变成了乐于伸出援手的人。他们是良好的公民，是乐意为了顾全大局而牺牲小我的人。因此，当面对一个巨大而丑陋的告示牌时，他们最终很可能会做出接受的决定。这是一个教导人们如何成功合作的典型案例。先从小处着手，就能够更容易地说服人们别为大事担心。</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[拖拉一点也无妨de读书笔记]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/01/30/tuo-la-yi-dian-ye-wu-fang/"/>
+    <updated>2014-01-30T15:18:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/01/30/tuo-la-yi-dian-ye-wu-fang</id>
+    <content type="html"><![CDATA[<p>读完这本书，首先认识到我是个十足的拖延症患者，之前也误打误撞地干了其中的一两件战拖秘籍，着实让我心中一笑（看来我也有战拖天分啊！）。作者约翰是个大学教授，也是个拖延症患者，透露了很多其他教授什么的也是，这让我感到一丝平衡，原来我大拖人遍布各行各业啊。</p>
+
+<blockquote><p>后天能干的事，就别赶着明天做了。 ——马克吐温</p></blockquote>
+
+<p>这句话确实地证明了大作家马克吐温也是个拖延症患者，可见，拖延症不是坏事，只要我们能够好好地利用它。</p>
+
+<!--more-->
+
+
+<hr />
+
+<h2>结构化拖延法</h2>
+
+<p>这本书主要是讲了一个叫做<code>结构化拖延法</code>的方法，用拖延症的心理去完成更多的任务。因为，拖延症患者极少什么都不做，他们会在拖延一件事的时候去做另一件无关紧要的事，而<code>结构化拖延法</code>就是利用了这个心理。</p>
+
+<blockquote><ol>
+<li>要选一个优先级最高的任务，这个任务必须：有明确的截止日期（但实际上没有），它看似重要得不得了（但实际上并不是）</li>
+<li>这个最优先的任务被拖了一两周了，这时你会感到非常烦躁，激励你去做一些算是有用却没那么重要的事。</li>
+</ol>
+</blockquote>
+
+<p>大概就是这么个状况：<strong>工作开始&hellip;..东搞西搞&hellip;&hellip;&hellip;&hellip;&hellip;恐慌&hellip;..哭着把事做完..死线</strong></p>
+
+<p>就像原文中说的那样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>实践结构化拖延法是需要一定程度的自我欺骗的。因为你得对自己用上一种“金字塔式传销”的招数    ，才能保持高效状态。一点没错，你要为那些夸大重要性、虚设截止日期的任务投入自己的精力，同时还得让自己相信，这些任务的确既重要又紧迫。这都不是问题，因为说到底，所有拖延人士都拥有一流的自欺本领。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>总之，即使我爱拖延，也可能成为完成很多有价值工作的高产拖延症患者。</p>
+
+<h2>拖延与完美主义</h2>
+
+<p>从来没有完美，<code>没那么完美</code>就够了。好的开始是成功的一半，但对拖延症患者来说，烂的开始才是迈向成功的第一步！比起蛮好的结果，完美会更有用处么？答案往往是<code>没那么完美</code>就够了。  <br/>
+也就是说，不苛求完美，一件事做的蛮好就可以了，也就是说在截止时间到来之前，你可以有充足的时间泡图书馆，或是在家里熬上一整夜，做些算是有用却又无关紧要的事。</p>
+
+<h2>待办事项清单</h2>
+
+<p>也就是人们常说的[<strong>To-do list</strong>]。但这个list和普通的不一样，是专门为拖延症患者量身定做的。</p>
+
+<h4>key word:划掉</h4>
+
+<p>就像原文中说的那样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>当日待办事项清单。很多拖延者们都用这个办法。你或许认为，这张清单的目的就是提醒你要做哪些事情。它的确有这个功用，可这并不是最主要的用途。当日待办事项清单的主要功能是，让爱拖沓的家伙们每做完一件事就可以把它划掉。在某一条事项旁打个钩，或是潇洒地大笔一挥把它删掉，会让我们在心理上轻松一点。这个动作让我们觉得自己是行动派，很能干，不是懒骨头。这让我们有了心理上的动力。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>类似：
+ 1. <del>看《拖延一点也无妨》</del>；
+ 2. <del>吃早饭</del>；
+ 3. <del>学习bash</del>；</p>
+
+<p>没错，就是<code>划掉！！！狠狠地划掉！！！！</code></p>
+
+<h4>key word:小事</h4>
+
+<p>把一些<code>看似无关紧要的小事</code>（但影响很大，比如小睡&hellip;.呃）也写上，比如：
+ 1. 关掉闹钟；
+ 2. 别按“小睡”按钮；
+ 3. 起床；
+ 4. 去盥洗室；
+ 4. 别回来躺下；
+ 5. 吃早饭；
+ 6. 坐在书桌前；</p>
+
+<p>这很重要，当你划掉这些事的时候你会感到你很厉害，一天在神速中开始了！！！多么神奇！</p>
+
+<h4>key word:分解</h4>
+
+<p>把<code>大任务分成小任务</code>，one bird and another，能清楚对大任务的恐惧感！千里之行，始于足下。比如：
+ 1. 看《怪诞心理学》第一章；
+ 2. 看《怪诞心理学》第二章；
+ 3. 看《怪诞心理学》第三章；</p>
+
+<p>一切为了流畅的成就感！</p>
+
+<h4>key word:不要</h4>
+
+<p>把不要做的事也列上，比如：
+ 1. 不要逛bilibili；
+ 2. 不要聊Q；
+ 3. 不要逛weiboi；</p>
+
+<h4>key word:提前</h4>
+
+<p>提前一晚把要做的事写在纸上，一定要赶在做第一件事<em>起床</em>之前昨晚&hellip;..否则哥必然会小睡&hellip;额</p>
+
+<h2>放点音乐吧</h2>
+
+<p>感觉这个类似教导海豚，给点音乐然后做某件事。整理一个自习音乐单，跑步音乐单什么的，到时候听，兴奋点自然来了。</p>
+
+<h2>电脑与拖延</h2>
+
+<p>等到某个紧急的时间点再去处理网上的事，不过对我这个小程序员貌似不太管用，我唯一能做到的就是管住自己，不去闲逛，god bless me&hellip;&hellip;原文妙法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>我发现了一个小窍门，能在我忍不住想上网闲逛的时候管住自己。那就是，等到某件肯定会发生的、能打断我的事情快来了的时候再上网。比如我饿了，或是过不了多久太太肯定会拉我过去干个急活儿，要么就是我已经感到了内急的前兆。如果你用的是笔记本电脑，那还有个法子：上网收邮件之前把电源线拔掉，电池没电了，魔咒自然就打破了。可是，随着电池的性能越来越好，这一招也不大管用了。</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>平摊型和叠放型</h2>
+
+<p>这得看你是什么类型，平摊型把啥任务都摊成一片，叠放型把任务一个一个摞起来。感觉我就是一个平摊型的，把手上在做的事全部平摊在眼前。如果放起来，我敢确定，3天之内是不会动它了&hellip;.</p>
+
+<h2>与敌人合作</h2>
+
+<p>额，这个办法，和非拖延症患者合作，然后强迫自己不拖延（因为非拖延症患者太有干劲了）。但对友谊是个挑战&hellip;..</p>
+
+<h2>额外福利</h2>
+
+<p>有些时候，拖延也有额外的好处。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>“切勿把那些在明天到来之前就可能会消失不见的事情在今天就做掉”。但是，如果你是个结构化拖延者，你就不需要这条建议了。你会自动自发地不去做那些事。</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>有时候，要是你在动手做事之前等上一会儿，你就会发现合适的做法。</span></code></pre></td></tr></table></div></figure>
+
+
+<p>另外，貌似在哲学方面，不能替拖延说些什么，我不太懂哲学，作者在这方面的分析让我觉得糊里糊涂的&hellip;哲学在拖延方面唯一的用处就是，在别人抱怨你拖延的时候，你就跟他扯哲学。囧&hellip;..</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[重装系统后恢复Octopress博客]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/"/>
+    <updated>2014-01-04T22:03:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke</id>
+    <content type="html"><![CDATA[<p>之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
+关键是之前安装的很多插件，恢复过来就用不了了。</p>
+
+<!--more-->
+
+
+<p>1.首先要按照安装全新Octopress那样，弄出来一个能安装Octopress的环境,安好rvm,Ruby1.9.3之类的，详见<a href="http://ginsmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/#.UsgqCqx5MxA">用GitHub Pages和Octopress搭建博客</a>。  <br/>
+2.然后，要clone下来source分支：</p>
+
+<pre><code>$ git clone -b source git@github.com:username/username.github.com.git octopress
+</code></pre>
+
+<p>3.进入octopress目录，clone下_deploy来：</p>
+
+<pre><code>$ cd octopress
+$ git clone git@github.com:username/username.github.com.git _deploy 
+</code></pre>
+
+<p>4.安装bundler，使用bundler安装所需插件</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+$ bundle install
+</code></pre>
+
+<p>5.设置github pages页面关联</p>
+
+<pre><code>$ rake setup_github_pages
+</code></pre>
+
+<p>过程虽然这么简单，但是在这之后，我<code>rake generate</code>的时候，出现了不少错误，比如之前新添加的tag不能用的错误，此时只能删了重新设置一遍。</p>
+
+<h2>参考资料</h2>
+
+<blockquote><p><a href="http://boboshone.com/blog/2013/06/05/write-octopress-blog-on-multiple-machines/">boboshone</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[杂谈]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/12/28/za-tan/"/>
+    <updated>2013-12-28T10:50:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/12/28/za-tan</id>
+    <content type="html"><![CDATA[<p>最近有些不在状态，想写点什么，发些牢骚，好再准备上路。  <br/>
+我真的还年轻么，还有时间去蹉跎么？就像Jeff Bezos说的那样，We are our choices，我们就是选择的集合，是一个个选择成就了我们。这里引用下老Jeff的话，最近这几句话让我很受鼓舞。</p>
+
+<!--more-->
+
+
+<blockquote><p>How will you use your gifts? What choices will you make?   <br/>
+Will inertia be your guide, or will you follow your passions?   <br/>
+Will you follow dogma, or will you be original?   <br/>
+Will you choose a life of ease, or a life of service and adventure?   <br/>
+Will you wilt under criticism, or will you follow your convictions?   <br/>
+Will you bluff it out when you&rsquo;re wrong, or will you apologize?   <br/>
+Will you guard your heart against rejection, or will you act when you fall in love?   <br/>
+Will you play it safe, or will you be a little bit swashbuckling?   <br/>
+When it&rsquo;s tough, will you give up, or will you be relentless?   <br/>
+Will you be a cynic, or will you be a builder?  <br/>
+Will you be clever at the expense of others, or will you be kind?</p></blockquote>
+
+<h2>1.面试体验游</h2>
+
+<hr />
+
+<h3>1.1 之前</h3>
+
+<p>十月份从沈阳面试完回学校，然后就开始准备实习面试，大概20号开始吧，我开始复习PHP还有数据库，顺带看了些网络相关的东西，比如HTTP什么的。计算机相关的知识真的是不嫌多，我随便抽出来的几本书居然有很多知识上的互相补充，让我受益良多。本想11月中旬回家待几天再去北京来，结果我简历投早了，面试通知很早就来了，我只能想去北京，就这样，我匆忙的上路了&hellip;&hellip;  <br/>
+11月初的时候，本打算先回家几天，再去北京找找实习。结果很不幸，由于我投简历投早了，一家看简历效率特别高的公司很快就让我去面试。于是我不得不直接去大北京了。接下来就是忙忙碌碌的一周面试体验&hellip;&hellip;</p>
+
+<h3>1.2 之中</h3>
+
+<p>11号光棍节的时候，我坐着动车去北京，本来想去参加两场面试，结果在火车上就收到了第三场面试的通知，话说前两家是创业公司，第三家是知名互联网公司，当时真的很想去第三家公司呢。就这样很是高兴的去了大帝都。不过，最后证明我的高兴劲就持续到这里了。因为我去借住的那个同学很晚才下班回来，我就到圆明园旁边的一个肯德基去逗留了几个小时，不过我对这太不熟悉了，靠着我那个破的不成样子的小米手机好不容易走了从圆明园站到西苑站的距离（我为什么不从西苑站下车呢？真是傻啊！），来到手机上说的最近的小肯德基（肯爷爷果然已然占领地球了！）。结果等了几个小时，小浩来电话了，他下班了唉，反正在那也是等，我就坐上地铁去他那里玩玩了~让他等了大概40分钟吧，辛苦小浩了~就这样我去了他那里。不过他的地方好小啊&hellip;..小到一定程度了，想必他一定过着很苦逼的北漂生活。生存的压力大概就是这样了吧&hellip;&hellip;  <br/>
+<strong>第一次面试</strong>：去大北京，没个住的地方，真的很苦逼。本来想去一个同学那里，本以为他们那里还有一个床位空着，结果是一个不大不小的貌似双人床似的小床。然后他那里好冷唉，没开暖气，有种又湿又冷的感觉。结果，不知道是环境改变了，还是第二天面试的关系，我一直失眠到夜里4点，第二天睡眼惺忪的去了西土城那里，面了我人生的第二次找工作面试（说起第一次，那是在今年5月份吧，上海的一个企业来招学生去管培生之类的，我就去试了试，不面不知道，一面吓一跳，从那次开始我才知道我有多么不足，多么差劲）。那家面试的地点在北影旁，住在最顶层，那连2G网络都连不上。我进去了之后，发现是很和蔼的一个人，和他随便聊了聊，也没问啥技术问题，唯一的一道技术问题我回答地不在点子上，不过也没什么大问题，我有几个项目经验，也有充足的实习时间，他很愉快的让我留下来试试。其实，我觉得我是在吃老本，最近好久没写Android了，虽说突击了一个多星期的PHP，但是实在不能说是熟悉啊，最多只是比“了解”这个程度稍高一点而已&hellip;&hellip;  <br/>
+<strong>第二次面试</strong>：这次是在朝阳区soho大悦城，离我住的地方很远呢，我去了之后连门牌号都搞错了，真是悲剧啊！！里面也是一个特和蔼的叔叔辈的任务接的我，问了我一些关于项目经验的问题，还让我给他展示了我的项目，我的老本又在这里起了大作用~~还是之前做过项目好啊，但感觉之前的项目没有一个拿得出手的，唉。。。然后问了我一个算法，让我用白纸写出来，我就傻了&hellip;&hellip;我是有多少年不看算法了啊，悲剧了，整整20分钟，把他那个算法好不容易给写出来了。。。其实实际工作中用到算法的地方很少，大概这个缓解就是考察我们的思维能力的吧！之后，在地铁上，我收到一个好消息，就是第二家公司说我拿到他们的offer了，我很是高兴啊&hellip;&hellip;不过我很傻蛋的告诉他们我还有面试，然后我就推了下这家公司。话说，这是我人生第一个offer啊！！哥很高兴！  <br/>
+<strong>第三次面试</strong>：有了第二次的教训，我回去之后立马看了所有的常见算法，花了这短短几个小时复习，让我默写已经不成问题了。在北京的第二天，由于昊哥过来到清华听课，要在这面暂住两晚上，所以我就去投靠小浩了，小浩那里真的好挤啊！真的对不住他了，让我和他挤这么小的个地方。去北京的第三天，我就这么去了那家大型互联网公司。话说那家公司好正式啊！还有保密协议，首先给我一张笔试题，居然有笔试题！！！我当时就傻了！！！还是算法题，我去，我不做算法好多个月了好不好！谁让我来应聘呢，我就这么硬着头皮把唯一一道不是算法题的题目给做出来了&hellip;&hellip;真特么悲剧！然后是两轮面试，问了我很多的问题，有Java的，有Android的，还有算法的，还好我之前看了一些常用算法，这回终于没难倒我。让我写快排？好，python三行搞定，写完之后，我看那个面试官也很蛋疼，居然这么简单，他心里一定这么想的&hellip;&hellip;然后问了几个小问题之后就拜拜了&hellip;&hellip;  <br/>
+然后，当天晚上，我跟家里通了通电话，通着通着我就想回家了&hellip;&hellip;说回就回，立马买票回家！！！！也许是第三场面试该觉自己太菜了，才想回家的，唉&hellip;&hellip;不知道这是不是应该叫做逃避&hellip;&hellip;</p>
+
+<h3>1.3之后</h3>
+
+<p>以上大概就是我这面试体验游的全部了，回到家，我想了很多。实力不济，以及不会表现自己，导致我的失败，不过也没关系（安慰下我受伤的心），我还有三年的时间强化自己，只能加油了！</p>
+
+<h2>2.家中杂记</h2>
+
+<hr />
+
+<p>同学们都在学车，而我却坚持自己的观点，认为实习比较重要。然后，我回家之后也到处投简历，结果让浪潮的校园招聘给不明不白地拉去面试了，后果可想而知。幸好一个创业公司接受了我，做了一个小实习生。  <br/>
+实习的日子很是不如意（天天去公司漫无目的地上自习有木有！），因为一些原因，半个多月后我就不去了（喂，是因为懒吧！！），改学车了（转了一圈又回来了，囧），我真不知道我的选择对不对&hellip;&hellip;      <br/>
+顺便吐槽下，最近济南雾霾太严重了，受不了&hellip;&hellip;</p>
+
+<h2>3.满足感</h2>
+
+<hr />
+
+<p>好久没有知识填满脑子的满足感了。努力学习一天之后，躺在床上，脑中是一块块的新知识，这种感觉非常好！记得上一次又这种感觉是8月份在学校综合楼的时候，有很明确的目的，有想法，有动力。然后还有一次是去年暑假的时候不断做算法题的时候。在学校上课的时候真的没有过，大概是被动接受知识让我的大脑没有兴奋感吧！现在时间充裕，为什么我却不去做（学渣认定，汗！）&hellip;&hellip;</p>
+
+<h2>4. 加油现在</h2>
+
+<hr />
+
+<p>这里不说什么目标了，加油吧，少年！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python编码转换]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/25/python-encoding/"/>
+    <updated>2013-09-25T10:37:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/25/python-encoding</id>
+    <content type="html"><![CDATA[<p>python中默认使用ASCII编码，但是如果出现中文等非ASCII字符就要使用其他编码方式了。定义程序的编码方式有好几种，只要满足正则表达式：</p>
+
+<pre><code>\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$                            
+</code></pre>
+
+<p>即可。最常见的是在第一行或者第二行写上字符：<code># -*- coding:utf-8 -*-</code>  或者 <code>#coding=utf-8</code></p>
+
+<!--more-->
+
+
+<h2>其他编码转换为unicode</h2>
+
+<p>使用函数unicode(s,encoding) 或者s.decode(encoding)，就可以将gb2312，utf-8，GBK等编码转换为unicode，例如将utf-8转换成unicode：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+#文件保存为UTF-8格式
+s = '汉字'
+
+#utf-8转换成unicode
+s_unicode = s.decode("utf-8")  
+s_unicode2 = unicode(s,'utf-8') #第二种方法
+s_unicode3 = u'汉字' #第三种方法
+print s_unicode == s_unicode2 #True
+print s_unicode == s_unicode3 #True
+</code></pre>
+
+<h2>unicode转化成其他编码</h2>
+
+<p>如果字符串为ascii或者unicode编码，就可以直接使用encode方法：</p>
+
+<pre><code># -*- coding: UTF-8 -*-
+s_unicode = u'汉字'
+
+#utf-8转换成gbk
+s_gbk = s_unicode.encode('gbk')
+</code></pre>
+
+<p>若直接使用encode方法，Python会自动的先把s解码为unicode，然后再编码成一定的编码方法。
+若s不是ascii编码或是unicode编码而直接使用encode方法，如下：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+s_utf8.encode('gbk') #error
+</code></pre>
+
+<p>会出现以下错误：</p>
+
+<pre><code>UnicodeDecodeError: 'ascii' codec can't decode byte 0xe6 in position 0: ordinal not in range(128)
+</code></pre>
+
+<h2>非unicode编码之间的转换</h2>
+
+<p>这个要拿unicode当作中间编码</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+#utf-8转换成gbk
+s_gbk = s_utf8.decode('utf-8').encode('gbk')
+
+#utf-8转换成gb2312
+s_gb2312 = s_utf8.decode('utf-8').encode('gb2312')
+
+#gbk转换成gb2312
+s_gb2312_next = s_gbk.decode('gbk').encode('gb2312')
+print s_gb2312 == s_gb2312_next #True
+</code></pre>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.pythonclub.org/python-basic/codec">python编码转换</a></li>
+<li><a href="http://my.oschina.net/u/1178546/blog/146660">python编码注释</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[文件编码]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/25/file-encoding/"/>
+    <updated>2013-09-25T10:36:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/25/file-encoding</id>
+    <content type="html"><![CDATA[<p>最近学习python，遇到了不少和字符编码有关的问题，所以特地查了不少资料，学习了不少知识，所以就借此机会整理了一下。</p>
+
+<blockquote><ul>
+<li>字符(Character)：是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</li>
+<li>字符集(Character set)：是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。</li>
+<li>字符编码（Character Encoding）：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系。</li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<h2>ASCII</h2>
+
+<p><strong>ASCII字符集</strong>，共表示了128个字符，包括32个不能打印的字符。  <br/>
+<strong>ASCII编码</strong>，将ASCII字符集转换成计算机能够接受的数字系统的数的规则。采用八位二进制编码，最高位统一为0，剩余7位共表示了128个字符，包括32个不能打印的字符，如：<code>5</code>用<code>00110101</code>来表示，如果文件是ASCII编码，可以在DOS中通过type命令查看。 <br/>
+另：ASCII的扩展版本EASCII可以显示西欧语言，是现今最通用的<strong>单字节</strong>编码系统。</p>
+
+<h2>GB类</h2>
+
+<p>由于ASCII编码不支持中文，所以中国单独制定了一套编码。
+&ndash; GB2312编码，使用两个字节，一共收录了7445个字符，包括6763个汉字和682个其他字符。这682个其他字符包括：罗马希腊字母，数学符号，日文假名，数字（全角），标点（全角），字母（全角）。汉字区的内码范围高字节从B0-F7，低字节从A1-FE。<strong>ASCII里面本来就有的叫做半角</strong>。
+&ndash; GBK编码（1.0），微软编制，是对GB2312的扩展，收录了21886个符号。
+&ndash; GB18030编码，基本兼容GBK，完全兼容GB2312，，支持Unicode的全部统一汉字，收录了70244个汉字，同时还收录了藏文、蒙文、维吾尔文等主要的少数民族文字。</p>
+
+<p>以上三种（GB2312，GBK，GB18030）被称为双字节字符集（DBCS）</p>
+
+<p>兼容性：</p>
+
+<blockquote><p>ASCII &lt; GB2312 &lt; GBK &lt; GB18030   如：<code>汉</code>字均用<code>6C49</code>来表示。  <br/>
+ASCII &lt; Unicode 如：<code>汉</code>字用<code>BABA</code>来表示</p></blockquote>
+
+<h2>Big5</h2>
+
+<p>大五码，是使用繁体中文最常用的电脑汉字字符集标准。</p>
+
+<hr />
+
+<p><strong>像中国一样，各个国家都有类似GB2312编码的编码体系，这样非常不适合交流。于是就出现了大一统。历史上有两个组织开发出了统一的编码系统，分别是国际标准化组织（ISO）和统一码联盟（The Unicode Consortium），分别研制出了UCS（ISO 10646）和Unicode。目前两个项目保持兼容。</strong></p>
+
+<hr />
+
+<h2>Unicode字符集</h2>
+
+<p>Unicode字符集，两字节二进制编码，如：<code>汉</code>用<code>U+6C49</code>来表示。</p>
+
+<blockquote><p>big endian <code>汉</code>用<code>U+6C49</code>来表示，文件最前面有一个FEFF  <br/>
+little endian <code>汉</code>用<code>U+496C</code>来表示，文件最前面有一个FFFE  <br/>
+Unicode字符集有很多种编码方案，比如：UTF-8，UTF-16，UTF-32等</p></blockquote>
+
+<h2>UCS（通用字符集）</h2>
+
+<p>Universal Character Set，通用字符集。是由ISO 10646标准所定义的标准字符集，包含已知语言的所有字符。</p>
+
+<blockquote><p>UCS-2，用16位编码。  <br/>
+UCS-4，用31位编码，第32位为0。</p></blockquote>
+
+<p>下面介绍下UCS-4     <br/>
+0xxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx 共有 2<sup>31</sup> = 2147483648 个码位。</p>
+
+<blockquote><ul>
+<li>UCS-4编码分为2<sup>7</sup> = 128 个group，每个group形如 01234567 xxxxxxxx xxxxxxxx xxxxxxxx</li>
+<li>每个group分为2<sup>8</sup> = 256 个plane，每个plane形如 01234567 12345678 xxxxxxxx xxxxxxxx</li>
+<li>每个plane分为2<sup>8</sup> = 256 个rows，每个rows形如 01234567 12345678 12345678 xxxxxxx</li>
+<li>每个rows分为2<sup>8</sup> = 256 个cells，每个cells形如 01234567 12345678 12345678 12345678</li>
+</ul>
+</blockquote>
+
+<p>00000000 00000000 xxxxxxxx xxxxxxxx ，即高两个字节均为0的UCS-4被称为BMP</p>
+
+<h2>UTF-8编码方式</h2>
+
+<p>UTF-8（8-bit Unicode Transformation Format），可变长度字符编码，是unicode的一种实现方式。与ASCII编码兼容。  <br/>
+<strong>占用1~4个字节</strong>
+编码规则：</p>
+
+<blockquote><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</li>
+<li>对于n字节的符号（n>1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</li>
+</ul>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th align="center">UCS-2编码(16进制)/Unicode符号范围</th>
+<th align="center">UTF-8 字节流(二进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0000 0000 &ndash; 0000 007F </td>
+<td align="center"> 0xxxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0080 &ndash; 0000 07FF </td>
+<td align="center"> 110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0800 &ndash; 0000 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0001 0000 &ndash; 0010 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>例如“汉”字的Unicode编码是<code>6C49</code>，故转化成UTF-8采用第三种三字节编码方式，<code>6C49</code>的二进制带入三字节模版，就得到了其UTF-8编码：<code>11100110 10110001 10001001</code>，即<code>E6 B1 89</code>。  <br/>
+UTF编码中有一个名为BOM的编码方式，用来区分UTF-16是Big-Endian还是Little-Endian。</p>
+
+<h2>UTF-16编码方式</h2>
+
+<p>UTF-16编码方式用16位，即两个字节来编码字符，所以他只能编码Unicode的前65535个字符。  <br/>
+&ndash; 如果字符编码小于0x10000，直接用两字节表示，如<code>U+6C49</code>  <br/>
+&ndash; 如果字符编码大于0x10000</p>
+
+<h2>UTF-32编码方式</h2>
+
+<p>UTF-32又称UCS-4，是一种将Unicode字符编码的协定，对每个字符使用4个字节。这种编码方式非常浪费空间。</p>
+
+<h2>CJK</h2>
+
+<p>Chinese Japanese Korean，中日韩统一表意文字。把分别来自中文、日文、韩文、越文中，本质、意义相同、形状一样或稍异的表意文字（主要为汉字，但也有仿汉字如日本国字、韩国独有汉字、越南的喃字）于ISO 10646及Unicode标准内赋予相同编码。</p>
+
+<h2>windows和linux种的文件编码</h2>
+
+<p>windows中新建一个记事本文档，默认是ASCII编码，如果出现中文就会使用gb2312编码。  <br/>
+linux编码使用utf-8编码。</p>
+
+<h2>mySQL的编码</h2>
+
+<p>mySQL默认采用ISO 8859-1编码方式，即单字节的EASCII编码。
+更改mySQL编码方式：<code>mysql_query('set names gbk');</code></p>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.cnblogs.com/imissherso/articles/640727.html">文件编码格式</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">阮一峰：字符编码笔记</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81">字符编码-wiki百科</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E6%97%A5%E9%9F%93%E8%B6%8A%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97">CJK-wiki百科</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[我的利器]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/23/tools/"/>
+    <updated>2013-09-23T11:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/23/tools</id>
+    <content type="html"><![CDATA[<p>古语有云：<strong>工欲善其事，必先利其器</strong>。 <br/>
+学习计算机也是这样， 总结最近几年学习计算机专业的经验，我把我认为非常有用的软件，网站，工具等做了下总结：</p>
+
+<blockquote><ul>
+<li>Sublime Text，一款文本编辑器，跨平台，用起来非常舒服，可称之为神器。</li>
+<li>Git，一个分布式的版本控制系统</li>
+<li>GitHub， 用于使用Git版本控制系统项目的共享虚拟主机服务</li>
+<li>MindManager，思维导图</li>
+<li>VMware，虚拟机</li>
+<li>Powerdesigner，数据库设计软件</li>
+<li>Baidu Cloud，国内速度快，超稳定，容量大的网盘，太好用了！</li>
+<li>MOOC，大规模开放在线课堂</li>
+<li>Evernote，印象笔记，看课程做笔记就靠他了，其中的“马克飞象”扩展特别好用，可以用markdown语法些笔记</li>
+<li>Octopress，写博客的神器</li>
+<li>Raspberry Pi，树莓派，廉价低功耗Linux电脑，任你折腾</li>
+<li>LaTeX，排版利器，写论文必会</li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<p>顺便说一句，最近用如下组合用的特别爽：</p>
+
+<blockquote><p>Octopress + GitHub + Evernote（马克飞象）</p></blockquote>
+
+<p>Evernote（马克飞象）的跨平台，云同步，可以让我在Windows和Linux上编辑同一篇文章，Octopress+ GitHub Pages的黑客式写博客的方式就不用多说了。<strong>简洁的Markdown语法，方便的印象笔记，让人欲罢不能</strong>。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[我的Git常用命令]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/20/my-git-command/"/>
+    <updated>2013-09-20T16:50:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/20/my-git-command</id>
+    <content type="html"><![CDATA[<p>使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
+<img class="right" src="http://GinSmile.github.io/images/pic/git_logo.png" width="130" height="130" title="welcome" alt="welcome"></p>
+
+<h2>设置</h2>
+
+<p>设置邮箱和用户名</p>
+
+<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
+git config --global user.name "GinSmile"
+</code></pre>
+
+<p>生成SSH Key</p>
+
+<pre><code>ssh-keygen -t rsa -C "example@163.com"
+....然后提示输入密码什么的
+</code></pre>
+
+<!--more-->
+
+
+<h2>创建</h2>
+
+<p>初始化本地库</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>克隆远程版本库</p>
+
+<pre><code>git clone git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>添加远程分支(添加Algorithm项目的dev分支到本地)</p>
+
+<pre><code>git remote add dev git@github.com:GinSmile/Algorithms.git
+</code></pre>
+
+<p>查看远程分支</p>
+
+<pre><code>git remote -v
+</code></pre>
+
+<h2>提交</h2>
+
+<p>提交</p>
+
+<pre><code>git add .
+git commit -m "some comment"
+</code></pre>
+
+<p>更改上次提交的comment注释</p>
+
+<pre><code>git commit -amend "new comment"
+</code></pre>
+
+<p>查看状态，即查看那些文章被修改了</p>
+
+<pre><code>git status
+</code></pre>
+
+<p>查看提交的历史记录</p>
+
+<pre><code>git log
+</code></pre>
+
+<h2>删除</h2>
+
+<p>从当前跟踪列表中移除文件，并完全删除</p>
+
+<pre><code>git rm Readme.md
+</code></pre>
+
+<p>仅仅在暂存区删除，不再跟踪该文件，并在目录中保留</p>
+
+<pre><code>git rm --cached Readme.md
+</code></pre>
+
+<h2>分支</h2>
+
+<p>创建一个名为dev的分支</p>
+
+<pre><code>git branch dev
+</code></pre>
+
+<p>切换到dev分支</p>
+
+<pre><code>git checkout dev
+</code></pre>
+
+<p>创建并切换到dev分支（等同于以上两个命令）</p>
+
+<pre><code>git checkout -b dev
+</code></pre>
+
+<h2>合并</h2>
+
+<p>从远程库中拉去最新文件，并自动合并</p>
+
+<pre><code>git pull
+</code></pre>
+
+<p>合并分支（当前分支为master，要合并dev的更改）</p>
+
+<pre><code>git merge dev
+</code></pre>
+
+<h2>忽略</h2>
+
+<p>即.gitignore文件，可忽略文件夹和文件
+忽略文件夹</p>
+
+<pre><code>bin
+</code></pre>
+
+<p>忽略文件</p>
+
+<pre><code>*.c
+</code></pre>
+
+<p>最近发现一张特别棒的Git 命令思维导图，特拿来备份，感谢原作者。
+<img class="center" src="http://GinSmile.github.io/images/pic/git.png"  title="welcome" alt="welcome"></p>
+
+<h2>一个简单的Git工作流程</h2>
+
+<pre><code>#创建develop分支：
+git branch develop
+
+#切换到develop分支
+git checkout develop
+
+#做一些更改后提交
+git commit -m "some changes"
+
+# 切换到Master分支
+git checkout master
+
+# 对Develop分支进行合并
+git merge –no–ff develop
+</code></pre>
+
+<p>参数<code>–no–ff</code>代表<strong>快进式合并</strong>（fast-farward merge），会直接将Master分支指向Develop分支。</p>
+
+<h2>参考资料：</h2>
+
+<blockquote><ul>
+<li><a href="http://rogerdudler.github.io/git-guide/index.zh.html">Git Guide</a></li>
+<li><a href="https://code.csdn.net/help/CSDN_Code/code_support/Progit_Index">Pro Git</a></li>
+<li><a href="http://www.oschina.net/question/54100_74533">开源中国社区</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Weibo Robot]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/19/weibo-robot/"/>
+    <updated>2013-09-19T12:01:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/19/weibo-robot</id>
+    <content type="html"><![CDATA[<p>最近偷偷搞了一个微博机器人，第一版算是完成了吧，虽然还有bug，但不影响使用。  <br/>
+这个机器人是基于新浪微博的python api，搭建在我的Raspberry Pi上的，因为我想让她更像一个人，所以加了很多图片和语录，导致程序有点大，仅仅图片就20M&hellip;.OMG~~  <br/>
+以下是她的功能：
+<img class="right" src="http://GinSmile.github.io/images/pic/sina_logo.png" width="224" height="71" title="sina" alt="sina"></p>
+
+<blockquote><ol>
+<li>每小时发布一条密友微博，以监控树莓派的状态</li>
+<li>每天发布7条普通微博，[图片 or 问候语 or 监控信息] 随机搭配</li>
+<li>回复提到我的原创微博，随机回复其[天气预报 or 问候语]</li>
+<li>回复提到我的评论（不包括点击回复按钮那种评论），随机回复其一些评论</li>
+</ol>
+</blockquote>
+
+<!--more-->
+
+
+<p>下面是项目地址：<a href="https://github.com/GinSmile/QRobot">https://github.com/GinSmile/QRobot</a></p>
+
+<p>Demo：<a href="http://weibo.com/u/3798238610">http://weibo.com/u/3798238610</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python列表推导式]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/16/liebiao/"/>
+    <updated>2013-09-16T21:05:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/16/liebiao</id>
+    <content type="html"><![CDATA[<p>真是超级喜欢这个语法，大赞!  <br/>
+最近在看《某科学的超电磁炮》，感觉婚后光子玩python玩的不错～～哈哈</p>
+
+<!--more-->
+
+
+<h4>列表推导式能轻易完成复杂的工作</h4>
+
+<p>先来一段有名的三行快排：</p>
+
+<pre><code>def qsort(L):
+    if len(L)&lt;=0: return L
+    return qsort([x for x in L if x&lt;L[0]]) + [x for x in L if x==L[0]] + qsort([x for x in L if x&gt;L[0]])
+
+L=[1, 3, 4, 5, 6, 77, 23, 12]
+L=qsort(L)
+print L
+</code></pre>
+
+<p>真是太劲爆了，短短三行，就把快排的思想显露无疑。下面来分析一下：     <br/>
+<img class="right" src="http://GinSmile.github.io/images/pic/mypython.png" width="190" height="240" title="婚后光子" alt="婚后光子"></p>
+
+<blockquote><p><code>[x for x in L if x&lt;L[0]]</code>指的是把L中小于L[0]的提取出来组成一个列表     <br/>
+<code>[x for x in L if x==L[0]]</code>指的是把L中等于L[0]的提取出来组成一个列表     <br/>
+<code>qsort([x for x in L if x&gt;L[0]])</code>指的是把L中大于L[0]的提取出来组成一个列表</p></blockquote>
+
+<p>列表推导式不是真正的语句，是看起来像循环的表达式，即：<em>轻量级循环</em>。</p>
+
+<h4>列表推导式也可以推导出元组列表</h4>
+
+<p>比如：</p>
+
+<pre><code>[(x, y) for x in range(3) for y in range(3)]
+</code></pre>
+
+<p>运行结果为：[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raspberry Pi 把玩记录]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/16/raspberry-pi/"/>
+    <updated>2013-09-16T20:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/16/raspberry-pi</id>
+    <content type="html"><![CDATA[<h1>树莓派</h1>
+
+<p>树莓派是个好东西！</p>
+
+<h3>1. 配置</h3>
+
+<p>它是一款基于Linux的卡片大小的微型电脑，我买的是红板（国产B版）：</p>
+
+<pre><code>树莓派主板
+散热片
+开关电源线
+网线 
+class10 8G SD卡
+</code></pre>
+
+<p>由于我是在笔记本上利用远程登陆控制树莓派，所以以下配件不需要，等回家有电视了之后再鼓捣：</p>
+
+<pre><code>无线网卡
+HDMI线 
+</code></pre>
+
+<!--more-->
+
+
+<p><img class="right" src="http://GinSmile.github.io/images/pic/Pi_Logo.png" width="190" height="240" title="Pi_Logo" alt="Pi_Logo"></p>
+
+<h3>2. 安装过程中遇到的问题</h3>
+
+<p>在安装中文的时候，有一个错：</p>
+
+<pre><code>perl: warning: Setting locale failed
+</code></pre>
+
+<p>这时候，在home目录中，打开.bashrc <code>vi .bashrc</code>，在.bashrc文件內底部添加下面一句即可：</p>
+
+<pre><code>export LC_ALL=C
+</code></pre>
+
+<h3>3. 使用windows的mstsc登陆树莓派（远程桌面方式）</h3>
+
+<p>在putty中输入以下命令，安装xrdp：</p>
+
+<pre><code>sudo apt-get install xrdp
+</code></pre>
+
+<p>然后再windows的运行中输入：mstsc进入远程桌面，输入树莓派的IP地址即可</p>
+
+<h3>4. 在树莓派上安装weibo sdk</h3>
+
+<p>首先安装pip</p>
+
+<pre><code>sudo apt-get install python-pip
+</code></pre>
+
+<p>然后</p>
+
+<pre><code>pip install sinaweibopy
+</code></pre>
+
+<h3>5. 利用samba树莓派和PC共享文件夹</h3>
+
+<p>由于Raspberry Pi内存很小，在上面编程非常卡，所以我就利用windows和树莓派的共享文件夹，在windows下编写程序，然后复制到tmp文件夹里。 <br/>
+利用下面命令安装samba</p>
+
+<pre><code>sudo apt-get install samba
+sudo apt-get install samba-common-bin
+</code></pre>
+
+<p>配置，修改<code>/ect/samba/</code>目录下</p>
+
+<pre><code>+ 重命名smb.conf为smb.conf.backup
++ 新建一个文件，命名为smb.conf,内容如下：
+
+       [global]
+       log file = /var/log/samba/log.%m
+       [tmp]
+       comment = Temporary file space
+       path = /tmp
+       read only = no
+       public = yes
++ 保存完毕后输入`sudo /etc/init.d/samba retsart`，开启samba服务。
++ 在树莓派终端输入`sudo useradd admin`创建用户admin
++ 在`/etc/samba/`文件夹下建立smbpasswd文件，命令为：`sudo touch /etc/samba/smbpasswd`
++ 设置密码，命令`sudo smbpasswd -a admin `
++ 此时，就能在windows的网络里面找到名为RASPBERRY的网络，然后点进去输入刚才的用户名，密码，这里的tmp文件夹即为共享文件夹。   
+</code></pre>
+
+<p>Tips： <br/>
+我利用这个文件夹和Github实现项目的云同步的功能，首先在windows上编写程序，上传到Github上，在网络tmp文件夹下<code>git clone</code>和<code>git pull</code>来更新。这样即使树莓派不安装git也可以。</p>
+
+<h3>参考资料</h3>
+
+<p><a href="http://www.eeboard.com/bbs/thread-5473-1-1.html">爱板网</a></p>
+
+<p><a href="http://www.shumeipai.net">树莓派论坛</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[matrix effect]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/04/matrix-effect/"/>
+    <updated>2013-09-04T10:13:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/04/matrix-effect</id>
+    <content type="html"><![CDATA[<p>最近在学习python，其中的游戏库pygame也是刚刚入门。发现其实游戏编写并不是很难，逻辑清晰，一点点实现，一个稍大点的游戏完全可以做。由于刚刚入门，所以就写了一个小程序，用来实现类似黑客帝国的01弹幕效果。 <br/>
+这个小程序主要利用了pygame的font库，首先生成一条长度随机速度随机的字幕，然后将其顺时针旋转90度，代码中注释非常详细，这里不再赘述。</p>
+
+<!--more-->
+
+
+<p>实现代码如下</p>
+
+<div><script src='https://gist.github.com/6426839.js'></script>
+<noscript><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html class=&quot;  &quot;&gt;
+&lt;head prefix=&quot;og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#&quot;&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+
+  &lt;title&gt;The Matrix effect，黑客帝国的弹幕效果&lt;/title&gt;
+
+  &lt;meta content=&quot;authenticity_token&quot; name=&quot;csrf-param&quot; /&gt;
+&lt;meta content=&quot;AkYIIelchDn1teQ6sTmCDXk36VNZVOzEbLuJ27ccpNP8sNQTsDiN0RuDe5BuAvINvPGfguR6VEcXIdIhjT7t7w==&quot; name=&quot;csrf-token&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=960&quot;&gt;
+
+
+    &lt;link type=&quot;text/plain&quot; rel=&quot;author&quot; href=&quot;https://github.com/humans.txt&quot; /&gt;
+    &lt;meta content=&quot;gist&quot; name=&quot;octolytics-app-id&quot; /&gt;&lt;meta content=&quot;collector.githubapp.com&quot; name=&quot;octolytics-host&quot; /&gt;&lt;meta content=&quot;collector-cdn.github.com&quot; name=&quot;octolytics-script-host&quot; /&gt;&lt;meta content=&quot;70E8C355:338A:97DD126:53DE49E3&quot; name=&quot;octolytics-dimension-request_id&quot; /&gt;
+  &lt;link rel=&quot;assets&quot; href=&quot;https://gist-assets.github.com/&quot;&gt;
+
+
+  &lt;link href=&quot;https://gist-assets.github.com/assets/application-6aa95e92e16bc9aede46492c2b44dabd.css&quot; media=&quot;screen, print&quot; rel=&quot;stylesheet&quot; /&gt;
+  &lt;script src=&quot;https://gist-assets.github.com/assets/application-b0ad1b04929e096cce129a42fbef61fc.js&quot;&gt;&lt;/script&gt;
+
+      &lt;meta name=&quot;twitter:card&quot; content=&quot;summary&quot;&gt;
+  &lt;meta name=&quot;twitter:site&quot; content=&quot;@github&quot;&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;GinSmile/MatrixEffect&quot;&gt;
+  &lt;meta property=&quot;og:type&quot; content=&quot;githubog:gist&quot;&gt;
+  &lt;meta property=&quot;og:url&quot; content=&quot;https://gist.github.com/GinSmile/6426839&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://avatars2.githubusercontent.com/u/3349829?s=140&quot;&gt;
+  &lt;meta property=&quot;og:site_name&quot; content=&quot;GitHub Gists&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;The Matrix effect，黑客帝国的弹幕效果 - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;The Matrix effect，黑客帝国的弹幕效果 - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+
+
+&lt;/head&gt;
+
+&lt;body class=&quot; &quot;
+  data-plan=&quot;&quot;&gt;
+
+  &lt;div id=&quot;wrapper&quot;&gt;
+    
+
+    &lt;div id=&quot;header&quot; class=&quot;header header-logged-out&quot;&gt;
+      &lt;div class=&quot;container&quot; class=&quot;clearfix&quot;&gt;
+        &lt;a class=&quot;header-logo-wordmark&quot; href=&quot;https://gist.github.com/&quot;&gt;&lt;/a&gt;
+
+        &lt;div class=&quot;header-actions&quot;&gt;
+          &lt;a class=&quot;button primary&quot; href=&quot;https://github.com/signup?return_to=gist&quot;&gt;Sign up for a GitHub account&lt;/a&gt;
+          &lt;a class=&quot;button&quot; href=&quot;https://gist.github.com/login?return_to=%2FGinSmile%2F6426839&quot; data-skip-pjax&gt;Sign in&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;divider-vertical&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;topsearch&quot;&gt;
+  &lt;form id=&quot;top_search_form&quot; action=&quot;/search&quot; data-pjax-remote=push accept-charset=&quot;UTF-8&quot;&gt;
+    &lt;div class=&quot;search&quot;&gt;
+      &lt;input type=&quot;text&quot; class=&quot;search js-search js-navigation-enable &quot; name=&quot;q&quot; placeholder=&quot;Search&amp;#x2026;&quot; data-hotkey=&quot;/&quot; autocomplete=off autocorrect=off value=&quot;&quot; &gt;
+
+    &lt;/div&gt;
+    &lt;div class=&quot;divider-vertical&quot;&gt;&lt;/div&gt;
+  &lt;/form&gt;
+  &lt;ul class=&quot;top-nav&quot;&gt;
+    &lt;li class=&quot;explore&quot;&gt;&lt;a href=&quot;/discover&quot;&gt;All Gists&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;site-content&quot; id=&quot;js-pjax-container&quot; data-pjax-container&gt;
+      &lt;div id=&quot;js-flash-container&quot; class=&quot;site-container js-site-container&quot; data-url=&quot;/GinSmile/6426839&quot;&gt;
+  
+  
+
+&lt;meta content=&quot;true&quot; name=&quot;octolytics-dimension-public&quot; /&gt;&lt;meta content=&quot;6426839&quot; name=&quot;octolytics-dimension-gist_id&quot; /&gt;&lt;meta content=&quot;6426839&quot; name=&quot;octolytics-dimension-gist_name&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-anonymous&quot; /&gt;&lt;meta content=&quot;3349829&quot; name=&quot;octolytics-dimension-owner_id&quot; /&gt;&lt;meta content=&quot;GinSmile&quot; name=&quot;octolytics-dimension-owner_login&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-forked&quot; /&gt;
+
+&lt;div class=&quot;pagehead repohead&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;title-actions-bar&quot;&gt;
+      &lt;ul class=&quot;pagehead-actions&quot;&gt;
+
+
+      &lt;/ul&gt;
+      &lt;h1 itemscope itemtype=&quot;http://data-vocabulary.org/Breadcrumb&quot; class=&quot;entry-title public&quot; &gt;
+  &lt;span class=&quot;repo-label&quot;&gt;&lt;span class=&quot;&quot; &gt;public&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;mega-octicon octicon-gist&quot; &gt;&lt;/span&gt;
+  &lt;div class=&quot;meta&quot;&gt;
+    &lt;div class=&quot;gist-author&quot;&gt;
+      &lt;img src=&quot;https://avatars2.githubusercontent.com/u/3349829?s=140&quot; width=&quot;26&quot; height=&quot;26&quot;&gt;
+        &lt;span class=&quot;author vcard&quot;&gt;
+            &lt;span itemprop=&quot;title&quot;&gt;&lt;a href=&quot;/GinSmile&quot;&gt;GinSmile&lt;/a&gt;&lt;/span&gt;
+        &lt;/span&gt; /
+      &lt;strong&gt;&lt;a href=&quot;/GinSmile/6426839&quot; class=&quot;js-current-repository&quot;&gt;MatrixEffect&lt;/a&gt;&lt;/strong&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;gist-timestamp&quot;&gt;
+        &lt;span class=&quot;datetime&quot;&gt;Last active &lt;time datetime=&quot;2013-09-04T02:35:02Z&quot; is=&quot;relative-time&quot;&gt;September 04, 2013&lt;/time&gt;&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/h1&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;gist js-gist-container gist-with-sidebar with-full-navigation&quot;
+    data-version=&quot;703ea2cd152b24f7d81df4a3062d4730b67735fc&quot;
+    data-created=&quot;false&quot;
+    data-updated=&quot;false&quot;&gt;
+
+      &lt;div class=&quot;gist-sidebar clearfix&quot;&gt;
+  &lt;div class=&quot;sunken-menu vertical-right repo-nav js-repo-nav js-repository-container-pjax js-octicon-loaders&quot;&gt;
+    &lt;div class=&quot;sunken-menu-contents&quot;&gt;
+      &lt;ul class=&quot;sunken-menu-group&quot;&gt;
+        &lt;li class=&quot;tooltipped tooltipped-w&quot; aria-label=&quot;Code&quot;&gt;
+          &lt;a aria-label=&quot;Code&quot; class=&quot;sunken-menu-item selected&quot; data-pjax=&quot;true&quot; href=&quot;/GinSmile/6426839&quot;&gt;
+            &lt;span class=&quot;octicon octicon-code&quot;&gt;&lt;/span&gt; &lt;span class=&quot;full-word&quot;&gt;Code&lt;/span&gt;
+            &lt;img alt=&quot;&quot; class=&quot;mini-loader&quot; height=&quot;16&quot; src=&quot;https://gist-assets.github.com/assets/spinners/octocat-spinner-32-4ae22f00973f33151cb92eea73616c5c.gif&quot; width=&quot;16&quot; /&gt;
+&lt;/a&gt;        &lt;/li&gt;
+
+          &lt;li class=&quot;tooltipped tooltipped-w&quot; aria-label=&quot;Revisions&quot;&gt;
+            &lt;a aria-label=&quot;Revisions&quot; class=&quot;sunken-menu-item&quot; data-pjax=&quot;true&quot; href=&quot;/GinSmile/6426839/revisions&quot;&gt;
+              &lt;span class=&quot;octicon octicon-git-commit&quot;&gt;&lt;/span&gt; &lt;span class=&quot;full-word&quot;&gt;Revisions&lt;/span&gt;
+              &lt;img alt=&quot;&quot; class=&quot;mini-loader&quot; height=&quot;16&quot; src=&quot;https://gist-assets.github.com/assets/spinners/octocat-spinner-32-4ae22f00973f33151cb92eea73616c5c.gif&quot; width=&quot;16&quot; /&gt;
+              &lt;span class=&#39;counter&#39;&gt;2&lt;/span&gt;
+&lt;/a&gt;          &lt;/li&gt;
+
+
+      &lt;/ul&gt;
+    &lt;/div&gt;&lt;!-- /.sunken-menu-group --&gt;
+  &lt;/div&gt;&lt;!-- /.sunken-menu-contents --&gt;
+
+  &lt;div class=&quot;only-with-full-nav&quot;&gt;
+
+    &lt;div class=&quot;embed-url open&quot; style=&quot;display: block;&quot;&gt;
+      &lt;h3&gt;&lt;strong&gt;Embed&lt;/strong&gt; URL&lt;/h3&gt;
+      &lt;div class=&quot;clone-url-box&quot;&gt;
+        &lt;input type=&quot;text&quot; class=&quot;clone js-url-field&quot; value=&quot;&amp;lt;script src=&amp;quot;https://gist.github.com/GinSmile/6426839.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&quot; readonly=&quot;readonly&quot;&gt;
+        &lt;span class=&quot;url-box-clippy&quot;&gt;
+          &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;&amp;lt;script src=&amp;quot;https://gist.github.com/GinSmile/6426839.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;clone-options&quot;&gt;&lt;/p&gt;
+
+      
+&lt;div class=&quot;clone-url open&quot; data-protocol-type=&quot;http&quot; data-url=&quot;https://gist.github.com/6426839.git&quot;&gt;
+  &lt;h3&gt;&lt;strong&gt;HTTPS&lt;/strong&gt; clone URL&lt;/h3&gt;
+  &lt;div class=&quot;clone-url-box&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;clone url-field js-url-field&quot; value=&quot;https://gist.github.com/6426839.git&quot; readonly=&quot;readonly&quot;&gt;
+    &lt;span class=&quot;url-box-clippy&quot;&gt;
+      &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;https://gist.github.com/6426839.git&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+  
+&lt;div class=&quot;clone-url &quot; data-protocol-type=&quot;ssh&quot; data-url=&quot;git@gist.github.com:/6426839.git&quot;&gt;
+  &lt;h3&gt;&lt;strong&gt;SSH&lt;/strong&gt; clone URL&lt;/h3&gt;
+  &lt;div class=&quot;clone-url-box&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;clone url-field js-url-field&quot; value=&quot;git@gist.github.com:/6426839.git&quot; readonly=&quot;readonly&quot;&gt;
+    &lt;span class=&quot;url-box-clippy&quot;&gt;
+      &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;git@gist.github.com:/6426839.git&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p class=&quot;clone-options&quot;&gt;You can clone with
+      &lt;a href=&quot;#&quot; class=&quot;js-clone-selector&quot; data-protocol=&quot;http&quot;&gt;HTTPS&lt;/a&gt;
+      or &lt;a href=&quot;#&quot; class=&quot;js-clone-selector&quot; data-protocol=&quot;ssh&quot;&gt;SSH&lt;/a&gt;.
+&lt;/p&gt;
+
+
+    &lt;a aria-label=&quot;Download MatrixEffect as a zip file&quot; class=&quot;minibutton sidebar-button&quot; href=&quot;/GinSmile/6426839/download&quot; rel=&quot;nofollow&quot; title=&quot;Download MatrixEffect as a zip file&quot;&gt;
+      &lt;span class=&quot;octicon octicon-cloud-download&quot;&gt;&lt;/span&gt;
+      Download Gist
+&lt;/a&gt;  &lt;/div&gt;&lt;!-- /.only-with-full-nav --&gt;
+
+&lt;/div&gt;
+
+
+    &lt;div class=&quot;gist-content&quot;&gt;
+          &lt;div class=&quot;gist-meta&quot;&gt;
+            &lt;div class=&quot;gist-description&quot;&gt;
+              &lt;p&gt;&lt;div&gt;The Matrix effect，黑客帝国的弹幕效果&lt;/div&gt;&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+      &lt;div class=&quot;files&quot;&gt;
+            &lt;div id=&quot;file-matrixeffect&quot; class=&quot;file &quot;&gt;
+    &lt;a href=&quot;/GinSmile/6426839&quot; class=&quot;link-overlay&quot;&gt;
+    &lt;span class=&quot;link&quot;&gt;View &lt;strong&gt;MatrixEffect&lt;/strong&gt; &lt;span class=&quot;octicon octicon-arrow-right&quot;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class=&quot;meta clearfix&quot;&gt;
+    &lt;div class=&quot;info file-name&quot;&gt;
+      &lt;span class=&quot;icon&quot;&gt;
+        &lt;b class=&quot;octicon octicon-gist&quot;&gt;&lt;/b&gt;
+      &lt;/span&gt;
+      &lt;a aria-label=&quot;Permalink&quot; href=&quot;#file-matrixeffect&quot; class=&quot;tooltipped tooltipped-s permalink&quot;&gt;&lt;strong class=&quot;file-name js-selectable-text&quot;&gt;MatrixEffect&lt;/strong&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;div class=&quot;button-group&quot;&gt;
+        &lt;a aria-label=&quot;View Raw&quot;
+          href=&quot;/GinSmile/6426839/raw/572031c663e68cfdf50aaa51158153e68884582a/MatrixEffect&quot;
+          data-skip-pjax class=&quot;minibutton raw-url js-view-raw&quot;&gt;Raw&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;suppressed&quot;&gt;
+    &lt;a class=&quot;js-show-suppressed-file&quot;&gt;File suppressed. Click to show.&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;blob-wrapper data type-text js-blob-data&quot;&gt;
+    
+
+
+
+    &lt;div class=&quot;file-data&quot;&gt;
+      &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;lines highlight&quot;&gt;
+        &lt;tr&gt;
+          &lt;td class=&quot;line-numbers&quot;&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L1&quot; rel=&quot;file-matrixeffect-L1&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L2&quot; rel=&quot;file-matrixeffect-L2&quot;&gt;2&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L3&quot; rel=&quot;file-matrixeffect-L3&quot;&gt;3&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L4&quot; rel=&quot;file-matrixeffect-L4&quot;&gt;4&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L5&quot; rel=&quot;file-matrixeffect-L5&quot;&gt;5&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L6&quot; rel=&quot;file-matrixeffect-L6&quot;&gt;6&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L7&quot; rel=&quot;file-matrixeffect-L7&quot;&gt;7&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L8&quot; rel=&quot;file-matrixeffect-L8&quot;&gt;8&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L9&quot; rel=&quot;file-matrixeffect-L9&quot;&gt;9&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L10&quot; rel=&quot;file-matrixeffect-L10&quot;&gt;10&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L11&quot; rel=&quot;file-matrixeffect-L11&quot;&gt;11&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L12&quot; rel=&quot;file-matrixeffect-L12&quot;&gt;12&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L13&quot; rel=&quot;file-matrixeffect-L13&quot;&gt;13&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L14&quot; rel=&quot;file-matrixeffect-L14&quot;&gt;14&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L15&quot; rel=&quot;file-matrixeffect-L15&quot;&gt;15&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L16&quot; rel=&quot;file-matrixeffect-L16&quot;&gt;16&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L17&quot; rel=&quot;file-matrixeffect-L17&quot;&gt;17&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L18&quot; rel=&quot;file-matrixeffect-L18&quot;&gt;18&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L19&quot; rel=&quot;file-matrixeffect-L19&quot;&gt;19&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L20&quot; rel=&quot;file-matrixeffect-L20&quot;&gt;20&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L21&quot; rel=&quot;file-matrixeffect-L21&quot;&gt;21&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L22&quot; rel=&quot;file-matrixeffect-L22&quot;&gt;22&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L23&quot; rel=&quot;file-matrixeffect-L23&quot;&gt;23&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L24&quot; rel=&quot;file-matrixeffect-L24&quot;&gt;24&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L25&quot; rel=&quot;file-matrixeffect-L25&quot;&gt;25&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L26&quot; rel=&quot;file-matrixeffect-L26&quot;&gt;26&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L27&quot; rel=&quot;file-matrixeffect-L27&quot;&gt;27&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L28&quot; rel=&quot;file-matrixeffect-L28&quot;&gt;28&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L29&quot; rel=&quot;file-matrixeffect-L29&quot;&gt;29&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L30&quot; rel=&quot;file-matrixeffect-L30&quot;&gt;30&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L31&quot; rel=&quot;file-matrixeffect-L31&quot;&gt;31&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L32&quot; rel=&quot;file-matrixeffect-L32&quot;&gt;32&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L33&quot; rel=&quot;file-matrixeffect-L33&quot;&gt;33&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L34&quot; rel=&quot;file-matrixeffect-L34&quot;&gt;34&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L35&quot; rel=&quot;file-matrixeffect-L35&quot;&gt;35&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L36&quot; rel=&quot;file-matrixeffect-L36&quot;&gt;36&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L37&quot; rel=&quot;file-matrixeffect-L37&quot;&gt;37&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L38&quot; rel=&quot;file-matrixeffect-L38&quot;&gt;38&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L39&quot; rel=&quot;file-matrixeffect-L39&quot;&gt;39&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L40&quot; rel=&quot;file-matrixeffect-L40&quot;&gt;40&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L41&quot; rel=&quot;file-matrixeffect-L41&quot;&gt;41&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L42&quot; rel=&quot;file-matrixeffect-L42&quot;&gt;42&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L43&quot; rel=&quot;file-matrixeffect-L43&quot;&gt;43&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L44&quot; rel=&quot;file-matrixeffect-L44&quot;&gt;44&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L45&quot; rel=&quot;file-matrixeffect-L45&quot;&gt;45&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L46&quot; rel=&quot;file-matrixeffect-L46&quot;&gt;46&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L47&quot; rel=&quot;file-matrixeffect-L47&quot;&gt;47&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L48&quot; rel=&quot;file-matrixeffect-L48&quot;&gt;48&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L49&quot; rel=&quot;file-matrixeffect-L49&quot;&gt;49&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L50&quot; rel=&quot;file-matrixeffect-L50&quot;&gt;50&lt;/span&gt;
+          &lt;/td&gt;
+          &lt;td class=&quot;line-data&quot;&gt;
+            &lt;pre class=&quot;line-pre&quot;&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC1&quot;&gt;#!/usr/bin/env python&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC2&quot;&gt;# coding=utf-8&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC3&quot;&gt;import pygame&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC4&quot;&gt;from pygame.locals import *&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC5&quot;&gt;from sys import exit&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC6&quot;&gt;import random&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC7&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC8&quot;&gt;#初始化&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC9&quot;&gt;pygame.init()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC10&quot;&gt;SCREEN_SIZE = (640, 480)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC11&quot;&gt;screen = pygame.display.set_mode(SCREEN_SIZE, 0, 32) &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC12&quot;&gt;font = pygame.font.SysFont(&amp;quot;arial&amp;quot;, 16);&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC13&quot;&gt;text = []&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC14&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC15&quot;&gt;while True:    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC16&quot;&gt;    line = &amp;#39;&amp;#39;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC17&quot;&gt;    #每条字幕长度随机&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC18&quot;&gt;    for i in range(random.randint(10, 40)):&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC19&quot;&gt;      item = random.randint(0,1)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC20&quot;&gt;      line += str(item)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC21&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC22&quot;&gt;    #随机位置，速度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC23&quot;&gt;    x = random.randint(0, 640)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC24&quot;&gt;    y = -500&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC25&quot;&gt;    sep = random.randint(1, 8)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC26&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC27&quot;&gt;    if pygame.time.get_ticks() % 50 == 1 :&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC28&quot;&gt;        text.append([line, x, y, sep])#文本，x坐标，y坐标，速度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC29&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC30&quot;&gt;    #QUIT&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC31&quot;&gt;    for event in pygame.event.get(): &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC32&quot;&gt;        if event.type==pygame.QUIT:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC33&quot;&gt;            pygame.quit()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC34&quot;&gt;            exit(0)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC35&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC36&quot;&gt;    #黑色背景&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC37&quot;&gt;    screen.fill((0, 0, 0))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC38&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC39&quot;&gt;    #产生每一条字幕，由于render函数不生成跨行的字，所以要用rotate函数顺时针旋转90度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC40&quot;&gt;    for sur in text:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC41&quot;&gt;        textSuf = font.render(sur[0], True, (0, 255, 0))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC42&quot;&gt;        textSuf.convert()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC43&quot;&gt;       playerrot = pygame.transform.rotate(textSuf, -90)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC44&quot;&gt;        screen.blit(playerrot ,(sur[1], sur[2]))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC45&quot;&gt;        sur[2] += sur[3] * 0.1&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC46&quot;&gt;        if sur[2] &amp;gt; 480:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC47&quot;&gt;            text.remove(sur)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC48&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC49&quot;&gt;    #刷新&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC50&quot;&gt;    pygame.display.flip()&lt;/div&gt;&lt;/pre&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+        &lt;div class=&quot;discussion-timeline js-quote-selection-container&quot;&gt;
+
+          &lt;div class=&quot;js-discussion&quot;&gt;
+            
+          &lt;/div&gt;
+
+          &lt;div class=&quot;discussion-timeline-actions&quot;&gt;
+              &lt;div class=&quot;signed-out-comment&quot;&gt;
+    &lt;a class=&quot;button primary&quot; href=&quot;https://github.com/signup?return_to=gist&quot; rel=&quot;nofollow&quot;&gt;Sign up for free&lt;/a&gt;
+    &lt;strong&gt;to join this conversation on GitHub&lt;/strong&gt;.
+    Already have an account?
+  &lt;a href=&quot;https://gist.github.com/login?return_to=%2FGinSmile%2F6426839&quot; rel=&quot;nofollow&quot;&gt;Sign in to comment&lt;/a&gt;
+&lt;/div&gt;
+
+
+          &lt;/div&gt;
+        &lt;/div&gt;&lt;!-- /.discussion-timeline --&gt;
+      &lt;/div&gt;&lt;!-- /.gist-content --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;&lt;!-- /.container --&gt;
+
+  &lt;div class=&quot;context-overlay&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class=&quot;slow-loading-overlay&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;ajax-error-message&quot; class=&quot;flash flash-error&quot;&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;span class=&quot;octicon octicon-alert&quot;&gt;&lt;/span&gt;
+      Something went wrong with that request. Please try again.
+      &lt;a href=&quot;#&quot; class=&quot;octicon octicon-x ajax-error-dismiss&quot;&gt;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+  &lt;footer&gt;
+    &lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;site-footer&quot;&gt;
+    &lt;ul class=&quot;site-footer-links right&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;https://status.github.com/&quot;&gt;Status&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://developer.github.com&quot;&gt;API&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/about&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+
+    &lt;/ul&gt;
+
+    &lt;a href=&quot;/&quot;&gt;
+      &lt;span class=&quot;mega-octicon octicon-mark-github&quot; title=&quot;GitHub &quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;ul class=&quot;site-footer-links&quot;&gt;
+      &lt;li&gt;&amp;copy; 2014 &lt;span title=&quot;0.05077s from github-fe102-cp1-prd.iad.github.net&quot;&gt;GitHub&lt;/span&gt;, Inc.&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/site/terms&quot;&gt;Terms&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/site/privacy&quot;&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/security&quot;&gt;Security&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/contact&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;&lt;!-- /.site-footer --&gt;
+&lt;/div&gt;&lt;!-- /.container --&gt;
+
+  &lt;/footer&gt;
+
+  &lt;div class=&quot;fullscreen-overlay js-fullscreen-overlay&quot; id=&quot;fullscreen_overlay&quot;&gt;
+  &lt;div class=&quot;fullscreen-container js-fullscreen-container&quot;&gt;
+    &lt;div class=&quot;textarea-wrap&quot;&gt;
+      &lt;textarea name=&quot;fullscreen-contents&quot; id=&quot;fullscreen-contents&quot; class=&quot;fullscreen-contents js-fullscreen-contents&quot; placeholder=&quot;&quot; data-suggester=&quot;fullscreen_suggester&quot;&gt;&lt;/textarea&gt;
+        &lt;div class=&quot;suggester-container&quot;&gt;
+            &lt;div class=&quot;suggester fullscreen-suggester js-navigation-container&quot; id=&quot;fullscreen_suggester&quot;
+                data-url=&quot;/GinSmile/6426839/suggestions&quot;&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;fullscreen-sidebar&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w&quot; aria-label=&quot;Exit Zen Mode&quot;&gt;
+      &lt;span class=&quot;mega-octicon octicon-screen-normal&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;theme-switcher js-theme-switcher tooltipped tooltipped-w&quot;
+      aria-label=&quot;Switch themes&quot;&gt;
+      &lt;span class=&quot;octicon octicon-color-mode&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></noscript></div>
+
+
+<p>效果图如下：
+<img class="center" src="http://GinSmile.github.io/images/program_shot/matrix.png" width="449" height="357" title="welcome" alt="welcome"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress博客技巧]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/29/octopressbo-ke-ji-qiao/"/>
+    <updated>2013-08-29T13:42:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/29/octopressbo-ke-ji-qiao</id>
+    <content type="html"><![CDATA[<h2>0.首页仅显示部分</h2>
+
+<p>只需要在post的markdown文档里面适当位置加上<code>&lt;!--more--&gt;</code>即可。这样就不会在首页显示此代码以后的部分。另外，还会在首页的相同位置添加一个read on的链接，点击即可阅读全文。<br/>
+<img class="right" src="http://GinSmile.github.io/images/pic/octopress_logo.png" width="227" height="227" title="octopress_logo" alt="octopress_logo"></p>
+
+<h2>1.插入图片</h2>
+
+<p>参考<a href="http://octopress.org/docs/plugins/image-tag/">Image Tag</a></p>
+
+<pre><code>&lt;img class="right" src="http://GinSmile.github.io/images/pic/octopress_logo.png" width="227" height="227" title="octopress_logo" alt="octopress_logo"&gt;
+</code></pre>
+
+<!--more-->
+
+
+<h2>2.草稿</h2>
+
+<p>只需要在新的post的头步加入<code>published: false</code>即可。  <br/>
+比如本文头部为：</p>
+
+<pre><code>---
+layout: post
+title: "Octopress博客技巧"
+date: 2013-08-29 13:42
+comments: true
+categories: Octopress
+published: false
+---
+</code></pre>
+
+<p>需要注意的是，在使用preview查看的时候，草稿还是会显示的，但是在deploy的时候，草稿并不会在_deploy中生成，也就是说不会在username.github.io上显示。</p>
+
+<h2>3.添加类别</h2>
+
+<p>单个类别：</p>
+
+<pre><code>categories: octopress
+</code></pre>
+
+<p>多个类别：</p>
+
+<pre><code>#方式一
+categories: [octopress, github, algorithm]
+#方式二
+categories:
+- octopress
+- github
+- algorithm
+</code></pre>
+
+<h2>4.rake deploy失败的解决办法</h2>
+
+<p>rake deploy失败通常是因为不小心在GitHub修改了master分支，错误信息大概如下：</p>
+
+<pre><code>## Pushing generated _deploy website
+To git@github.com:GinSmile/ginsmile.github.io.git
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: 无法推送一些引用到 'git@github.com:GinSmile/ginsmile.github.io.git'
+提示：更新被拒绝，因为您当前分支的最新提交落后于其对应的远程分支。
+提示：再次推送前，先与远程变更合并（如 'git pull ...'）。详见
+提示：'git push --help' 中的 'Note about fast-forwards' 小节。    
+</code></pre>
+
+<p>这时候，需要修改RakeFile文件（Octopress目录下）来强制推送，这里参考了<a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">stackoverflow的解决办法</a><br/>
+第264行：</p>
+
+<pre><code>system "git push origin #{deploy_branch}"
+</code></pre>
+
+<p>修改为：</p>
+
+<pre><code>system "git push origin +#{deploy_branch}"
+</code></pre>
+
+<p>注意：此方法使强制推送，会删除GitHub上的所有的本地分支没有的提交。记住推送完毕后再把RakeFile文件改回来。</p>
+
+<h2>5.更换网页favcion</h2>
+
+<p>这个只需要拿一个新的16×16的favicon.png的图片来替换source/favicon.png即可。然后<code>rake generate
+</code>，<code>rake preview</code>就会在localhost:4000端口看到结果。不过有时会由于缓存的原因不能马上看到结果。</p>
+
+<h2>6.rake preview 命令执行后的 TCPServer Error: Address already in use 错误</h2>
+
+<p>这种情况，是因为端口已经被使用了，就需要找到占用端口的进程，然后杀掉！</p>
+
+<pre><code>$ lsof -wni tcp:4000
+$ kill -9 PID
+</code></pre>
+
+<p>PID指的是杀掉的进程的ID，可以从第一个命令中获得。</p>
+
+<h2>7.错误 WARN  Could not determine content-length of response body 的解决</h2>
+
+<p>这是一Webrick引发的问题，详细错误如下：</p>
+
+<pre><code>WARN  Could not determine content-length of response body. Set content-length of the response or set Response#chunked = true
+</code></pre>
+
+<p>可以用以下方法来解决，在<code>Octopress/Gemfile</code>中，添加以下命令：</p>
+
+<pre><code>gem 'thin'
+</code></pre>
+
+<h2>参考资料</h2>
+
+<blockquote><p><a href="http://stackoverflow.com/questions/17609453/rake-gen-deploy-rejected-in-octopress">stackoverflow</a>   <br/>
+<a href="http://octopress.org/docs/blogging/">octopress docs/blogging</a>  <br/>
+<a href="http://blog.chatswood.org.uk/">Chatswood</a>
+<a href="http://stackoverflow.com/questions/9612618/warn-could-not-determine-content-length-of-response-body-set-content-length-of">stackoverflow</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress博客配置]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi/"/>
+    <updated>2013-08-28T23:16:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/bo-ke-pei-zhi</id>
+    <content type="html"><![CDATA[<p>以下介绍了我的Octopress博客的配置情况。</p>
+
+<h2>0.添加主题</h2>
+
+<p>Octopress有很多精美的主题，在这里可以看到很多：<a href="http://opthemes.com/">http://opthemes.com/</a> 。本博客使用了greyshade主题，该主题的作者是<a href="http://shashankmehta.in/">Shashank Mehta</a>，主题的介绍页面在<a href="http://shashankmehta.in/archive/2012/greyshade.html%E3%80%82">http://shashankmehta.in/archive/2012/greyshade.html%E3%80%82</a> <br/>
+这里介绍了greyshade主题的安装：     <br/>
+假设你已经安装好了默认主题，并且当前在octopress目录下，只需要输入以下命令即可：</p>
+
+<pre><code>$ git clone git@github.com:shashankmehta/greyshade.git .themes/greyshade
+$ echo "\$greyshade: color;" &gt;&gt; sass/custom/_colors.scss 
+$ rake "install[greyshade]"
+$ rake generate
+</code></pre>
+
+<!--more-->
+
+
+<h2>1.添加About Me页面</h2>
+
+<p>首先创建about页面：<code>rake new_page["about"]</code>，就会在创建source/about目录的同时创建index.markdown,使用编辑器编辑即可。  <br/>
+然后打开source/_includes/custom/navigation.html，修改成如下：</p>
+
+<pre><code>&lt;ul class="main-navigation"&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/blog/archives"&gt;Archives&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://GinSmile.github.io/about"&gt;About Me&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p><img class="right" src="http://GinSmile.github.io/images/about_shot.png" width="247" height="130" title="image" alt="images">
+然后使用<code>rake generate</code>命令，就会产生相应的静态页面。使用<code>rake preview</code>预览即可。  <br/>
+如果想在username.github.io中看到，不要忘了<code>rake deploy</code>以及git命令提交到github。</p>
+
+<!--more-->
+
+
+<h2>2.添加社会化分享按钮</h2>
+
+<p>只需要添加著名的社会化分享按钮addthis.com即可。去<a href="https://www.addthis.com/get/sharing#.Uh4X56EW3nM">addthis.com</a>注册,获取代码。  <br/>
+将代码粘贴到source/_includes/post/sharing.html中。例如我的sharing.html文件为：</p>
+
+<pre><code>&lt;div class="sharing"&gt;
+    &lt;!-- AddThis Button BEGIN --&gt;
+    &lt;div class="addthis_toolbox addthis_default_style addthis_32x32_style"&gt;
+        &lt;a class="addthis_button_sinaweibo"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_twitter"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_facebook"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_pinterest_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_google_plusone_share"&gt;&lt;/a&gt;
+        &lt;a class="addthis_button_compact"&gt;&lt;/a&gt;&lt;a class="addthis_counter addthis_bubble_style"&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script type="text/javascript"&gt;var addthis_config = {"data_track_addressbar":true};&lt;/script&gt;
+    &lt;script type="text/javascript" src="http://GinSmile.github.io//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"&gt;&lt;/script&gt;
+    &lt;!-- AddThis Button END --&gt;
+</code></pre>
+
+<h2>3.添加社会化评论</h2>
+
+<p>Octopress已经提供了一个评论插件，名为Disqus，我们只需要到Disqus注册帐号，在注册的时候输入网站域名（username.github.io即可）。注册时的shortname很有用，下面代码中要修改的就是shortname！！注册成功后修改octopress目录下的_config.yml文件：</p>
+
+<pre><code>#Disqus Comments
+disqus_short_name: shortname
+disqus_show_comment_count: true
+</code></pre>
+
+<p><em>另外，这里注意，在修改_config.yml的时候，一定要注意冒号后面有个空格，否则在<code>rake generate</code>的时候会有解析错误</em>  <br/>
+最重要的一点，_config.yml文件修改好之后必须generate之后才能在本地preview到。而其他文件，比如post了一个新的文章，如果处在preview状态，刷新一下localhost:4000会立马看到。</p>
+
+<h2>4.添加新浪微博支持</h2>
+
+<p>原始的greyshade主题不支持新浪微博，这里稍加修改，即可在页面左下角显示新浪微博的按钮。本修改方法来自于<a href="http://www.imallen.com/blog/2013/05/12/add-support-for-weibo-and-dribbble-to-greyshade.html">allenhsu</a>，在这里向作者表示感谢。   <br/>
+<img class="left" src="http://GinSmile.github.io/images/social_shot.png" width="282" height="114" title="image" alt="images"></p>
+
+<p>首先，在sass/parts/_header.scss文件中去掉第316行,<code>margin-right: 15px;</code>更改为：</p>
+
+<pre><code>margin-right: 5px;
+margin-bottom: 15px;
+</code></pre>
+
+<p>然后，还是在上一个文件里，在320行往后添加weibo相关代码，最终代码段如下：</p>
+
+<pre><code>        &amp;:hover{
+                opacity: 1;
+            }
+            &amp;.weibo{
+                background: image-url('social/weibo.png') center no-repeat #e32529;
+                border: 1px solid #e32529;
+                &amp;:hover{
+                  border: 1px solid darken(#e32529, 10%);
+                }
+                  }               
+            &amp;.facebook{
+                background: image-url('social/facebook.png') center no-repeat #3B5998;
+                border: 1px solid #3B5998;
+                &amp;:hover{
+                    border: 1px solid darken(#3B5998, 10%);
+                }
+            }
+</code></pre>
+
+<p>第三步，在source/_includes/header.html中，修改代码，在类为social的div下加上如下代码：</p>
+
+<pre><code>&lt;div class="social"&gt;
+
+        &lt;a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo"&gt;Weibo&lt;/a&gt;
+</code></pre>
+
+<p>最后，不要忘了在source/images/social文件夹下添加weibo.png图片，可以直接到我的github<a href="https://github.com/GinSmile/ginsmile.github.io/tree/03f65a6acf8b00988c294b01c701abfbfedb41a1/source/images/social/weibo.png">下载</a>。  <br/>
+如果还不清楚，可在我的github中查看修改过程。点击这个链接：<a href="https://github.com/GinSmile/ginsmile.github.io/commit/03f65a6acf8b00988c294b01c701abfbfedb41a1">commit 添加博文：博客配置，添加新浪添加微博支持</a>,由于我没有把以波浪结尾的临时文件（*~）添加到gitignore，这里有点乱，读者大可忽略所有以波浪线为结尾的文件改动。</p>
+
+<h2>5.imagepop plugin</h2>
+
+<p>这是一个添加图片的插件，可以按照比例缩放图片，点击图片可以查看原图，项目地址在<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a><br/>
+这里重复一下安装过程：</p>
+
+<blockquote><p>在<code>octopress/Gemfile</code>中添加以下代码，就可以得到相应依赖：</p>
+
+<pre><code>    gem 'erubis'
+    gem 'mini_magick'
+</code></pre>
+
+<p>运行<code>bundle install</code>,安装相应依赖
+将开源项目中的<code>_style.scss</code>中的内容添加到<code>octopress/sass/custom/_styles.scss</code>中
+将开源项目中plugins中的两个文件复制<code>octopress/plugins</code>文件夹下
+将开源项目中的imgpop.js文件复制<code>octopress</code>文件夹下   <br/>
+ok~~</p></blockquote>
+
+<h2>参考资料：   </h2>
+
+<blockquote><p><a href="https://github.com/shashankmehta/greyshade">greyshade</a> <br/>
+<a href="http://www.yanjiuyanjiu.com/blog/20130402/">yanjiuyanjiu.com</a>  <br/>
+<a href="http://zonyitoo.github.io/blog/2012/04/14/octopresszhu-ti-ji.markdown/">zonyitoo.github.io</a> <br/>
+<a href="https://bitbucket.org/fudanchii/imgpop/src/2fc043b1713e5de401edb0eea8639502bcc250a8?at=default">imgpop</a></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[用GitHub Pages和Octopress搭建博客]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/"/>
+    <updated>2013-08-28T19:42:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke</id>
+    <content type="html"><![CDATA[<p>本文介绍了在ubuntu 12.04下使用GitHub Pages和Octopress搭建博客的过程。如果读者英文阅读能力良好，强烈建议读者去官方网站阅读文档，其文档已经包含了成功搭建一个博客的绝大部分内容。 <br/>
+文档地址：<a href="https://help.github.com/categories/20/articles">GitHub Pages</a>，<a href="http://octopress.org/docs/">Octopress Document</a> <br/>
+注意：根据官方文档中的步骤安装Ruby 1.9.3可能会遇到一个错误,解决方法请看本文后面部分。</p>
+
+<!--more-->
+
+
+<h1>搭建流程</h1>
+
+<h2>1.注册GitHub帐号</h2>
+
+<p>按照标准流程来注册帐号，创建名为username.github.io的repo，不要添加任何文件。</p>
+
+<h2>2.安装git</h2>
+
+<pre><code>$ sudo apt-add-repository ppa:git-core/ppa
+$ sudo apt-get update
+$ sudo apt-get install git
+</code></pre>
+
+<p>设置git，务必和github上相同</p>
+
+<pre><code>$ git config --global user.name "your username"
+$ git config --global user.email "you email"   
+</code></pre>
+
+<h2>3.产生SSH Key</h2>
+
+<p>首先查看目录中是否有SSH Key</p>
+
+<pre><code>$ cd ～/.ssh
+$ ls
+# Lists the files in your .ssh directory
+</code></pre>
+
+<p>如果目录中没有SSH，则要生成一个新的，做法如下</p>
+
+<pre><code>$ ssh-keygen -t rsa -C "your_email@example.com"
+......
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/you/.ssh/id_rsa):
+# 这里直接打回车，按提示输入密码。（必须输入密码！）
+........
+# 如果成功，则会显示：
+Your identification has been saved in /home/you/.ssh/id_rsa.
+........
+</code></pre>
+
+<p>如果有SSH Key或者刚刚生成了新的SSH，则把SSH添加到剪贴板：</p>
+
+<pre><code>$ sudo apt-get install xclip
+# Downloads and installs xclip.
+
+$ xclip -sel clip &lt; ~/.ssh/id_rsa.pub
+# Copies the contents of the id_rsa.pub file to your clipboard
+</code></pre>
+
+<h2>4.在github中设置SSH</h2>
+
+<p>去GitHub主页，进入Account Settings->SSH Keys->Add SSh Key，把剪贴板中剪贴板中的SSH key粘贴到里面，over。</p>
+
+<h2>5.使用RVM安装Ruby 1.9.3</h2>
+
+<p>这里是用RVM安装Ruby 1.9.3。 <br/>
+首先在终端里输入ruby -version，查看是否安装过ruby。一般如果没有之前没有用过ruby，就不会显示已安装过1.9.3版本。这时候，和官方文档不同，首先要卸载系统默认的ruby和rvm。  <br/>
+<em>这里详细请看网上的一篇博文：<a href="http://zuyunfei.com/2013/04/01/install-ruby-on-ubuntu/">Cloud&rsquo;s Blog</a></em>，这里复制下命令来备份，再次感谢原作者。 <br/>
+卸载系统默认ruby以及rvm</p>
+
+<pre><code>$ sudo apt-get remove --purge ruby-rvm ruby
+$ sudo rm -rf /usr/share/ruby-rvm /etc/rvmrc /etc/profile.d/rvm.sh
+$ rm -rf ~/.rvm* ~/.gem/ ~/.bundle
+</code></pre>
+
+<p>禁止安装doc</p>
+
+<pre><code>$ echo 'gem: --no-rdoc --no-ri' &gt;&gt; ~/.gemrc
+</code></pre>
+
+<p>安装必要的工具和库</p>
+
+<pre><code>$ sudo apt-get install -y \
+  git \
+  build-essential \
+  curl \
+  wget
+</code></pre>
+
+<p>将rvm的配置加入.bashrc中</p>
+
+<pre><code>$ sudo apt-get install -y \
+  build-essential \
+  openssl \
+  libreadline6 \
+  libreadline6-dev \
+  curl \
+  git-core \
+  zlib1g \
+  zlib1g-dev \
+  libssl-dev \
+  libyaml-dev \
+  libxml2-dev \
+  libxslt-dev \
+  autoconf \
+  libc6-dev \
+  ncurses-dev \
+  automake \
+  libtool \
+  bison \
+  subversion \
+  pkg-config \
+  libgdbm-dev
+</code></pre>
+
+<p>安装sqlite3</p>
+
+<pre><code>$ sudo apt-get install -y \ sqlite3 \ libsqlite3-dev
+</code></pre>
+
+<p>安装rvm和ruby，<em>期间可能会提示安装ruby1.9.3,根据提示安装即可</em>。</p>
+
+<pre><code>$ curl -L https://get.rvm.io | bash -s stable --ruby
+$ source ~/.rvm/scripts/rvm
+$ rvm reload
+$ rvm use default
+$ ruby --version 
+</code></pre>
+
+<p>安装cyaml和bundler</p>
+
+<pre><code>$ gem install cyaml --no-ri --no-rdoc
+$ gem install bundler --no-ri --no-rdoc
+</code></pre>
+
+<p>此时输入命令：<code>ruby --version</code>,会显示ruby 1.9.3，表示已经安装好了。</p>
+
+<h2>6.安装Octopress</h2>
+
+<p>克隆 Octopress项目</p>
+
+<pre><code>$ git clone git://github.com/imathis/octopress.git octopress
+$ cd octopress
+</code></pre>
+
+<p>安装依赖</p>
+
+<pre><code>$ gem install bundler
+$ rbenv rehash
+$ bundle install
+</code></pre>
+
+<p>安装默认主题</p>
+
+<pre><code>$ rake install
+</code></pre>
+
+<h2>7.部署网站</h2>
+
+<p>使用此命令<code>rake setup_github_pages</code>设置Octpress和Github的联系。
+这条命令将：</p>
+
+<blockquote><ul>
+<li>询问你的GitHub Pages仓库的URL地址</li>
+<li>重命名远端分支名从这‘origin’到站‘octopress’</li>
+<li>将GitHub Pages项目作为默认的远端分支</li>
+<li>将活动分支将从master转换为source</li>
+<li>根据你的Git仓库地址设置博客的URL</li>
+<li>在<em>deploy分支设置一个master分支，部署用，最终页面的目录最终即最终此文件夹
+使用以下命令在本地预览
+  $ rake generate  //此命令会产生最终的静态页面
+  $ rake preview   //此命令会打开4000端口,可输入localhost:4000预览博客
+使用以下命令将c产生你的blog，产生的文件到</em>deploy目录，然后自动commit，push到github的master分支。
+  $ rake generate
+  $ rake deploy  <br/>
+将改动将更新到github
+  $ git add .
+  $ git commit -m &lsquo;your message&rsquo;
+  $ git push origin source</li>
+</ul>
+</blockquote>
+
+<p>截止到此，一个基于GitHub Pages和Octopress的博客就搭建好了。 现在打开username.github.io就会看到刚刚搭建好的博客，注意：只有deploy到github上之后才会在username.github.io看到最终效果.</p>
+
+<h2>8.发布第一篇博文</h2>
+
+<p>生成博文框架</p>
+
+<pre><code>$ rake new_post[‘文章标题’]
+</code></pre>
+
+<p>此时可以在source/_posts文件夹下看到刚创建的网页。使用markdown语法写一篇博客即可（此处可使用retext编辑Markdown文件）。</p>
+
+<pre><code>$ rake generate  //此命令会产生最终的静态页面
+$ rake preview   //此命令会打开4000端口,可输入在浏览器localhost:4000预览
+$ rake deploy    
+</code></pre>
+
+<h2>9. 安装retext编辑Markdown文章</h2>
+
+<p>网上有不少可以编辑Markdown文件的文档，这里推荐一款retext，适合liunx。</p>
+
+<pre><code>$ sudo apt-add-repository ppa:mitya57
+$ sudo apt-get update
+$ sudo apt-get install retext
+</code></pre>
+
+<h2>参考资料</h2>
+
+<p><a href="https://help.github.com/articles/generating-ssh-keys">GitHub Help</a> <br/>
+<a href="https://help.github.com/categories/20/articles">GitHub Pages</a> <br/>
+<a href="http://octopress.org/docs/">Octopress Document</a>  <br/>
+<a href="http://zuyunfei.com/">zuyunfei.com</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[新博客开通了]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/08/28/xin-bo-ke-kai-tong-liao/"/>
+    <updated>2013-08-28T15:54:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/08/28/xin-bo-ke-kai-tong-liao</id>
+    <content type="html"><![CDATA[<h2>我的新家</h2>
+
+<p>  越来越喜欢github了，不仅有代码托管还有博客框架提供。本博客是利用GitHub Pages和Octopress搭建成功的。<br/>
+Markdown真的很棒，用它来写作真的很舒服。另外，像黑客一样写博客的感觉真的很爽。^.^b 今后争取把高质量的文章放到这里。</p>
+]]></content>
+  </entry>
+  
+</feed>

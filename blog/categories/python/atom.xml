@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: python | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python编码转换]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/25/python-encoding/"/>
+    <updated>2013-09-25T10:37:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/25/python-encoding</id>
+    <content type="html"><![CDATA[<p>python中默认使用ASCII编码，但是如果出现中文等非ASCII字符就要使用其他编码方式了。定义程序的编码方式有好几种，只要满足正则表达式：</p>
+
+<pre><code>\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$                            
+</code></pre>
+
+<p>即可。最常见的是在第一行或者第二行写上字符：<code># -*- coding:utf-8 -*-</code>  或者 <code>#coding=utf-8</code></p>
+
+<!--more-->
+
+
+<h2>其他编码转换为unicode</h2>
+
+<p>使用函数unicode(s,encoding) 或者s.decode(encoding)，就可以将gb2312，utf-8，GBK等编码转换为unicode，例如将utf-8转换成unicode：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+#文件保存为UTF-8格式
+s = '汉字'
+
+#utf-8转换成unicode
+s_unicode = s.decode("utf-8")  
+s_unicode2 = unicode(s,'utf-8') #第二种方法
+s_unicode3 = u'汉字' #第三种方法
+print s_unicode == s_unicode2 #True
+print s_unicode == s_unicode3 #True
+</code></pre>
+
+<h2>unicode转化成其他编码</h2>
+
+<p>如果字符串为ascii或者unicode编码，就可以直接使用encode方法：</p>
+
+<pre><code># -*- coding: UTF-8 -*-
+s_unicode = u'汉字'
+
+#utf-8转换成gbk
+s_gbk = s_unicode.encode('gbk')
+</code></pre>
+
+<p>若直接使用encode方法，Python会自动的先把s解码为unicode，然后再编码成一定的编码方法。
+若s不是ascii编码或是unicode编码而直接使用encode方法，如下：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+s_utf8.encode('gbk') #error
+</code></pre>
+
+<p>会出现以下错误：</p>
+
+<pre><code>UnicodeDecodeError: 'ascii' codec can't decode byte 0xe6 in position 0: ordinal not in range(128)
+</code></pre>
+
+<h2>非unicode编码之间的转换</h2>
+
+<p>这个要拿unicode当作中间编码</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+#utf-8转换成gbk
+s_gbk = s_utf8.decode('utf-8').encode('gbk')
+
+#utf-8转换成gb2312
+s_gb2312 = s_utf8.decode('utf-8').encode('gb2312')
+
+#gbk转换成gb2312
+s_gb2312_next = s_gbk.decode('gbk').encode('gb2312')
+print s_gb2312 == s_gb2312_next #True
+</code></pre>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.pythonclub.org/python-basic/codec">python编码转换</a></li>
+<li><a href="http://my.oschina.net/u/1178546/blog/146660">python编码注释</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Weibo Robot]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/19/weibo-robot/"/>
+    <updated>2013-09-19T12:01:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/19/weibo-robot</id>
+    <content type="html"><![CDATA[<p>最近偷偷搞了一个微博机器人，第一版算是完成了吧，虽然还有bug，但不影响使用。  <br/>
+这个机器人是基于新浪微博的python api，搭建在我的Raspberry Pi上的，因为我想让她更像一个人，所以加了很多图片和语录，导致程序有点大，仅仅图片就20M&hellip;.OMG~~  <br/>
+以下是她的功能：
+<img class="right" src="/images/pic/sina_logo.png" width="224" height="71" title="&lsquo;sina&rsquo; &lsquo;sina&rsquo;" ></p>
+
+<blockquote><ol>
+<li>每小时发布一条密友微博，以监控树莓派的状态</li>
+<li>每天发布7条普通微博，[图片 or 问候语 or 监控信息] 随机搭配</li>
+<li>回复提到我的原创微博，随机回复其[天气预报 or 问候语]</li>
+<li>回复提到我的评论（不包括点击回复按钮那种评论），随机回复其一些评论</li>
+</ol>
+</blockquote>
+
+<!--more-->
+
+
+<p>下面是项目地址：<a href="https://github.com/GinSmile/QRobot">https://github.com/GinSmile/QRobot</a></p>
+
+<p>Demo：<a href="http://weibo.com/u/3798238610">http://weibo.com/u/3798238610</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[python列表推导式]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/16/liebiao/"/>
+    <updated>2013-09-16T21:05:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/16/liebiao</id>
+    <content type="html"><![CDATA[<p>真是超级喜欢这个语法，大赞!  <br/>
+最近在看《某科学的超电磁炮》，感觉婚后光子玩python玩的不错～～哈哈</p>
+
+<!--more-->
+
+
+<h4>列表推导式能轻易完成复杂的工作</h4>
+
+<p>先来一段有名的三行快排：</p>
+
+<pre><code>def qsort(L):
+    if len(L)&lt;=0: return L
+    return qsort([x for x in L if x&lt;L[0]]) + [x for x in L if x==L[0]] + qsort([x for x in L if x&gt;L[0]])
+
+L=[1, 3, 4, 5, 6, 77, 23, 12]
+L=qsort(L)
+print L
+</code></pre>
+
+<p>真是太劲爆了，短短三行，就把快排的思想显露无疑。下面来分析一下：     <br/>
+<img class="right" src="/images/pic/mypython.png" width="190" height="240" title="&lsquo;婚后光子&rsquo; &lsquo;婚后光子&rsquo;" ></p>
+
+<blockquote><p><code>[x for x in L if x&lt;L[0]]</code>指的是把L中小于L[0]的提取出来组成一个列表     <br/>
+<code>[x for x in L if x==L[0]]</code>指的是把L中等于L[0]的提取出来组成一个列表     <br/>
+<code>qsort([x for x in L if x&gt;L[0]])</code>指的是把L中大于L[0]的提取出来组成一个列表</p></blockquote>
+
+<p>列表推导式不是真正的语句，是看起来像循环的表达式，即：<em>轻量级循环</em>。</p>
+
+<h4>列表推导式也可以推导出元组列表</h4>
+
+<p>比如：</p>
+
+<pre><code>[(x, y) for x in range(3) for y in range(3)]
+</code></pre>
+
+<p>运行结果为：[(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)]</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[matrix effect]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/04/matrix-effect/"/>
+    <updated>2013-09-04T10:13:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/04/matrix-effect</id>
+    <content type="html"><![CDATA[<p>最近在学习python，其中的游戏库pygame也是刚刚入门。发现其实游戏编写并不是很难，逻辑清晰，一点点实现，一个稍大点的游戏完全可以做。由于刚刚入门，所以就写了一个小程序，用来实现类似黑客帝国的01弹幕效果。 <br/>
+这个小程序主要利用了pygame的font库，首先生成一条长度随机速度随机的字幕，然后将其顺时针旋转90度，代码中注释非常详细，这里不再赘述。</p>
+
+<!--more-->
+
+
+<p>实现代码如下
+<div><script src='https://gist.github.com/6426839.js'></script>
+<noscript><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html class=&quot;  &quot;&gt;
+&lt;head prefix=&quot;og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#&quot;&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;
+
+  &lt;title&gt;The Matrix effect，黑客帝国的弹幕效果&lt;/title&gt;
+
+  &lt;meta content=&quot;authenticity_token&quot; name=&quot;csrf-param&quot; /&gt;
+&lt;meta content=&quot;AkYIIelchDn1teQ6sTmCDXk36VNZVOzEbLuJ27ccpNP8sNQTsDiN0RuDe5BuAvINvPGfguR6VEcXIdIhjT7t7w==&quot; name=&quot;csrf-token&quot; /&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=960&quot;&gt;
+
+
+    &lt;link type=&quot;text/plain&quot; rel=&quot;author&quot; href=&quot;https://github.com/humans.txt&quot; /&gt;
+    &lt;meta content=&quot;gist&quot; name=&quot;octolytics-app-id&quot; /&gt;&lt;meta content=&quot;collector.githubapp.com&quot; name=&quot;octolytics-host&quot; /&gt;&lt;meta content=&quot;collector-cdn.github.com&quot; name=&quot;octolytics-script-host&quot; /&gt;&lt;meta content=&quot;70E8C355:338A:97DD126:53DE49E3&quot; name=&quot;octolytics-dimension-request_id&quot; /&gt;
+  &lt;link rel=&quot;assets&quot; href=&quot;https://gist-assets.github.com/&quot;&gt;
+
+
+  &lt;link href=&quot;https://gist-assets.github.com/assets/application-6aa95e92e16bc9aede46492c2b44dabd.css&quot; media=&quot;screen, print&quot; rel=&quot;stylesheet&quot; /&gt;
+  &lt;script src=&quot;https://gist-assets.github.com/assets/application-b0ad1b04929e096cce129a42fbef61fc.js&quot;&gt;&lt;/script&gt;
+
+      &lt;meta name=&quot;twitter:card&quot; content=&quot;summary&quot;&gt;
+  &lt;meta name=&quot;twitter:site&quot; content=&quot;@github&quot;&gt;
+  &lt;meta property=&quot;og:title&quot; content=&quot;GinSmile/MatrixEffect&quot;&gt;
+  &lt;meta property=&quot;og:type&quot; content=&quot;githubog:gist&quot;&gt;
+  &lt;meta property=&quot;og:url&quot; content=&quot;https://gist.github.com/GinSmile/6426839&quot;&gt;
+  &lt;meta property=&quot;og:image&quot; content=&quot;https://avatars2.githubusercontent.com/u/3349829?s=140&quot;&gt;
+  &lt;meta property=&quot;og:site_name&quot; content=&quot;GitHub Gists&quot;&gt;
+  &lt;meta property=&quot;og:description&quot; content=&quot;The Matrix effect，黑客帝国的弹幕效果 - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+  &lt;meta name=&quot;description&quot; content=&quot;The Matrix effect，黑客帝国的弹幕效果 - Gist is a simple way to share snippets of text and code with others.&quot;&gt;
+
+
+&lt;/head&gt;
+
+&lt;body class=&quot; &quot;
+  data-plan=&quot;&quot;&gt;
+
+  &lt;div id=&quot;wrapper&quot;&gt;
+    
+
+    &lt;div id=&quot;header&quot; class=&quot;header header-logged-out&quot;&gt;
+      &lt;div class=&quot;container&quot; class=&quot;clearfix&quot;&gt;
+        &lt;a class=&quot;header-logo-wordmark&quot; href=&quot;https://gist.github.com/&quot;&gt;&lt;/a&gt;
+
+        &lt;div class=&quot;header-actions&quot;&gt;
+          &lt;a class=&quot;button primary&quot; href=&quot;https://github.com/signup?return_to=gist&quot;&gt;Sign up for a GitHub account&lt;/a&gt;
+          &lt;a class=&quot;button&quot; href=&quot;https://gist.github.com/login?return_to=%2FGinSmile%2F6426839&quot; data-skip-pjax&gt;Sign in&lt;/a&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;divider-vertical&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;topsearch&quot;&gt;
+  &lt;form id=&quot;top_search_form&quot; action=&quot;/search&quot; data-pjax-remote=push accept-charset=&quot;UTF-8&quot;&gt;
+    &lt;div class=&quot;search&quot;&gt;
+      &lt;input type=&quot;text&quot; class=&quot;search js-search js-navigation-enable &quot; name=&quot;q&quot; placeholder=&quot;Search&amp;#x2026;&quot; data-hotkey=&quot;/&quot; autocomplete=off autocorrect=off value=&quot;&quot; &gt;
+
+    &lt;/div&gt;
+    &lt;div class=&quot;divider-vertical&quot;&gt;&lt;/div&gt;
+  &lt;/form&gt;
+  &lt;ul class=&quot;top-nav&quot;&gt;
+    &lt;li class=&quot;explore&quot;&gt;&lt;a href=&quot;/discover&quot;&gt;All Gists&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;site-content&quot; id=&quot;js-pjax-container&quot; data-pjax-container&gt;
+      &lt;div id=&quot;js-flash-container&quot; class=&quot;site-container js-site-container&quot; data-url=&quot;/GinSmile/6426839&quot;&gt;
+  
+  
+
+&lt;meta content=&quot;true&quot; name=&quot;octolytics-dimension-public&quot; /&gt;&lt;meta content=&quot;6426839&quot; name=&quot;octolytics-dimension-gist_id&quot; /&gt;&lt;meta content=&quot;6426839&quot; name=&quot;octolytics-dimension-gist_name&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-anonymous&quot; /&gt;&lt;meta content=&quot;3349829&quot; name=&quot;octolytics-dimension-owner_id&quot; /&gt;&lt;meta content=&quot;GinSmile&quot; name=&quot;octolytics-dimension-owner_login&quot; /&gt;&lt;meta content=&quot;false&quot; name=&quot;octolytics-dimension-forked&quot; /&gt;
+
+&lt;div class=&quot;pagehead repohead&quot;&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div class=&quot;title-actions-bar&quot;&gt;
+      &lt;ul class=&quot;pagehead-actions&quot;&gt;
+
+
+      &lt;/ul&gt;
+      &lt;h1 itemscope itemtype=&quot;http://data-vocabulary.org/Breadcrumb&quot; class=&quot;entry-title public&quot; &gt;
+  &lt;span class=&quot;repo-label&quot;&gt;&lt;span class=&quot;&quot; &gt;public&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;mega-octicon octicon-gist&quot; &gt;&lt;/span&gt;
+  &lt;div class=&quot;meta&quot;&gt;
+    &lt;div class=&quot;gist-author&quot;&gt;
+      &lt;img src=&quot;https://avatars2.githubusercontent.com/u/3349829?s=140&quot; width=&quot;26&quot; height=&quot;26&quot;&gt;
+        &lt;span class=&quot;author vcard&quot;&gt;
+            &lt;span itemprop=&quot;title&quot;&gt;&lt;a href=&quot;/GinSmile&quot;&gt;GinSmile&lt;/a&gt;&lt;/span&gt;
+        &lt;/span&gt; /
+      &lt;strong&gt;&lt;a href=&quot;/GinSmile/6426839&quot; class=&quot;js-current-repository&quot;&gt;MatrixEffect&lt;/a&gt;&lt;/strong&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;gist-timestamp&quot;&gt;
+        &lt;span class=&quot;datetime&quot;&gt;Last active &lt;time datetime=&quot;2013-09-04T02:35:02Z&quot; is=&quot;relative-time&quot;&gt;September 04, 2013&lt;/time&gt;&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/h1&gt;
+
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;gist js-gist-container gist-with-sidebar with-full-navigation&quot;
+    data-version=&quot;703ea2cd152b24f7d81df4a3062d4730b67735fc&quot;
+    data-created=&quot;false&quot;
+    data-updated=&quot;false&quot;&gt;
+
+      &lt;div class=&quot;gist-sidebar clearfix&quot;&gt;
+  &lt;div class=&quot;sunken-menu vertical-right repo-nav js-repo-nav js-repository-container-pjax js-octicon-loaders&quot;&gt;
+    &lt;div class=&quot;sunken-menu-contents&quot;&gt;
+      &lt;ul class=&quot;sunken-menu-group&quot;&gt;
+        &lt;li class=&quot;tooltipped tooltipped-w&quot; aria-label=&quot;Code&quot;&gt;
+          &lt;a aria-label=&quot;Code&quot; class=&quot;sunken-menu-item selected&quot; data-pjax=&quot;true&quot; href=&quot;/GinSmile/6426839&quot;&gt;
+            &lt;span class=&quot;octicon octicon-code&quot;&gt;&lt;/span&gt; &lt;span class=&quot;full-word&quot;&gt;Code&lt;/span&gt;
+            &lt;img alt=&quot;&quot; class=&quot;mini-loader&quot; height=&quot;16&quot; src=&quot;https://gist-assets.github.com/assets/spinners/octocat-spinner-32-4ae22f00973f33151cb92eea73616c5c.gif&quot; width=&quot;16&quot; /&gt;
+&lt;/a&gt;        &lt;/li&gt;
+
+          &lt;li class=&quot;tooltipped tooltipped-w&quot; aria-label=&quot;Revisions&quot;&gt;
+            &lt;a aria-label=&quot;Revisions&quot; class=&quot;sunken-menu-item&quot; data-pjax=&quot;true&quot; href=&quot;/GinSmile/6426839/revisions&quot;&gt;
+              &lt;span class=&quot;octicon octicon-git-commit&quot;&gt;&lt;/span&gt; &lt;span class=&quot;full-word&quot;&gt;Revisions&lt;/span&gt;
+              &lt;img alt=&quot;&quot; class=&quot;mini-loader&quot; height=&quot;16&quot; src=&quot;https://gist-assets.github.com/assets/spinners/octocat-spinner-32-4ae22f00973f33151cb92eea73616c5c.gif&quot; width=&quot;16&quot; /&gt;
+              &lt;span class=&#39;counter&#39;&gt;2&lt;/span&gt;
+&lt;/a&gt;          &lt;/li&gt;
+
+
+      &lt;/ul&gt;
+    &lt;/div&gt;&lt;!-- /.sunken-menu-group --&gt;
+  &lt;/div&gt;&lt;!-- /.sunken-menu-contents --&gt;
+
+  &lt;div class=&quot;only-with-full-nav&quot;&gt;
+
+    &lt;div class=&quot;embed-url open&quot; style=&quot;display: block;&quot;&gt;
+      &lt;h3&gt;&lt;strong&gt;Embed&lt;/strong&gt; URL&lt;/h3&gt;
+      &lt;div class=&quot;clone-url-box&quot;&gt;
+        &lt;input type=&quot;text&quot; class=&quot;clone js-url-field&quot; value=&quot;&amp;lt;script src=&amp;quot;https://gist.github.com/GinSmile/6426839.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&quot; readonly=&quot;readonly&quot;&gt;
+        &lt;span class=&quot;url-box-clippy&quot;&gt;
+          &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;&amp;lt;script src=&amp;quot;https://gist.github.com/GinSmile/6426839.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;clone-options&quot;&gt;&lt;/p&gt;
+
+      
+&lt;div class=&quot;clone-url open&quot; data-protocol-type=&quot;http&quot; data-url=&quot;https://gist.github.com/6426839.git&quot;&gt;
+  &lt;h3&gt;&lt;strong&gt;HTTPS&lt;/strong&gt; clone URL&lt;/h3&gt;
+  &lt;div class=&quot;clone-url-box&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;clone url-field js-url-field&quot; value=&quot;https://gist.github.com/6426839.git&quot; readonly=&quot;readonly&quot;&gt;
+    &lt;span class=&quot;url-box-clippy&quot;&gt;
+      &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;https://gist.github.com/6426839.git&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+  
+&lt;div class=&quot;clone-url &quot; data-protocol-type=&quot;ssh&quot; data-url=&quot;git@gist.github.com:/6426839.git&quot;&gt;
+  &lt;h3&gt;&lt;strong&gt;SSH&lt;/strong&gt; clone URL&lt;/h3&gt;
+  &lt;div class=&quot;clone-url-box&quot;&gt;
+    &lt;input type=&quot;text&quot; class=&quot;clone url-field js-url-field&quot; value=&quot;git@gist.github.com:/6426839.git&quot; readonly=&quot;readonly&quot;&gt;
+    &lt;span class=&quot;url-box-clippy&quot;&gt;
+      &lt;button aria-label=&quot;copy to clipboard&quot; class=&quot;js-zeroclipboard minibutton zeroclipboard-button&quot; data-clipboard-text=&quot;git@gist.github.com:/6426839.git&quot; data-copied-hint=&quot;copied!&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;octicon octicon-clippy&quot;&gt;&lt;/span&gt;&lt;/button&gt;
+    &lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;p class=&quot;clone-options&quot;&gt;You can clone with
+      &lt;a href=&quot;#&quot; class=&quot;js-clone-selector&quot; data-protocol=&quot;http&quot;&gt;HTTPS&lt;/a&gt;
+      or &lt;a href=&quot;#&quot; class=&quot;js-clone-selector&quot; data-protocol=&quot;ssh&quot;&gt;SSH&lt;/a&gt;.
+&lt;/p&gt;
+
+
+    &lt;a aria-label=&quot;Download MatrixEffect as a zip file&quot; class=&quot;minibutton sidebar-button&quot; href=&quot;/GinSmile/6426839/download&quot; rel=&quot;nofollow&quot; title=&quot;Download MatrixEffect as a zip file&quot;&gt;
+      &lt;span class=&quot;octicon octicon-cloud-download&quot;&gt;&lt;/span&gt;
+      Download Gist
+&lt;/a&gt;  &lt;/div&gt;&lt;!-- /.only-with-full-nav --&gt;
+
+&lt;/div&gt;
+
+
+    &lt;div class=&quot;gist-content&quot;&gt;
+          &lt;div class=&quot;gist-meta&quot;&gt;
+            &lt;div class=&quot;gist-description&quot;&gt;
+              &lt;p&gt;&lt;div&gt;The Matrix effect，黑客帝国的弹幕效果&lt;/div&gt;&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+
+      &lt;div class=&quot;files&quot;&gt;
+            &lt;div id=&quot;file-matrixeffect&quot; class=&quot;file &quot;&gt;
+    &lt;a href=&quot;/GinSmile/6426839&quot; class=&quot;link-overlay&quot;&gt;
+    &lt;span class=&quot;link&quot;&gt;View &lt;strong&gt;MatrixEffect&lt;/strong&gt; &lt;span class=&quot;octicon octicon-arrow-right&quot;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;/a&gt;
+  &lt;div class=&quot;meta clearfix&quot;&gt;
+    &lt;div class=&quot;info file-name&quot;&gt;
+      &lt;span class=&quot;icon&quot;&gt;
+        &lt;b class=&quot;octicon octicon-gist&quot;&gt;&lt;/b&gt;
+      &lt;/span&gt;
+      &lt;a aria-label=&quot;Permalink&quot; href=&quot;#file-matrixeffect&quot; class=&quot;tooltipped tooltipped-s permalink&quot;&gt;&lt;strong class=&quot;file-name js-selectable-text&quot;&gt;MatrixEffect&lt;/strong&gt;&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;div class=&quot;button-group&quot;&gt;
+        &lt;a aria-label=&quot;View Raw&quot;
+          href=&quot;/GinSmile/6426839/raw/572031c663e68cfdf50aaa51158153e68884582a/MatrixEffect&quot;
+          data-skip-pjax class=&quot;minibutton raw-url js-view-raw&quot;&gt;Raw&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;suppressed&quot;&gt;
+    &lt;a class=&quot;js-show-suppressed-file&quot;&gt;File suppressed. Click to show.&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;blob-wrapper data type-text js-blob-data&quot;&gt;
+    
+
+
+
+    &lt;div class=&quot;file-data&quot;&gt;
+      &lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; class=&quot;lines highlight&quot;&gt;
+        &lt;tr&gt;
+          &lt;td class=&quot;line-numbers&quot;&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L1&quot; rel=&quot;file-matrixeffect-L1&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L2&quot; rel=&quot;file-matrixeffect-L2&quot;&gt;2&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L3&quot; rel=&quot;file-matrixeffect-L3&quot;&gt;3&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L4&quot; rel=&quot;file-matrixeffect-L4&quot;&gt;4&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L5&quot; rel=&quot;file-matrixeffect-L5&quot;&gt;5&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L6&quot; rel=&quot;file-matrixeffect-L6&quot;&gt;6&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L7&quot; rel=&quot;file-matrixeffect-L7&quot;&gt;7&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L8&quot; rel=&quot;file-matrixeffect-L8&quot;&gt;8&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L9&quot; rel=&quot;file-matrixeffect-L9&quot;&gt;9&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L10&quot; rel=&quot;file-matrixeffect-L10&quot;&gt;10&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L11&quot; rel=&quot;file-matrixeffect-L11&quot;&gt;11&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L12&quot; rel=&quot;file-matrixeffect-L12&quot;&gt;12&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L13&quot; rel=&quot;file-matrixeffect-L13&quot;&gt;13&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L14&quot; rel=&quot;file-matrixeffect-L14&quot;&gt;14&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L15&quot; rel=&quot;file-matrixeffect-L15&quot;&gt;15&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L16&quot; rel=&quot;file-matrixeffect-L16&quot;&gt;16&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L17&quot; rel=&quot;file-matrixeffect-L17&quot;&gt;17&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L18&quot; rel=&quot;file-matrixeffect-L18&quot;&gt;18&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L19&quot; rel=&quot;file-matrixeffect-L19&quot;&gt;19&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L20&quot; rel=&quot;file-matrixeffect-L20&quot;&gt;20&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L21&quot; rel=&quot;file-matrixeffect-L21&quot;&gt;21&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L22&quot; rel=&quot;file-matrixeffect-L22&quot;&gt;22&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L23&quot; rel=&quot;file-matrixeffect-L23&quot;&gt;23&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L24&quot; rel=&quot;file-matrixeffect-L24&quot;&gt;24&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L25&quot; rel=&quot;file-matrixeffect-L25&quot;&gt;25&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L26&quot; rel=&quot;file-matrixeffect-L26&quot;&gt;26&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L27&quot; rel=&quot;file-matrixeffect-L27&quot;&gt;27&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L28&quot; rel=&quot;file-matrixeffect-L28&quot;&gt;28&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L29&quot; rel=&quot;file-matrixeffect-L29&quot;&gt;29&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L30&quot; rel=&quot;file-matrixeffect-L30&quot;&gt;30&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L31&quot; rel=&quot;file-matrixeffect-L31&quot;&gt;31&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L32&quot; rel=&quot;file-matrixeffect-L32&quot;&gt;32&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L33&quot; rel=&quot;file-matrixeffect-L33&quot;&gt;33&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L34&quot; rel=&quot;file-matrixeffect-L34&quot;&gt;34&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L35&quot; rel=&quot;file-matrixeffect-L35&quot;&gt;35&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L36&quot; rel=&quot;file-matrixeffect-L36&quot;&gt;36&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L37&quot; rel=&quot;file-matrixeffect-L37&quot;&gt;37&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L38&quot; rel=&quot;file-matrixeffect-L38&quot;&gt;38&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L39&quot; rel=&quot;file-matrixeffect-L39&quot;&gt;39&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L40&quot; rel=&quot;file-matrixeffect-L40&quot;&gt;40&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L41&quot; rel=&quot;file-matrixeffect-L41&quot;&gt;41&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L42&quot; rel=&quot;file-matrixeffect-L42&quot;&gt;42&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L43&quot; rel=&quot;file-matrixeffect-L43&quot;&gt;43&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L44&quot; rel=&quot;file-matrixeffect-L44&quot;&gt;44&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L45&quot; rel=&quot;file-matrixeffect-L45&quot;&gt;45&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L46&quot; rel=&quot;file-matrixeffect-L46&quot;&gt;46&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L47&quot; rel=&quot;file-matrixeffect-L47&quot;&gt;47&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L48&quot; rel=&quot;file-matrixeffect-L48&quot;&gt;48&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L49&quot; rel=&quot;file-matrixeffect-L49&quot;&gt;49&lt;/span&gt;
+            &lt;span class=&quot;line-number&quot; id=&quot;file-matrixeffect-L50&quot; rel=&quot;file-matrixeffect-L50&quot;&gt;50&lt;/span&gt;
+          &lt;/td&gt;
+          &lt;td class=&quot;line-data&quot;&gt;
+            &lt;pre class=&quot;line-pre&quot;&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC1&quot;&gt;#!/usr/bin/env python&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC2&quot;&gt;# coding=utf-8&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC3&quot;&gt;import pygame&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC4&quot;&gt;from pygame.locals import *&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC5&quot;&gt;from sys import exit&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC6&quot;&gt;import random&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC7&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC8&quot;&gt;#初始化&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC9&quot;&gt;pygame.init()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC10&quot;&gt;SCREEN_SIZE = (640, 480)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC11&quot;&gt;screen = pygame.display.set_mode(SCREEN_SIZE, 0, 32) &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC12&quot;&gt;font = pygame.font.SysFont(&amp;quot;arial&amp;quot;, 16);&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC13&quot;&gt;text = []&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC14&quot;&gt; &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC15&quot;&gt;while True:    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC16&quot;&gt;    line = &amp;#39;&amp;#39;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC17&quot;&gt;    #每条字幕长度随机&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC18&quot;&gt;    for i in range(random.randint(10, 40)):&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC19&quot;&gt;      item = random.randint(0,1)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC20&quot;&gt;      line += str(item)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC21&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC22&quot;&gt;    #随机位置，速度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC23&quot;&gt;    x = random.randint(0, 640)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC24&quot;&gt;    y = -500&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC25&quot;&gt;    sep = random.randint(1, 8)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC26&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC27&quot;&gt;    if pygame.time.get_ticks() % 50 == 1 :&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC28&quot;&gt;        text.append([line, x, y, sep])#文本，x坐标，y坐标，速度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC29&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC30&quot;&gt;    #QUIT&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC31&quot;&gt;    for event in pygame.event.get(): &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC32&quot;&gt;        if event.type==pygame.QUIT:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC33&quot;&gt;            pygame.quit()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC34&quot;&gt;            exit(0)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC35&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC36&quot;&gt;    #黑色背景&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC37&quot;&gt;    screen.fill((0, 0, 0))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC38&quot;&gt;    &lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC39&quot;&gt;    #产生每一条字幕，由于render函数不生成跨行的字，所以要用rotate函数顺时针旋转90度&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC40&quot;&gt;    for sur in text:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC41&quot;&gt;    	textSuf = font.render(sur[0], True, (0, 255, 0))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC42&quot;&gt;        textSuf.convert()&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC43&quot;&gt;    	playerrot = pygame.transform.rotate(textSuf, -90)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC44&quot;&gt;        screen.blit(playerrot ,(sur[1], sur[2]))&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC45&quot;&gt;        sur[2] += sur[3] * 0.1&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC46&quot;&gt;        if sur[2] &amp;gt; 480:&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC47&quot;&gt;            text.remove(sur)&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC48&quot;&gt;&amp;nbsp;&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC49&quot;&gt;    #刷新&lt;/div&gt;&lt;div class=&quot;line&quot; id=&quot;file-matrixeffect-LC50&quot;&gt;    pygame.display.flip()&lt;/div&gt;&lt;/pre&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+        &lt;div class=&quot;discussion-timeline js-quote-selection-container&quot;&gt;
+
+          &lt;div class=&quot;js-discussion&quot;&gt;
+            
+          &lt;/div&gt;
+
+          &lt;div class=&quot;discussion-timeline-actions&quot;&gt;
+              &lt;div class=&quot;signed-out-comment&quot;&gt;
+	&lt;a class=&quot;button primary&quot; href=&quot;https://github.com/signup?return_to=gist&quot; rel=&quot;nofollow&quot;&gt;Sign up for free&lt;/a&gt;
+	&lt;strong&gt;to join this conversation on GitHub&lt;/strong&gt;.
+	Already have an account?
+  &lt;a href=&quot;https://gist.github.com/login?return_to=%2FGinSmile%2F6426839&quot; rel=&quot;nofollow&quot;&gt;Sign in to comment&lt;/a&gt;
+&lt;/div&gt;
+
+
+          &lt;/div&gt;
+        &lt;/div&gt;&lt;!-- /.discussion-timeline --&gt;
+      &lt;/div&gt;&lt;!-- /.gist-content --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;&lt;!-- /.container --&gt;
+
+  &lt;div class=&quot;context-overlay&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+    &lt;/div&gt;
+    &lt;div class=&quot;slow-loading-overlay&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;ajax-error-message&quot; class=&quot;flash flash-error&quot;&gt;
+    &lt;div class=&quot;container&quot;&gt;
+      &lt;span class=&quot;octicon octicon-alert&quot;&gt;&lt;/span&gt;
+      Something went wrong with that request. Please try again.
+      &lt;a href=&quot;#&quot; class=&quot;octicon octicon-x ajax-error-dismiss&quot;&gt;&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+
+  &lt;footer&gt;
+    &lt;div class=&quot;container&quot;&gt;
+  &lt;div class=&quot;site-footer&quot;&gt;
+    &lt;ul class=&quot;site-footer-links right&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;https://status.github.com/&quot;&gt;Status&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://developer.github.com&quot;&gt;API&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/about&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+
+    &lt;/ul&gt;
+
+    &lt;a href=&quot;/&quot;&gt;
+      &lt;span class=&quot;mega-octicon octicon-mark-github&quot; title=&quot;GitHub &quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+
+    &lt;ul class=&quot;site-footer-links&quot;&gt;
+      &lt;li&gt;&amp;copy; 2014 &lt;span title=&quot;0.05077s from github-fe102-cp1-prd.iad.github.net&quot;&gt;GitHub&lt;/span&gt;, Inc.&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/site/terms&quot;&gt;Terms&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/site/privacy&quot;&gt;Privacy&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/security&quot;&gt;Security&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;https://github.com/contact&quot;&gt;Contact&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;&lt;!-- /.site-footer --&gt;
+&lt;/div&gt;&lt;!-- /.container --&gt;
+
+  &lt;/footer&gt;
+
+  &lt;div class=&quot;fullscreen-overlay js-fullscreen-overlay&quot; id=&quot;fullscreen_overlay&quot;&gt;
+  &lt;div class=&quot;fullscreen-container js-fullscreen-container&quot;&gt;
+    &lt;div class=&quot;textarea-wrap&quot;&gt;
+      &lt;textarea name=&quot;fullscreen-contents&quot; id=&quot;fullscreen-contents&quot; class=&quot;fullscreen-contents js-fullscreen-contents&quot; placeholder=&quot;&quot; data-suggester=&quot;fullscreen_suggester&quot;&gt;&lt;/textarea&gt;
+        &lt;div class=&quot;suggester-container&quot;&gt;
+            &lt;div class=&quot;suggester fullscreen-suggester js-navigation-container&quot; id=&quot;fullscreen_suggester&quot;
+                data-url=&quot;/GinSmile/6426839/suggestions&quot;&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;fullscreen-sidebar&quot;&gt;
+    &lt;a href=&quot;#&quot; class=&quot;exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w&quot; aria-label=&quot;Exit Zen Mode&quot;&gt;
+      &lt;span class=&quot;mega-octicon octicon-screen-normal&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;theme-switcher js-theme-switcher tooltipped tooltipped-w&quot;
+      aria-label=&quot;Switch themes&quot;&gt;
+      &lt;span class=&quot;octicon octicon-color-mode&quot;&gt;&lt;/span&gt;
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></noscript></div>
+</p>
+
+<p>效果图如下：
+<img class="center" src="http://GinSmile.github.io/images/program_shot/matrix.png" width="449" height="357" title="welcome" alt="welcome"></p>
+]]></content>
+  </entry>
+  
+</feed>

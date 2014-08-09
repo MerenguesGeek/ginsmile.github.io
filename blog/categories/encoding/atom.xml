@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: encoding | John Xu's Blog]]></title>
+  <link href="http://GinSmile.github.io/blog/categories/encoding/atom.xml" rel="self"/>
+  <link href="http://GinSmile.github.io/"/>
+  <updated>2014-08-03T22:43:32+08:00</updated>
+  <id>http://GinSmile.github.io/</id>
+  <author>
+    <name><![CDATA[John Xu]]></name>
+    <email><![CDATA[xu.jin.smile@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python编码转换]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/25/python-encoding/"/>
+    <updated>2013-09-25T10:37:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/25/python-encoding</id>
+    <content type="html"><![CDATA[<p>python中默认使用ASCII编码，但是如果出现中文等非ASCII字符就要使用其他编码方式了。定义程序的编码方式有好几种，只要满足正则表达式：</p>
+
+<pre><code>\%^.*\(\n.*\)\?#.*coding[:=]\s*[0-9A-Za-z-_.]\+.*$                            
+</code></pre>
+
+<p>即可。最常见的是在第一行或者第二行写上字符：<code># -*- coding:utf-8 -*-</code>  或者 <code>#coding=utf-8</code></p>
+
+<!--more-->
+
+
+<h2>其他编码转换为unicode</h2>
+
+<p>使用函数unicode(s,encoding) 或者s.decode(encoding)，就可以将gb2312，utf-8，GBK等编码转换为unicode，例如将utf-8转换成unicode：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+#文件保存为UTF-8格式
+s = '汉字'
+
+#utf-8转换成unicode
+s_unicode = s.decode("utf-8")  
+s_unicode2 = unicode(s,'utf-8') #第二种方法
+s_unicode3 = u'汉字' #第三种方法
+print s_unicode == s_unicode2 #True
+print s_unicode == s_unicode3 #True
+</code></pre>
+
+<h2>unicode转化成其他编码</h2>
+
+<p>如果字符串为ascii或者unicode编码，就可以直接使用encode方法：</p>
+
+<pre><code># -*- coding: UTF-8 -*-
+s_unicode = u'汉字'
+
+#utf-8转换成gbk
+s_gbk = s_unicode.encode('gbk')
+</code></pre>
+
+<p>若直接使用encode方法，Python会自动的先把s解码为unicode，然后再编码成一定的编码方法。
+若s不是ascii编码或是unicode编码而直接使用encode方法，如下：</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+s_utf8.encode('gbk') #error
+</code></pre>
+
+<p>会出现以下错误：</p>
+
+<pre><code>UnicodeDecodeError: 'ascii' codec can't decode byte 0xe6 in position 0: ordinal not in range(128)
+</code></pre>
+
+<h2>非unicode编码之间的转换</h2>
+
+<p>这个要拿unicode当作中间编码</p>
+
+<pre><code># -*- coding: utf-8 -*-
+s_utf8 = '汉字'
+
+#utf-8转换成gbk
+s_gbk = s_utf8.decode('utf-8').encode('gbk')
+
+#utf-8转换成gb2312
+s_gb2312 = s_utf8.decode('utf-8').encode('gb2312')
+
+#gbk转换成gb2312
+s_gb2312_next = s_gbk.decode('gbk').encode('gb2312')
+print s_gb2312 == s_gb2312_next #True
+</code></pre>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.pythonclub.org/python-basic/codec">python编码转换</a></li>
+<li><a href="http://my.oschina.net/u/1178546/blog/146660">python编码注释</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[文件编码]]></title>
+    <link href="http://GinSmile.github.io/blog/2013/09/25/file-encoding/"/>
+    <updated>2013-09-25T10:36:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2013/09/25/file-encoding</id>
+    <content type="html"><![CDATA[<p>最近学习python，遇到了不少和字符编码有关的问题，所以特地查了不少资料，学习了不少知识，所以就借此机会整理了一下。</p>
+
+<blockquote><ul>
+<li>字符(Character)：是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</li>
+<li>字符集(Character set)：是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。</li>
+<li>字符编码（Character Encoding）：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系。</li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<h2>ASCII</h2>
+
+<p><strong>ASCII字符集</strong>，共表示了128个字符，包括32个不能打印的字符。  <br/>
+<strong>ASCII编码</strong>，将ASCII字符集转换成计算机能够接受的数字系统的数的规则。采用八位二进制编码，最高位统一为0，剩余7位共表示了128个字符，包括32个不能打印的字符，如：<code>5</code>用<code>00110101</code>来表示，如果文件是ASCII编码，可以在DOS中通过type命令查看。 <br/>
+另：ASCII的扩展版本EASCII可以显示西欧语言，是现今最通用的<strong>单字节</strong>编码系统。</p>
+
+<h2>GB类</h2>
+
+<p>由于ASCII编码不支持中文，所以中国单独制定了一套编码。
+&ndash; GB2312编码，使用两个字节，一共收录了7445个字符，包括6763个汉字和682个其他字符。这682个其他字符包括：罗马希腊字母，数学符号，日文假名，数字（全角），标点（全角），字母（全角）。汉字区的内码范围高字节从B0-F7，低字节从A1-FE。<strong>ASCII里面本来就有的叫做半角</strong>。
+&ndash; GBK编码（1.0），微软编制，是对GB2312的扩展，收录了21886个符号。
+&ndash; GB18030编码，基本兼容GBK，完全兼容GB2312，，支持Unicode的全部统一汉字，收录了70244个汉字，同时还收录了藏文、蒙文、维吾尔文等主要的少数民族文字。</p>
+
+<p>以上三种（GB2312，GBK，GB18030）被称为双字节字符集（DBCS）</p>
+
+<p>兼容性：</p>
+
+<blockquote><p>ASCII &lt; GB2312 &lt; GBK &lt; GB18030   如：<code>汉</code>字均用<code>6C49</code>来表示。  <br/>
+ASCII &lt; Unicode 如：<code>汉</code>字用<code>BABA</code>来表示</p></blockquote>
+
+<h2>Big5</h2>
+
+<p>大五码，是使用繁体中文最常用的电脑汉字字符集标准。</p>
+
+<hr />
+
+<p><strong>像中国一样，各个国家都有类似GB2312编码的编码体系，这样非常不适合交流。于是就出现了大一统。历史上有两个组织开发出了统一的编码系统，分别是国际标准化组织（ISO）和统一码联盟（The Unicode Consortium），分别研制出了UCS（ISO 10646）和Unicode。目前两个项目保持兼容。</strong></p>
+
+<hr />
+
+<h2>Unicode字符集</h2>
+
+<p>Unicode字符集，两字节二进制编码，如：<code>汉</code>用<code>U+6C49</code>来表示。</p>
+
+<blockquote><p>big endian <code>汉</code>用<code>U+6C49</code>来表示，文件最前面有一个FEFF  <br/>
+little endian <code>汉</code>用<code>U+496C</code>来表示，文件最前面有一个FFFE  <br/>
+Unicode字符集有很多种编码方案，比如：UTF-8，UTF-16，UTF-32等</p></blockquote>
+
+<h2>UCS（通用字符集）</h2>
+
+<p>Universal Character Set，通用字符集。是由ISO 10646标准所定义的标准字符集，包含已知语言的所有字符。</p>
+
+<blockquote><p>UCS-2，用16位编码。  <br/>
+UCS-4，用31位编码，第32位为0。</p></blockquote>
+
+<p>下面介绍下UCS-4     <br/>
+0xxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx 共有 2<sup>31</sup> = 2147483648 个码位。</p>
+
+<blockquote><ul>
+<li>UCS-4编码分为2<sup>7</sup> = 128 个group，每个group形如 01234567 xxxxxxxx xxxxxxxx xxxxxxxx</li>
+<li>每个group分为2<sup>8</sup> = 256 个plane，每个plane形如 01234567 12345678 xxxxxxxx xxxxxxxx</li>
+<li>每个plane分为2<sup>8</sup> = 256 个rows，每个rows形如 01234567 12345678 12345678 xxxxxxx</li>
+<li>每个rows分为2<sup>8</sup> = 256 个cells，每个cells形如 01234567 12345678 12345678 12345678</li>
+</ul>
+</blockquote>
+
+<p>00000000 00000000 xxxxxxxx xxxxxxxx ，即高两个字节均为0的UCS-4被称为BMP</p>
+
+<h2>UTF-8编码方式</h2>
+
+<p>UTF-8（8-bit Unicode Transformation Format），可变长度字符编码，是unicode的一种实现方式。与ASCII编码兼容。  <br/>
+<strong>占用1~4个字节</strong>
+编码规则：</p>
+
+<blockquote><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</li>
+<li>对于n字节的符号（n>1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</li>
+</ul>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th align="center">UCS-2编码(16进制)/Unicode符号范围</th>
+<th align="center">UTF-8 字节流(二进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0000 0000 &ndash; 0000 007F </td>
+<td align="center"> 0xxxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0080 &ndash; 0000 07FF </td>
+<td align="center"> 110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0800 &ndash; 0000 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0001 0000 &ndash; 0010 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>例如“汉”字的Unicode编码是<code>6C49</code>，故转化成UTF-8采用第三种三字节编码方式，<code>6C49</code>的二进制带入三字节模版，就得到了其UTF-8编码：<code>11100110 10110001 10001001</code>，即<code>E6 B1 89</code>。  <br/>
+UTF编码中有一个名为BOM的编码方式，用来区分UTF-16是Big-Endian还是Little-Endian。</p>
+
+<h2>UTF-16编码方式</h2>
+
+<p>UTF-16编码方式用16位，即两个字节来编码字符，所以他只能编码Unicode的前65535个字符。  <br/>
+&ndash; 如果字符编码小于0x10000，直接用两字节表示，如<code>U+6C49</code>  <br/>
+&ndash; 如果字符编码大于0x10000</p>
+
+<h2>UTF-32编码方式</h2>
+
+<p>UTF-32又称UCS-4，是一种将Unicode字符编码的协定，对每个字符使用4个字节。这种编码方式非常浪费空间。</p>
+
+<h2>CJK</h2>
+
+<p>Chinese Japanese Korean，中日韩统一表意文字。把分别来自中文、日文、韩文、越文中，本质、意义相同、形状一样或稍异的表意文字（主要为汉字，但也有仿汉字如日本国字、韩国独有汉字、越南的喃字）于ISO 10646及Unicode标准内赋予相同编码。</p>
+
+<h2>windows和linux种的文件编码</h2>
+
+<p>windows中新建一个记事本文档，默认是ASCII编码，如果出现中文就会使用gb2312编码。  <br/>
+linux编码使用utf-8编码。</p>
+
+<h2>mySQL的编码</h2>
+
+<p>mySQL默认采用ISO 8859-1编码方式，即单字节的EASCII编码。
+更改mySQL编码方式：<code>mysql_query('set names gbk');</code></p>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.cnblogs.com/imissherso/articles/640727.html">文件编码格式</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">阮一峰：字符编码笔记</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81">字符编码-wiki百科</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E6%97%A5%E9%9F%93%E8%B6%8A%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97">CJK-wiki百科</a></li>
+</ul>
+</blockquote>
+]]></content>
+  </entry>
+  
+</feed>

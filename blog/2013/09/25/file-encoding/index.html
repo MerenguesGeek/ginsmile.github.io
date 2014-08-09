@@ -1,0 +1,345 @@
+
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>文件编码 - John Xu's Blog</title>
+	<meta name="author" content="John Xu">
+
+	
+	<meta name="description" content="文件编码 最近学习python，遇到了不少和字符编码有关的问题，所以特地查了不少资料，学习了不少知识，所以就借此机会整理了一下。 字符(Character)：是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。
+字符集(Character set)：是多个字符的集合， &hellip;">
+	
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2013/09/25/file-encoding/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+
+	  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+      
+      <link href="/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
+      
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.profilepic').append("<img src='http://www.gravatar.com/avatar/" + MD5("xu.jin.smile@gmail.com") + "?s=160' alt='Profile Picture' style='width: 160px;' />");
+		});
+	</script>
+</div>
+<hgroup>
+  <h1><a href="/">John Xu's Blog</a></h1>
+  
+    <h2>Just enjoy coding.</h2>
+  
+</hgroup>
+
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About Me</a></li>
+</ul>
+
+
+<section class="aboutme">
+  <p>
+    nice and beautiful
+  </p>
+</section>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/smilexujin" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		<a class="twitter" href="http://twitter.com/smilexujin" title="Twitter">Twitter</a>
+		
+		
+		<a class="github" href="https://github.com/ginsmile" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">文件编码</h1>
+	<div class="entry-content" itemprop="articleBody"><p>最近学习python，遇到了不少和字符编码有关的问题，所以特地查了不少资料，学习了不少知识，所以就借此机会整理了一下。</p>
+
+<blockquote><ul>
+<li>字符(Character)：是各种文字和符号的总称，包括各国家文字、标点符号、图形符号、数字等。</li>
+<li>字符集(Character set)：是多个字符的集合，字符集种类较多，每个字符集包含的字符个数不同，常见字符集名称：ASCII字符集、GB2312字符集、BIG5字符集、GB18030字符集、Unicode字符集等。</li>
+<li>字符编码（Character Encoding）：是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表），与其他东西的一个集合（如号码或电脉冲）进行配对。即在符号集合与数字系统之间建立对应关系。</li>
+</ul>
+</blockquote>
+
+<!--more-->
+
+
+<h2>ASCII</h2>
+
+<p><strong>ASCII字符集</strong>，共表示了128个字符，包括32个不能打印的字符。  <br/>
+<strong>ASCII编码</strong>，将ASCII字符集转换成计算机能够接受的数字系统的数的规则。采用八位二进制编码，最高位统一为0，剩余7位共表示了128个字符，包括32个不能打印的字符，如：<code>5</code>用<code>00110101</code>来表示，如果文件是ASCII编码，可以在DOS中通过type命令查看。 <br/>
+另：ASCII的扩展版本EASCII可以显示西欧语言，是现今最通用的<strong>单字节</strong>编码系统。</p>
+
+<h2>GB类</h2>
+
+<p>由于ASCII编码不支持中文，所以中国单独制定了一套编码。
+&ndash; GB2312编码，使用两个字节，一共收录了7445个字符，包括6763个汉字和682个其他字符。这682个其他字符包括：罗马希腊字母，数学符号，日文假名，数字（全角），标点（全角），字母（全角）。汉字区的内码范围高字节从B0-F7，低字节从A1-FE。<strong>ASCII里面本来就有的叫做半角</strong>。
+&ndash; GBK编码（1.0），微软编制，是对GB2312的扩展，收录了21886个符号。
+&ndash; GB18030编码，基本兼容GBK，完全兼容GB2312，，支持Unicode的全部统一汉字，收录了70244个汉字，同时还收录了藏文、蒙文、维吾尔文等主要的少数民族文字。</p>
+
+<p>以上三种（GB2312，GBK，GB18030）被称为双字节字符集（DBCS）</p>
+
+<p>兼容性：</p>
+
+<blockquote><p>ASCII &lt; GB2312 &lt; GBK &lt; GB18030   如：<code>汉</code>字均用<code>6C49</code>来表示。  <br/>
+ASCII &lt; Unicode 如：<code>汉</code>字用<code>BABA</code>来表示</p></blockquote>
+
+<h2>Big5</h2>
+
+<p>大五码，是使用繁体中文最常用的电脑汉字字符集标准。</p>
+
+<hr />
+
+<p><strong>像中国一样，各个国家都有类似GB2312编码的编码体系，这样非常不适合交流。于是就出现了大一统。历史上有两个组织开发出了统一的编码系统，分别是国际标准化组织（ISO）和统一码联盟（The Unicode Consortium），分别研制出了UCS（ISO 10646）和Unicode。目前两个项目保持兼容。</strong></p>
+
+<hr />
+
+<h2>Unicode字符集</h2>
+
+<p>Unicode字符集，两字节二进制编码，如：<code>汉</code>用<code>U+6C49</code>来表示。</p>
+
+<blockquote><p>big endian <code>汉</code>用<code>U+6C49</code>来表示，文件最前面有一个FEFF  <br/>
+little endian <code>汉</code>用<code>U+496C</code>来表示，文件最前面有一个FFFE  <br/>
+Unicode字符集有很多种编码方案，比如：UTF-8，UTF-16，UTF-32等</p></blockquote>
+
+<h2>UCS（通用字符集）</h2>
+
+<p>Universal Character Set，通用字符集。是由ISO 10646标准所定义的标准字符集，包含已知语言的所有字符。</p>
+
+<blockquote><p>UCS-2，用16位编码。  <br/>
+UCS-4，用31位编码，第32位为0。</p></blockquote>
+
+<p>下面介绍下UCS-4     <br/>
+0xxxxxxx xxxxxxxx xxxxxxxx xxxxxxxx 共有 2<sup>31</sup> = 2147483648 个码位。</p>
+
+<blockquote><ul>
+<li>UCS-4编码分为2<sup>7</sup> = 128 个group，每个group形如 01234567 xxxxxxxx xxxxxxxx xxxxxxxx</li>
+<li>每个group分为2<sup>8</sup> = 256 个plane，每个plane形如 01234567 12345678 xxxxxxxx xxxxxxxx</li>
+<li>每个plane分为2<sup>8</sup> = 256 个rows，每个rows形如 01234567 12345678 12345678 xxxxxxx</li>
+<li>每个rows分为2<sup>8</sup> = 256 个cells，每个cells形如 01234567 12345678 12345678 12345678</li>
+</ul>
+</blockquote>
+
+<p>00000000 00000000 xxxxxxxx xxxxxxxx ，即高两个字节均为0的UCS-4被称为BMP</p>
+
+<h2>UTF-8编码方式</h2>
+
+<p>UTF-8（8-bit Unicode Transformation Format），可变长度字符编码，是unicode的一种实现方式。与ASCII编码兼容。  <br/>
+<strong>占用1~4个字节</strong>
+编码规则：</p>
+
+<blockquote><ul>
+<li>对于单字节的符号，字节的第一位设为0，后面7位为这个符号的unicode码。因此对于英语字母，UTF-8编码和ASCII码是相同的。</li>
+<li>对于n字节的符号（n>1），第一个字节的前n位都设为1，第n+1位设为0，后面字节的前两位一律设为10。剩下的没有提及的二进制位，全部为这个符号的unicode码。</li>
+</ul>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th align="center">UCS-2编码(16进制)/Unicode符号范围</th>
+<th align="center">UTF-8 字节流(二进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">0000 0000 &ndash; 0000 007F </td>
+<td align="center"> 0xxxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0080 &ndash; 0000 07FF </td>
+<td align="center"> 110xxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0000 0800 &ndash; 0000 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+<tr>
+<td align="center">0001 0000 &ndash; 0010 FFFF </td>
+<td align="center"> 1110xxxx 10xxxxxx 10xxxxxx 10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>例如“汉”字的Unicode编码是<code>6C49</code>，故转化成UTF-8采用第三种三字节编码方式，<code>6C49</code>的二进制带入三字节模版，就得到了其UTF-8编码：<code>11100110 10110001 10001001</code>，即<code>E6 B1 89</code>。  <br/>
+UTF编码中有一个名为BOM的编码方式，用来区分UTF-16是Big-Endian还是Little-Endian。</p>
+
+<h2>UTF-16编码方式</h2>
+
+<p>UTF-16编码方式用16位，即两个字节来编码字符，所以他只能编码Unicode的前65535个字符。  <br/>
+&ndash; 如果字符编码小于0x10000，直接用两字节表示，如<code>U+6C49</code>  <br/>
+&ndash; 如果字符编码大于0x10000</p>
+
+<h2>UTF-32编码方式</h2>
+
+<p>UTF-32又称UCS-4，是一种将Unicode字符编码的协定，对每个字符使用4个字节。这种编码方式非常浪费空间。</p>
+
+<h2>CJK</h2>
+
+<p>Chinese Japanese Korean，中日韩统一表意文字。把分别来自中文、日文、韩文、越文中，本质、意义相同、形状一样或稍异的表意文字（主要为汉字，但也有仿汉字如日本国字、韩国独有汉字、越南的喃字）于ISO 10646及Unicode标准内赋予相同编码。</p>
+
+<h2>windows和linux种的文件编码</h2>
+
+<p>windows中新建一个记事本文档，默认是ASCII编码，如果出现中文就会使用gb2312编码。  <br/>
+linux编码使用utf-8编码。</p>
+
+<h2>mySQL的编码</h2>
+
+<p>mySQL默认采用ISO 8859-1编码方式，即单字节的EASCII编码。
+更改mySQL编码方式：<code>mysql_query('set names gbk');</code></p>
+
+<h2>参考资料</h2>
+
+<blockquote><ul>
+<li><a href="http://www.cnblogs.com/imissherso/articles/640727.html">文件编码格式</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">阮一峰：字符编码笔记</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81">字符编码-wiki百科</a></li>
+<li><a href="http://zh.wikipedia.org/zh-cn/%E4%B8%AD%E6%97%A5%E9%9F%93%E8%B6%8A%E7%B5%B1%E4%B8%80%E8%A1%A8%E6%84%8F%E6%96%87%E5%AD%97">CJK-wiki百科</a></li>
+</ul>
+</blockquote>
+</div>
+
+</article>
+
+	<!-- <div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	<a class="addthis_button_tweet"></a>
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div> -->
+<div class="sharing">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a class="addthis_button_sinaweibo"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_pinterest_share"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"></script>
+    <!-- AddThis Button END -->
+
+
+<section id="comment">
+    <h1 class="title">Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - John Xu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fa007a8efad716708ac296c721099b0e4' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			
+
+<script type="text/javascript">
+      var disqus_shortname = 'ginsmile';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2013/09/25/file-encoding/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2013/09/25/file-encoding/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>
