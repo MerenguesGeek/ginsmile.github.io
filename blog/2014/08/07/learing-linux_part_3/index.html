@@ -5,12 +5,12 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>重装系统后恢复Octopress博客 - John Xu's Blog</title>
+	<title>learing linux,part 3 - John Xu's Blog</title>
 	<meta name="author" content="John Xu">
 
 	
-	<meta name="description" content="重装系统后恢复Octopress博客 之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
-关键是之前安装的很多插件，恢复过来就用不了了。 1.首先要按照安装全新Octopress那样， &hellip;">
+	<meta name="description" content="Learing Linux,part 3 此文为学习《鸟哥的私房菜》时候的备忘录. 第三部分 学习shell与shell script 第三部分 学习shell与shell script vi的使用 一般模式，vi a.c 进入此模式。移动光标，删除字符，删除整行，复制粘贴
+编辑模式，输入“i， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/">
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_3/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -109,42 +109,137 @@
 			
 			<div class="mid-col-container">
 				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-	<h1 class="title" itemprop="name">重装系统后恢复Octopress博客</h1>
-	<div class="entry-content" itemprop="articleBody"><p>之前在虚拟机安装的linux，运行一会就内存爆掉了，实在不好玩，这次实打实地安了一个双系统，真的很快，不过把Octopress恢复在一个全新的系统上真的很麻烦。
-关键是之前安装的很多插件，恢复过来就用不了了。</p>
+	<h1 class="title" itemprop="name">Learing Linux,part 3</h1>
+	<div class="entry-content" itemprop="articleBody"><p>此文为学习《鸟哥的私房菜》时候的备忘录.</p>
+
+<ul>
+<li>第三部分 学习shell与shell script</li>
+</ul>
+
 
 <!--more-->
 
 
-<p>1.首先要按照安装全新Octopress那样，弄出来一个能安装Octopress的环境,安好rvm,Ruby1.9.3之类的，详见<a href="http://ginsmile.github.io/blog/2013/08/28/yong-github-pageshe-octopressda-jian-bo-ke/#.UsgqCqx5MxA">用GitHub Pages和Octopress搭建博客</a>。  <br/>
-2.然后，要clone下来source分支：</p>
+<h2>第三部分 学习shell与shell script</h2>
 
-<pre><code>$ git clone -b source git@github.com:username/username.github.com.git octopress
+<hr />
+
+<h3>vi的使用</h3>
+
+<ul>
+<li>一般模式，<code>vi a.c</code> 进入此模式。移动光标，删除字符，删除整行，复制粘贴</li>
+<li>编辑模式，输入“i，o，a，r”任何一个字母进入。</li>
+<li>命令行模式，输入“[:],[/],[?]”中任一个字符进入。查找数据，读取保存，大量替换字符，离开，显示行号等。</li>
+</ul>
+
+
+<p>一般过程：</p>
+
+<pre><code>touch a.c
+vi a.c
+//get into vim
+...
+//input 'i' to enter edit modle
+...
+//edit the file
+...
+//tap 'esc' to enter order modle
+//tap ':wq' to store the changes(or tap ':wq!' to compel to save the file )
 </code></pre>
 
-<p>3.进入octopress目录，clone下_deploy来：</p>
+<p>vim仅需要熟记几种常用命令即可。</p>
 
-<pre><code>$ cd octopress
-$ git clone git@github.com:username/username.github.com.git _deploy 
+<hr />
+
+<h3>bash基础</h3>
+
+<p> 通过shell将我们输入的命令与内核（kernel）通信，好让内核可以控制硬件来正确无误地工作。<strong>诸如ls，cd都是独立的应用程序。通过shell来操作这些应用程序。</strong>  <br/>
+shell的版本</p>
+
+<ul>
+<li>sh（bourne SHell）</li>
+<li>C SHell(Sun里的)</li>
+<li>K SHell(商业常用)</li>
+<li>bash（Bourne Again SHell）</li>
+</ul>
+
+
+<p><em>可以用 cat /ect/shells 命令查看shells文件的内容，找到可用的shell</em>，而bash是Linux的默认shell</p>
+
+<hr />
+
+<h3>shell常用功能</h3>
+
+<ul>
+<li>命令记忆，按[上下箭头]选择历史纪录</li>
+<li>文件补全，按[tab]</li>
+<li>命令补全，按[tab]</li>
+<li>别名，如<code>alias lm＝'ls -al'</code></li>
+<li>shell script</li>
+<li>wildcard（通配符）</li>
+</ul>
+
+
+<hr />
+
+<h3>shell变量</h3>
+
+<p>1.环境变量，如</p>
+
+<ul>
+<li>@SHELL，默认shell的版本</li>
+<li>@PATH，执行文件查找的路径</li>
+<li>@HOME，用户的主文件夹</li>
+<li>@HISTSIZE，history size，历史命令的条数</li>
+<li>@LANG，语系数据</li>
+<li>@RADOM，0～32767之间的随机整数</li>
+</ul>
+
+
+<p>2.自定义变量，如:</p>
+
+<pre><code>myvar＝one
+echo @myvar    //会显示one
 </code></pre>
 
-<p>4.安装bundler，使用bundler安装所需插件</p>
+<ul>
+<li>取消变量使用<code>unset myvar</code>。</li>
+<li>使用<code>export</code>使自定义变量变成环境变量。</li>
+</ul>
 
-<pre><code>$ gem install bundler
-$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
-$ bundle install
+
+<p>3.可以利用变量来进行目录的简化：</p>
+
+<pre><code>Jyoshin:/ xujin$ prac="/Users/xujin/practice/"
+Jyoshin:/ xujin$ cd $prac
+Jyoshin:practice xujin$ pwd
+/Users/xujin/practice
+Jyoshin:practice xujin$ 
 </code></pre>
 
-<p>5.设置github pages页面关联</p>
+<p>4.从键盘读取变量</p>
 
-<pre><code>$ rake setup_github_pages
-</code></pre>
+<ul>
+<li>read var</li>
+<li>declare -i var（声明一个int变量）</li>
+</ul>
 
-<p>过程虽然这么简单，但是在这之后，我<code>rake generate</code>的时候，出现了不少错误，比如之前新添加的tag不能用的错误，此时只能删了重新设置一遍。</p>
 
-<h2>参考资料</h2>
+<hr />
 
-<blockquote><p><a href="http://boboshone.com/blog/2013/06/05/write-octopress-blog-on-multiple-machines/">boboshone</a></p></blockquote>
+<h3>管道命令（pipe）</h3>
+
+<p>仅处理标准输出。 <code>ls -al /etc | less</code></p>
+
+<ul>
+<li>基本读取命令：less,more,head,tail，均可作为接受标准输入的管道命令。</li>
+<li>选取命令：cut，grep</li>
+<li>排序命令：sort，wc（计数），uniq（剔除重复）</li>
+<li>双向重定向：tee</li>
+</ul>
+
+
+<h3>正则表达式</h3>
 </div>
 
 </article>
@@ -198,8 +293,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/';
-        var disqus_url = 'http://GinSmile.github.io/blog/2014/01/04/zhong-zhuang-xi-tong-hou-hui-fu-octopressbo-ke/';
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_3/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_3/';
         var disqus_script = 'embed.js';
       
     (function () {

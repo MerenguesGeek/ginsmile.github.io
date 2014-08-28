@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | John Xu's Blog]]></title>
   <link href="http://GinSmile.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://GinSmile.github.io/"/>
-  <updated>2014-08-09T15:01:21+08:00</updated>
+  <updated>2014-08-28T13:03:32+08:00</updated>
   <id>http://GinSmile.github.io/</id>
   <author>
     <name><![CDATA[John Xu]]></name>
@@ -12,6 +12,144 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[learing linux,part 3]]></title>
+    <link href="http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_3/"/>
+    <updated>2014-08-07T22:53:00+08:00</updated>
+    <id>http://GinSmile.github.io/blog/2014/08/07/learing-linux_part_3</id>
+    <content type="html"><![CDATA[<p>此文为学习《鸟哥的私房菜》时候的备忘录.</p>
+
+<ul>
+<li>第三部分 学习shell与shell script</li>
+</ul>
+
+
+<!--more-->
+
+
+<h2>第三部分 学习shell与shell script</h2>
+
+<hr />
+
+<h3>vi的使用</h3>
+
+<ul>
+<li>一般模式，<code>vi a.c</code> 进入此模式。移动光标，删除字符，删除整行，复制粘贴</li>
+<li>编辑模式，输入“i，o，a，r”任何一个字母进入。</li>
+<li>命令行模式，输入“[:],[/],[?]”中任一个字符进入。查找数据，读取保存，大量替换字符，离开，显示行号等。</li>
+</ul>
+
+
+<p>一般过程：</p>
+
+<pre><code>touch a.c
+vi a.c
+//get into vim
+...
+//input 'i' to enter edit modle
+...
+//edit the file
+...
+//tap 'esc' to enter order modle
+//tap ':wq' to store the changes(or tap ':wq!' to compel to save the file )
+</code></pre>
+
+<p>vim仅需要熟记几种常用命令即可。</p>
+
+<hr />
+
+<h3>bash基础</h3>
+
+<p> 通过shell将我们输入的命令与内核（kernel）通信，好让内核可以控制硬件来正确无误地工作。<strong>诸如ls，cd都是独立的应用程序。通过shell来操作这些应用程序。</strong>  <br/>
+shell的版本</p>
+
+<ul>
+<li>sh（bourne SHell）</li>
+<li>C SHell(Sun里的)</li>
+<li>K SHell(商业常用)</li>
+<li>bash（Bourne Again SHell）</li>
+</ul>
+
+
+<p><em>可以用 cat /ect/shells 命令查看shells文件的内容，找到可用的shell</em>，而bash是Linux的默认shell</p>
+
+<hr />
+
+<h3>shell常用功能</h3>
+
+<ul>
+<li>命令记忆，按[上下箭头]选择历史纪录</li>
+<li>文件补全，按[tab]</li>
+<li>命令补全，按[tab]</li>
+<li>别名，如<code>alias lm＝'ls -al'</code></li>
+<li>shell script</li>
+<li>wildcard（通配符）</li>
+</ul>
+
+
+<hr />
+
+<h3>shell变量</h3>
+
+<p>1.环境变量，如</p>
+
+<ul>
+<li>@SHELL，默认shell的版本</li>
+<li>@PATH，执行文件查找的路径</li>
+<li>@HOME，用户的主文件夹</li>
+<li>@HISTSIZE，history size，历史命令的条数</li>
+<li>@LANG，语系数据</li>
+<li>@RADOM，0～32767之间的随机整数</li>
+</ul>
+
+
+<p>2.自定义变量，如:</p>
+
+<pre><code>myvar＝one
+echo @myvar    //会显示one
+</code></pre>
+
+<ul>
+<li>取消变量使用<code>unset myvar</code>。</li>
+<li>使用<code>export</code>使自定义变量变成环境变量。</li>
+</ul>
+
+
+<p>3.可以利用变量来进行目录的简化：</p>
+
+<pre><code>Jyoshin:/ xujin$ prac="/Users/xujin/practice/"
+Jyoshin:/ xujin$ cd $prac
+Jyoshin:practice xujin$ pwd
+/Users/xujin/practice
+Jyoshin:practice xujin$ 
+</code></pre>
+
+<p>4.从键盘读取变量</p>
+
+<ul>
+<li>read var</li>
+<li>declare -i var（声明一个int变量）</li>
+</ul>
+
+
+<hr />
+
+<h3>管道命令（pipe）</h3>
+
+<p>仅处理标准输出。 <code>ls -al /etc | less</code></p>
+
+<ul>
+<li>基本读取命令：less,more,head,tail，均可作为接受标准输入的管道命令。</li>
+<li>选取命令：cut，grep</li>
+<li>排序命令：sort，wc（计数），uniq（剔除重复）</li>
+<li>双向重定向：tee</li>
+</ul>
+
+
+<h3>正则表达式</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[learing linux,part 1,2]]></title>
