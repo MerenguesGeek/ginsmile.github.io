@@ -9,7 +9,7 @@
 	<meta name="author" content="John Xu">
 
 	
-	<meta name="description" content="Aug 7th, 2014 Linux Comments Learing Linux,part 3 此文为学习《鸟哥的私房菜》时候的备忘录. 第三部分 学习shell与shell script Read on &rarr; Aug 7th, 2014 Linux Comments Learing &hellip;">
+	<meta name="description" content="Aug 29th, 2014 android Comments Android-sdk-download 记下我重新安装android开发环境的过程 一句话，万恶的长城啊&hellip; 这次是第二次还是第三次装这个开发环境啊，我不太记得了，不过每次遇到的问题都差不多，故记录下来，以备下次用到。 &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,6 +109,63 @@
 			<div class="mid-col-container">
 				<div id="content" class="inner">
 <div itemscope itemtype="http://schema.org/Blog">
+
+
+    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-29T23:25:00+08:00" data-updated="true" itemprop="datePublished">Aug 29<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/android/'>android</a>
+
+
+</div>
+		
+			<span class="comments"><a href="/blog/2014/08/29/android-sdk-download/#disqus_thread">Comments</a></span>
+		
+	</div>
+	<h1 class="title" itemprop="name"><a href="/blog/2014/08/29/android-sdk-download/" itemprop="url">Android-sdk-download</a></h1>
+	<div class="entry-content" itemprop="articleBody">
+		<h3>记下我重新安装android开发环境的过程</h3>
+
+<p>一句话，万恶的长城啊&hellip;</p>
+
+<p>这次是第二次还是第三次装这个开发环境啊，我不太记得了，不过每次遇到的问题都差不多，故记录下来，以备下次用到。这次和前几次稍微不一样，使用了Intellij IDEA，看网上说这玩意比Eclipse好很多，就试了试，目前还不是很习惯的说。下面是安装过程：</p>
+
+<ul>
+<li>首先要安装Intellij IDEA</li>
+<li>然后确保本机安装有JDK</li>
+<li>去官网安装android sdk（那个alone的版本就好）</li>
+<li>打开sdk的<code>sdk/tools/android</code>命令，出现Android SDK Manager</li>
+<li>用此SDK Manager下载各个版本的API</li>
+</ul>
+
+
+<p>这次问题主要出现在最后一步，总是出现fetch不上的错误。原因就是dl-ssl.google.com 被干掉了。我们可以用<a href="http://ping.chinaz.com">站长工具</a>的超级ping工具来查找可用的IP。找到之后，修改<code>etc/hosts</code>文件的内容即可。即在此文件的文件尾加上：</p>
+
+<pre><code>203.208.46.146 dl.google.com
+203.208.46.146 dl-ssl.google.com
+127.0.0.1 servserv.generals.ea.com
+</code></pre>
+
+		
+		
+	</div>
+
+</article>
 
 
     <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
@@ -502,59 +559,6 @@
 
 		
 		<a href="/blog/2013/09/23/tools/" class="more-link">Read on &rarr;</a>
-	</div>
-
-</article>
-
-
-    <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-	<div class="meta">
-		<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-20T16:50:00+08:00" data-updated="true" itemprop="datePublished">Sep 20<span>th</span>, 2013</time></div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/git/'>Git</a>
-
-
-</div>
-		
-			<span class="comments"><a href="/blog/2013/09/20/my-git-command/#disqus_thread">Comments</a></span>
-		
-	</div>
-	<h1 class="title" itemprop="name"><a href="/blog/2013/09/20/my-git-command/" itemprop="url">我的Git常用命令</a></h1>
-	<div class="entry-content" itemprop="articleBody">
-		<p>使用Git开发已经有一段时间了，这里我总结了一下常用的Git命令。
-<img class="right" src="/images/pic/git_logo.png" width="130" height="130" title="welcome" alt="welcome"></p>
-
-<h2>设置</h2>
-
-<p>设置邮箱和用户名</p>
-
-<pre><code>git config --global user.email "xu.jin.smile@gmail.com"
-git config --global user.name "GinSmile"
-</code></pre>
-
-<p>生成SSH Key</p>
-
-<pre><code>ssh-keygen -t rsa -C "example@163.com"
-....然后提示输入密码什么的
-</code></pre>
-
-
-		
-		<a href="/blog/2013/09/20/my-git-command/" class="more-link">Read on &rarr;</a>
 	</div>
 
 </article>

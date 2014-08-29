@@ -5,11 +5,11 @@
 
 <head>
 	<meta charset="utf-8">
-	<title>Categories - John Xu's Blog</title>
+	<title>android-sdk-download - John Xu's Blog</title>
 	<meta name="author" content="John Xu">
 
 	
-	<meta name="description" content=" Lifestyle [ 1 ] Octopress [ 4 ] Python [ 4 ] Raspberrypi [ 2 ] Git [ 1 ] Tools [ 1 ] Encoding [ 2 ] Essay [ 1 ] Note [ 2 ] Linux [ 2 ] Android [ 1 ] ">
+	<meta name="description" content="Android-sdk-download 记下我重新安装android开发环境的过程 一句话，万恶的长城啊&hellip; 这次是第二次还是第三次装这个开发环境啊，我不太记得了，不过每次遇到的问题都差不多，故记录下来，以备下次用到。这次和前几次稍微不一样，使用了Intellij IDEA， &hellip;">
 	
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
 
 	<link href="/atom.xml" rel="alternate" title="John Xu's Blog" type="application/atom+xml">
 	
-	<link rel="canonical" href="http://GinSmile.github.io/blog/categories/">
+	<link rel="canonical" href="http://GinSmile.github.io/blog/2014/08/29/android-sdk-download/">
 	<link href="/favicon.png" rel="shortcut icon">
 	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
 	<link href="/stylesheets/font-awesome.min.css" media="screen, projection" rel="stylesheet" type="text/css">
@@ -107,38 +107,55 @@
 				
 			
 			<div class="mid-col-container">
-				<div id="content" class="inner"><article class="page">
-    
-    <h1 class="title">Categories</h1>
-    
-    <div class="entry-content"><ul>
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<h1 class="title" itemprop="name">Android-sdk-download</h1>
+	<div class="entry-content" itemprop="articleBody"><h3>记下我重新安装android开发环境的过程</h3>
 
-    <li><a href="/blog/categories/Lifestyle/">Lifestyle</a> [ 1 ]</li>
+<p>一句话，万恶的长城啊&hellip;</p>
 
-    <li><a href="/blog/categories/Octopress/">Octopress</a> [ 4 ]</li>
+<p>这次是第二次还是第三次装这个开发环境啊，我不太记得了，不过每次遇到的问题都差不多，故记录下来，以备下次用到。这次和前几次稍微不一样，使用了Intellij IDEA，看网上说这玩意比Eclipse好很多，就试了试，目前还不是很习惯的说。下面是安装过程：</p>
 
-    <li><a href="/blog/categories/python/">Python</a> [ 4 ]</li>
-
-    <li><a href="/blog/categories/RaspberryPi/">Raspberrypi</a> [ 2 ]</li>
-
-    <li><a href="/blog/categories/Git/">Git</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/tools/">Tools</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/encoding/">Encoding</a> [ 2 ]</li>
-
-    <li><a href="/blog/categories/essay/">Essay</a> [ 1 ]</li>
-
-    <li><a href="/blog/categories/note/">Note</a> [ 2 ]</li>
-
-    <li><a href="/blog/categories/Linux/">Linux</a> [ 2 ]</li>
-
-    <li><a href="/blog/categories/android/">Android</a> [ 1 ]</li>
-
+<ul>
+<li>首先要安装Intellij IDEA</li>
+<li>然后确保本机安装有JDK</li>
+<li>去官网安装android sdk（那个alone的版本就好）</li>
+<li>打开sdk的<code>sdk/tools/android</code>命令，出现Android SDK Manager</li>
+<li>用此SDK Manager下载各个版本的API</li>
 </ul>
 
+
+<p>这次问题主要出现在最后一步，总是出现fetch不上的错误。原因就是dl-ssl.google.com 被干掉了。我们可以用<a href="http://ping.chinaz.com">站长工具</a>的超级ping工具来查找可用的IP。找到之后，修改<code>etc/hosts</code>文件的内容即可。即在此文件的文件尾加上：</p>
+
+<pre><code>203.208.46.146 dl.google.com
+203.208.46.146 dl-ssl.google.com
+127.0.0.1 servserv.generals.ea.com
+</code></pre>
 </div>
+
 </article>
+
+	<!-- <div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+	
+	
+	
+	<a class="addthis_counter addthis_pill_style"></a>
+	</div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div> -->
+<div class="sharing">
+    <!-- AddThis Button BEGIN -->
+    <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a class="addthis_button_sinaweibo"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_pinterest_share"></a>
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a>
+    </div>
+    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-521dd13b3fa550d0"></script>
+    <!-- AddThis Button END -->
 
 
 <section id="comment">
@@ -146,7 +163,6 @@
     <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
 </section>
-
 </div>
 			</div>
 			<footer id="footer" class="inner"><p>
@@ -167,8 +183,8 @@ Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Sha
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://GinSmile.github.io/blog/categories/index.html';
-        var disqus_url = 'http://GinSmile.github.io/blog/categories/index.html';
+        var disqus_identifier = 'http://GinSmile.github.io/blog/2014/08/29/android-sdk-download/';
+        var disqus_url = 'http://GinSmile.github.io/blog/2014/08/29/android-sdk-download/';
         var disqus_script = 'embed.js';
       
     (function () {
